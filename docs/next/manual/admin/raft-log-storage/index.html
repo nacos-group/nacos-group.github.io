@@ -1,0 +1,909 @@
+<!DOCTYPE html><html lang="zh-CN" dir="ltr" data-has-toc data-has-sidebar class="astro-bguv2lll"> <head><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"> <meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Raft 日志存储 | Nacos 官网</title><link rel="canonical" href="https://nacos-group.github.io/docs/next/manual/admin/raft-log-storage/"/><link rel="alternate" hreflang="zh-CN" href="https://nacos-group.github.io/docs/next/manual/admin/raft-log-storage/"/><link rel="alternate" hreflang="en" href="https://nacos-group.github.io/en/docs/next/manual/admin/raft-log-storage/"/><link rel="sitemap" href="/sitemap-index.xml"/><link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/><meta name="aplus-core" content="aplus.js"/><meta property="og:title" content="Raft 日志存储"/><meta property="og:type" content="article"/><meta property="og:url" content="https://nacos-group.github.io/docs/next/manual/admin/raft-log-storage/"/><meta property="og:locale" content="zh-CN"/><meta property="og:site_name" content="Nacos 官网"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="Raft 日志存储"/><meta name="twitter:description" content="详细介绍 Nacos Raft 日志后端选择、配置与部署验证、文件格式、写入与恢复流程、平台约束、备份和故障排查。"/><meta name="baidu-site-verification" content="code-wzq5sw7io3"/><meta name="msvalidate.01" content="163AF92978FAA79FC0EF301039463525"/><meta name="description" content="详细介绍 Nacos Raft 日志后端选择、配置与部署验证、文件格式、写入与恢复流程、平台约束、备份和故障排查。"/><meta property="og:description" content="详细介绍 Nacos Raft 日志后端选择、配置与部署验证、文件格式、写入与恢复流程、平台约束、备份和故障排查。"/><meta property="keywords" content="Nacos,Raft,JRaft,RocksDB,文件日志,存储,恢复"/> <!--初始化SDK-->   <!-- Google tag (gtag.js) --> <script async src="https://www.googletagmanager.com/gtag/js?id=G-0YDFJ7LX7F"></script> <script>
+	window.StarlightThemeProvider = (() => {
+		const storedTheme =
+			typeof localStorage !== 'undefined' && localStorage.getItem('starlight-theme');
+		const theme =
+			storedTheme ||
+			(window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+		document.documentElement.dataset.theme = theme === 'light' ? 'light' : 'dark';
+		return {
+			updatePickers(theme = storedTheme || 'auto') {
+				document.querySelectorAll('starlight-theme-select').forEach((picker) => {
+					const select = picker.querySelector('select');
+					if (select) select.value = theme;
+					/** @type {HTMLTemplateElement | null} */
+					const tmpl = document.querySelector(`#theme-icons`);
+					const newIcon = tmpl && tmpl.content.querySelector('.' + theme);
+					if (newIcon) {
+						const oldIcon = picker.querySelector('svg.label-icon');
+						if (oldIcon) {
+							oldIcon.replaceChildren(...newIcon.cloneNode(true).childNodes);
+						}
+					}
+				});
+			},
+		};
+	})();
+</script><template id="theme-icons"><svg aria-hidden="true" class="light astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M5 12a1 1 0 0 0-1-1H3a1 1 0 0 0 0 2h1a1 1 0 0 0 1-1Zm.64 5-.71.71a1 1 0 0 0 0 1.41 1 1 0 0 0 1.41 0l.71-.71A1 1 0 0 0 5.64 17ZM12 5a1 1 0 0 0 1-1V3a1 1 0 0 0-2 0v1a1 1 0 0 0 1 1Zm5.66 2.34a1 1 0 0 0 .7-.29l.71-.71a1 1 0 1 0-1.41-1.41l-.66.71a1 1 0 0 0 0 1.41 1 1 0 0 0 .66.29Zm-12-.29a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.71-.71a1.004 1.004 0 1 0-1.43 1.41l.73.71ZM21 11h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2Zm-2.64 6A1 1 0 0 0 17 18.36l.71.71a1 1 0 0 0 1.41 0 1 1 0 0 0 0-1.41l-.76-.66ZM12 6.5a5.5 5.5 0 1 0 5.5 5.5A5.51 5.51 0 0 0 12 6.5Zm0 9a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Zm0 3.5a1 1 0 0 0-1 1v1a1 1 0 0 0 2 0v-1a1 1 0 0 0-1-1Z"/></svg> <svg aria-hidden="true" class="dark astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.64 13a1 1 0 0 0-1.05-.14 8.049 8.049 0 0 1-3.37.73 8.15 8.15 0 0 1-8.14-8.1 8.59 8.59 0 0 1 .25-2A1 1 0 0 0 8 2.36a10.14 10.14 0 1 0 14 11.69 1 1 0 0 0-.36-1.05Zm-9.5 6.69A8.14 8.14 0 0 1 7.08 5.22v.27a10.15 10.15 0 0 0 10.14 10.14 9.784 9.784 0 0 0 2.1-.22 8.11 8.11 0 0 1-7.18 4.32v-.04Z"/></svg> <svg aria-hidden="true" class="auto astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21 14h-1V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v7H3a1 1 0 0 0-1 1v2a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-2a1 1 0 0 0-1-1ZM6 7a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7H6V7Zm14 10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h16v1Z"/></svg> </template><link rel="stylesheet" href="/_astro/index.yVJFhwhX.css">
+<link rel="stylesheet" href="/_astro/global.D9QmXT2Z.css">
+<link rel="stylesheet" href="/_astro/index.hTc5G0Lr.css">
+<style>@font-face{font-family:Roboto;font-style:normal;font-weight:400;src:url(https://g.alicdn.com/cm-design/mw-vendor/1.6.11/Roboto-Regular.ttf) format("truetype");font-display:swap}@font-face{font-family:Roboto;font-style:normal;font-weight:700;src:url(https://g.alicdn.com/cm-design/mw-vendor/1.6.11/Roboto-Bold.ttf) format("truetype");font-display:swap}@font-face{font-family:Roboto;font-style:normal;font-weight:500;src:url(https://g.alicdn.com/cm-design/mw-vendor/1.6.11/Roboto-Medium.ttf) format("truetype");font-display:swap}@font-face{font-family:SourceHanSans;font-style:normal;font-weight:400;src:url(https://g.alicdn.com/cm-design/mw-vendor/1.6.11/SourceHanSansSC-Normal-Min.ttf) format("truetype");font-display:swap}@font-face{font-family:SourceHanSans;font-style:normal;font-weight:500;src:url(https://g.alicdn.com/cm-design/mw-vendor/1.6.11/SourceHanSansSC-Medium-Min.ttf) format("truetype");font-display:swap}
+html:not([data-has-toc]){--sl-mobile-toc-height: 0rem}html:not([data-has-sidebar]){--sl-content-width: 67.5rem}html{scroll-padding-top:calc(1.5rem + var(--sl-nav-height) + var(--sl-mobile-toc-height))}main:where(.astro-bguv2lll){padding-bottom:3vh}@media (min-width: 50em){:where(.astro-bguv2lll)[data-has-sidebar]{--sl-content-inline-start: var(--sl-sidebar-width)}}@media (min-width: 72em){html{scroll-padding-top:calc(1.5rem + var(--sl-nav-height))}}
+</style>
+<link rel="stylesheet" href="/_astro/index.vItnU7Nn.css">
+<style>.table-of-contents-wrapper ul{padding:0;list-style:none}.table-of-contents-wrapper a{--pad-inline: .5rem;display:block;border-radius:.25rem;padding-block:.25rem;padding-inline:calc(1rem * var(--depth) + var(--pad-inline)) var(--pad-inline);line-height:1.25}.table-of-contents-wrapper a[aria-current=true],.table-of-contents-wrapper a[aria-current=true]:hover,.table-of-contents-wrapper a[aria-current=true]:focus{color:#121316!important;background-color:#ebecef!important;border-left-style:solid;border-left-width:3px;border-left-color:#121316;padding-left:.625rem!important;font-weight:400!important;border-radius:0!important}.table-of-contents-wrapper .isMobile a{--pad-inline: 1rem;display:flex;justify-content:space-between;gap:var(--pad-inline);border-top:1px solid var(--sl-color-gray-6);border-radius:0;padding-block:.5rem;color:var(--sl-color-text);font-size:var(--sl-text-sm);text-decoration:none;outline-offset:var(--sl-outline-offset-inside)}.table-of-contents-wrapper .isMobile:first-child>li:first-child>a{border-top:0}.table-of-contents-wrapper .isMobile a[aria-current=true],.table-of-contents-wrapper .isMobile a[aria-current=true]:hover,.table-of-contents-wrapper .isMobile a[aria-current=true]:focus{color:var(--sl-color-white);background-color:unset}.table-of-contents-wrapper .isMobile a[aria-current=true]:after{content:"";width:1rem;background-color:var(--sl-color-text-accent);-webkit-mask-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxNCAxNCc+PHBhdGggZD0nTTEwLjkxNCA0LjIwNmEuNTgzLjU4MyAwIDAgMC0uODI4IDBMNS43NCA4LjU1NyAzLjkxNCA2LjcyNmEuNTk2LjU5NiAwIDAgMC0uODI4Ljg1N2wyLjI0IDIuMjRhLjU4My41ODMgMCAwIDAgLjgyOCAwbDQuNzYtNC43NmEuNTgzLjU4MyAwIDAgMCAwLS44NTdaJy8+PC9zdmc+Cg==);mask-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxNCAxNCc+PHBhdGggZD0nTTEwLjkxNCA0LjIwNmEuNTgzLjU4MyAwIDAgMC0uODI4IDBMNS43NCA4LjU1NyAzLjkxNCA2LjcyNmEuNTk2LjU5NiAwIDAgMC0uODI4Ljg1N2wyLjI0IDIuMjRhLjU4My41ODMgMCAwIDAgLjgyOCAwbDQuNzYtNC43NmEuNTgzLjU4MyAwIDAgMCAwLS44NTdaJy8+PC9zdmc+Cg==);-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;flex-shrink:0}
+svg:where(.astro-c6vsoqas){color:var(--sl-icon-color);font-size:var(--sl-icon-size, 1em);width:1em;height:1em}
+starlight-tabs:where(.astro-esqgolmp){display:block}.tablist-wrapper:where(.astro-esqgolmp){overflow-x:auto}:where(.astro-esqgolmp)[role=tablist]{display:flex;list-style:none;border-bottom:2px solid var(--sl-color-gray-5);padding:0}.tab:where(.astro-esqgolmp){margin-bottom:-2px}.tab:where(.astro-esqgolmp)>:where(.astro-esqgolmp)[role=tab]{display:block;padding:0 1.25rem;text-decoration:none;border-bottom:2px solid var(--sl-color-gray-5);color:var(--sl-color-gray-3);outline-offset:var(--sl-outline-offset-inside)}.tab:where(.astro-esqgolmp) :where(.astro-esqgolmp)[role=tab][aria-selected]{color:var(--sl-color-white);border-color:var(--sl-color-text-accent);font-weight:600}.tablist-wrapper:where(.astro-esqgolmp)~[role=tabpanel]{margin-top:1rem}
+</style><script type="module" src="/_astro/hoisted.fLjY71yy.js"></script>
+<script type="module" src="/_astro/page.CIklkdzg.js"></script></head> <body class="astro-bguv2lll"> <a class="skip-link-wrapper" href="#_top">跳转到内容</a>  <div class="page sl-flex"> <header class="header"><span class="header-wrapper" style="--width: 100%;--height: 3.5rem;--xpadding: 1.5rem;"> <div class="alert-bar w-full  h-12 flex align-center justify-between top-0 bg-cover bg-[url('https://img.alicdn.com/imgextra/i3/O1CN010OMCW91rMde4sifaA_!!6000000005617-0-tps-828-52.jpg')] md:bg-[url('https://img.alicdn.com/imgextra/i4/O1CN01wkq3Nl1O9FCjTbQNk_!!6000000001662-0-tps-2880-96.jpg')]" client:load><div class="md:text-base text-sm m-auto leading-6 "><span class=" text-blue-03 mr-4 md:mr-6 opacity-30 hidden md:inline-block">&lt;/&gt;</span><span class="alert-text hidden md:inline-block bg-gradient-to-r from-gray-01 to-gray-10 font-medium">Alibaba Cloud AI Agent Handbook 已开源，汇集50+工程师的一手实践经验</span><span class="alert-text bg-gradient-to-r from-gray-01 to-gray-10 text-blue-03  md:hidden font-medium">Alibaba Cloud AI Agent Handbook 已开源，汇集50+工程师的一手实践经验</span><a href="https://github.com/aliyun/ai-agent-handbook" target="_blank" class="mx-auto flex justify-center md:inline text-blue-07 font-medium md:ml-4 no-underline">点此了解</a></div><button class="close-button text-blue-03 bg-transparent border-none cursor-pointer text-lg leading-6 mr-1 md:mr-4">
+&times;
+</button></div> <my-layout style="position: sticky; height: 3.5rem; --width: 100%;--height: 3.5rem;--xpadding: 1.5rem;" class="w-full backdrop-blur-md top-0 z-[10] bg-gray-14 flex justify-center"> <!-- 方便控制header宽度 --> <div class="header-content flex items-center justify-between border-b border-gray-14" style="--width: 100%;--height: 3.5rem;--xpadding: 1.5rem;"> <div class="left-content h-full flex items-center" style="--width: 100%;--height: 3.5rem;--xpadding: 1.5rem;"> <a class="no-underline" href="/" style="--width: 100%;--height: 3.5rem;--xpadding: 1.5rem;"> <img class="logo" src="https://img.alicdn.com/imgextra/i4/O1CN01rW3vAB1FDWKSOiFf0_!!6000000000453-2-tps-204-40.png" alt="nacos-log" style="--width: 100%;--height: 3.5rem;--xpadding: 1.5rem;"> </a> <span class="mobile-navbar-wrapper" style="--top: 3.5rem;"> <div class="mobile-navbar mobile-navbar h-full ml-4" style="--top: 3.5rem;"> <mobile-menu-button style="--top: 3.5rem;"> <button aria-expanded="false" aria-label="mobile-menu-button" style="--top: 3.5rem;"> <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6304" width="28" height="28" style="--top: 3.5rem;"> <path d="M192.037 287.953h640.124c17.673 0 32-14.327 32-32s-14.327-32-32-32H192.037c-17.673 0-32 14.327-32 32s14.327 32 32 32zM832.161 479.169H438.553c-17.673 0-32 14.327-32 32s14.327 32 32 32h393.608c17.673 0 32-14.327 32-32s-14.327-32-32-32zM832.161 735.802H192.037c-17.673 0-32 14.327-32 32s14.327 32 32 32h640.124c17.673 0 32-14.327 32-32s-14.327-32-32-32zM319.028 351.594l-160 160 160 160z" fill="#f4f4f6" p-id="6305" style="--top: 3.5rem;"></path> </svg> </button> </mobile-menu-button> <div class="navbar-panel bg-gray-14" style="--top: 3.5rem;"> <div class="navbar-content flex" style="--top: 3.5rem;"> <span class="mobile-nav-sublist-wrapper"> <ul class="top-level"> <li> <details open> <summary> <div class="group-label"> <span class="large undefined">文档</span> </div> <svg aria-hidden="true" class="caret astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-color: #818598;--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg>  </summary> <span class="mobile-nav-sublist-wrapper"> <ul> <li> <a href="/docs/latest/overview/" class="flex items-center"> <span>最新版</span> <span class="rounded-full px-2 bg-gradient-to-r from-[#262CF4] to-[#7140FF] text-white text-xs">3.3</span> </a> </li><li> <a href="/docs/next/overview/" aria-current="page" class="flex items-center"> <span>预览版（Next）</span>  </a> </li><li> <a href="/docs/v3.2/overview/" class="flex items-center"> <span>3.2</span>  </a> </li><li> <a href="/docs/v3.1/overview/" class="flex items-center"> <span>3.1</span>  </a> </li><li> <a href="/docs/v3.0/overview/" class="flex items-center"> <span>3.0</span>  </a> </li><li> <a href="/docs/v2.5/overview/" class="flex items-center"> <span>2.5</span>  </a> </li><li> <a href="/docs/v2.4/overview/" class="flex items-center"> <span>2.4</span>  </a> </li><li> <a href="/docs/v2.3/what-is-nacos/" class="flex items-center"> <span>2.3</span>  </a> </li><li> <a href="/docs/v2/what-is-nacos/" class="flex items-center"> <span>2.x</span>  </a> </li><li> <a href="/docs/v1/what-is-nacos/" class="flex items-center"> <span>1.x</span>  </a> </li> </ul> </span>  </details> </li><li> <a href="/cloud/" class="large flex items-center"> <span>企业版 NACOS</span>  </a> </li><li> <a href="https://mcp.nacos.io/" class="large flex items-center"> <span>MCP</span>  </a> </li><li> <a href="/blog/" class="large flex items-center"> <span>博客</span>  </a> </li><li> <a href="/docs/ebook/kbyo6n/" class="large flex items-center"> <span>电子书</span>  </a> </li><li> <a href="/download/nacos-server/" class="large flex items-center"> <span>下载</span>  </a> </li><li> <a href="http://console.nacos.io/index.html" class="large flex items-center"> <span>控制台样例</span>  </a> </li><li> <a href="/blog/wuyi-intro/" class="large flex items-center"> <span>专家答疑</span>  </a> </li> </ul> </span>  </div> </div> </div> </span>   </div> <div class="center-content h-full" style="--width: 100%;--height: 3.5rem;--xpadding: 1.5rem;"> <span class="navbar-wrapper"> <navbar-component class="navbar-component h-full"> <div class="pc-navbar pc-navbar h-full"> <span class="toggle-wrapper"> <toggle-component data-trigger="hover" class="toggle-component h-full relative"> <div class="toggle-trigger relative cursor-pointer flex items-center h-full item  text-base">  <div class="toggle-text flex items-center justify-center h-full toggle-text-active"> 预览版（Next） </div>  <svg width="10" height="7" viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg" data-updown class="ml-2"> <path d="M8.05264 2L5.05264 5.00649L2.05264 2" stroke="#a3a6b3" stroke-width="1.25" stroke-linecap="square"></path> </svg> </div> <div class="toggle-dropdown w-fit inset-x-0 absolute t-3.5rem">  <docs-menu class="dropdown-docs block bg-gray-13 rounded-lg"> <ul class="w-[9.25rem] list-none m-0 p-2"> <li class="no-underline cursor-pointer my-1 rounded-lg  hover:bg-gray-12"> <a href="/docs/latest/overview/" class="inline-block w-full p-2 no-underline text-inherit text-gray-02"> 最新版 <span class="inline-block  px-2 py-1 rounded-full h-[18px] leading-3 bg-gradient-to-r from-[#262CF4] via-[#262CF4] to-[#7140FF] opacity-100 text-white text-sm">3.3</span> </a> </li><li class="no-underline cursor-pointer my-1 rounded-lg bg-gray-12 hover:bg-gray-12"> <a href="/docs/next/overview/" aria-current="page" class="inline-block w-full p-2 no-underline text-inherit text-gray-02"> 预览版（Next）  </a> </li><li class="no-underline cursor-pointer my-1 rounded-lg  hover:bg-gray-12"> <a href="/docs/v3.2/overview/" class="inline-block w-full p-2 no-underline text-inherit text-gray-02"> 3.2  </a> </li><li class="no-underline cursor-pointer my-1 rounded-lg  hover:bg-gray-12"> <a href="/docs/v3.1/overview/" class="inline-block w-full p-2 no-underline text-inherit text-gray-02"> 3.1  </a> </li><li class="no-underline cursor-pointer my-1 rounded-lg  hover:bg-gray-12"> <a href="/docs/v3.0/overview/" class="inline-block w-full p-2 no-underline text-inherit text-gray-02"> 3.0  </a> </li><li class="no-underline cursor-pointer my-1 rounded-lg  hover:bg-gray-12"> <a href="/docs/v2.5/overview/" class="inline-block w-full p-2 no-underline text-inherit text-gray-02"> 2.5  </a> </li><li class="no-underline cursor-pointer my-1 rounded-lg  hover:bg-gray-12"> <a href="/docs/v2.4/overview/" class="inline-block w-full p-2 no-underline text-inherit text-gray-02"> 2.4  </a> </li><li class="no-underline cursor-pointer my-1 rounded-lg  hover:bg-gray-12"> <a href="/docs/v2.3/what-is-nacos/" class="inline-block w-full p-2 no-underline text-inherit text-gray-02"> 2.3  </a> </li><li class="no-underline cursor-pointer my-1 rounded-lg  hover:bg-gray-12"> <a href="/docs/v2/what-is-nacos/" class="inline-block w-full p-2 no-underline text-inherit text-gray-02"> 2.x  </a> </li><li class="no-underline cursor-pointer my-1 rounded-lg  hover:bg-gray-12"> <a href="/docs/v1/what-is-nacos/" class="inline-block w-full p-2 no-underline text-inherit text-gray-02"> 1.x  </a> </li> </ul> </docs-menu>   </div> </toggle-component> </span>  <span class="toggle-wrapper"> <toggle-component data-trigger="click" class="toggle-component h-full relative"> <div class="toggle-trigger relative cursor-pointer flex items-center h-full item  text-base">  <a href="/cloud/" target="_self" class="toggle-text flex items-center justify-center no-underline h-full relative "> 企业版 NACOS <svg class="icon ml-1" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1452" width="14" height="14"> <path d="M758.915413 332.8L684.390969 409.6s0-307.2-248.433778-409.6c0 0-24.860444 281.6-149.048889 384C162.549191 486.4-85.884587 793.6 411.039858 1024c0 0-248.490667-281.6 74.524444-486.4 0 0-24.803556 102.4 99.441778 204.8 124.188444 102.4 0 281.6 0 281.6s596.309333-153.6 173.909333-691.2" fill="#FF0000" p-id="1453"></path> </svg>  </a>   </div>  </toggle-component> </span>  <span class="toggle-wrapper"> <toggle-component data-trigger="click" class="toggle-component h-full relative"> <div class="toggle-trigger relative cursor-pointer flex items-center h-full item  text-base">  <a href="https://mcp.nacos.io/" target="_blank" class="toggle-text flex items-center justify-center no-underline h-full relative "> MCP  <svg class="icon ml-1" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1452" width="14" height="14"> <path d="M758.915413 332.8L684.390969 409.6s0-307.2-248.433778-409.6c0 0-24.860444 281.6-149.048889 384C162.549191 486.4-85.884587 793.6 411.039858 1024c0 0-248.490667-281.6 74.524444-486.4 0 0-24.803556 102.4 99.441778 204.8 124.188444 102.4 0 281.6 0 281.6s596.309333-153.6 173.909333-691.2" fill="#FF0000" p-id="1453"></path> </svg> </a>   </div>  </toggle-component> </span>  <span class="toggle-wrapper"> <toggle-component data-trigger="hover" class="toggle-component h-full relative"> <div class="toggle-trigger relative cursor-pointer flex items-center h-full item  text-base">  <a href="/blog/" target="_self" class="toggle-text flex items-center justify-center no-underline h-full relative "> 博客   </a>   </div>  </toggle-component> </span>  <span class="toggle-wrapper"> <toggle-component data-trigger="hover" class="toggle-component h-full relative"> <div class="toggle-trigger relative cursor-pointer flex items-center h-full item  text-base">  <a href="/docs/ebook/kbyo6n/" target="_self" class="toggle-text flex items-center justify-center no-underline h-full relative "> 电子书   </a>   </div>  </toggle-component> </span>  <span class="toggle-wrapper"> <toggle-component data-trigger="click" class="toggle-component h-full relative"> <div class="toggle-trigger relative cursor-pointer flex items-center h-full item  text-base">  <a href="/download/nacos-server/" target="_self" class="toggle-text flex items-center justify-center no-underline h-full relative "> 下载   </a>   </div>  </toggle-component> </span>  <span class="toggle-wrapper"> <toggle-component data-trigger="click" class="toggle-component h-full relative"> <div class="toggle-trigger relative cursor-pointer flex items-center h-full item  text-base">  <a href="http://console.nacos.io/index.html" target="_blank" class="toggle-text flex items-center justify-center no-underline h-full relative "> 控制台样例   </a>   </div>  </toggle-component> </span>  <span class="toggle-wrapper"> <toggle-component data-trigger="click" class="toggle-component h-full relative"> <div class="toggle-trigger relative cursor-pointer flex items-center h-full item item-last-child text-base">  <a href="/blog/wuyi-intro/" target="_self" class="toggle-text flex items-center justify-center no-underline h-full relative "> 专家答疑   </a>   </div>  </toggle-component> </span>   </div> </navbar-component> </span>  </div> <div class="right-content flex items-center md:gap-4" style="--width: 100%;--height: 3.5rem;--xpadding: 1.5rem;"> <div class="common-languageToggle" style="--size: small;"> <toggle-content class="switch float-left relative m-0 rounded-[2rem]" style="--size: small;"> <input data-switch class="switch-checkbox hidden" id="pc-toggle-switch" type="checkbox" style="--size: small;"> <label class="switch-label block overflow-hidden cursor-pointer rounded-[2rem]" for="pc-toggle-switch" style="--size: small;"> <span class="switch-inner block" data-on="中文" data-off="EN" style="--size: small;"></span> <span class="switch-switch absolute float-right mx-1" style="--size: small;"></span> </label> </toggle-content> <div data-switch class="mobile-toggle w-[3.5rem] h-[1.5rem] leading-[1.5rem] text-xs text-center rounded-2xl bg-gray-12 text-white max-md:inline-block" id="pc-toggle-switch" style="--size: small;"> 中文 </div> </div>   <sl-doc-search data-translations="{&#34;translations&#34;:{&#34;button&#34;:{},&#34;modal&#34;:{&#34;searchBox&#34;:{},&#34;startScreen&#34;:{},&#34;errorScreen&#34;:{},&#34;footer&#34;:{},&#34;noResultsScreen&#34;:{}}}}"> <button type="button" class="DocSearch DocSearch-Button"> <span class="DocSearch-Button-Container"> <svg width="20" height="20" class="DocSearch-Search-Icon" viewBox="0 0 20 20"> <path d="M14.386 14.386l4.0877 4.0877-4.0877-4.0877c-2.9418 2.9419-7.7115 2.9419-10.6533 0-2.9419-2.9418-2.9419-7.7115 0-10.6533 2.9418-2.9419 7.7115-2.9419 10.6533 0 2.9419 2.9418 2.9419 7.7115 0 10.6533z" stroke="currentColor" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path> </svg> <span class="DocSearch-Button-Placeholder"></span> </span> <span class="DocSearch-Button-Keys"></span> </button> </sl-doc-search>   </div> </div> </my-layout> </span>     <script>
+    function setLightMode(document) {
+      const html = document.documentElement;
+      html.setAttribute('data-theme', 'light');
+      }
+
+    setLightMode(document);
+
+    document.addEventListener('astro:before-swap', ev => {
+      console.log("=======astro:before-swap=======")
+      setLightMode(ev.newDocument);
+    });
+</script></header> <nav class="sidebar" aria-label="主要"> <starlight-menu-button class="astro-jif73yzw"> <button aria-expanded="false" aria-label="菜单" aria-controls="starlight__sidebar" class="sl-flex md:sl-hidden astro-jif73yzw"> <svg aria-hidden="true" class="astro-jif73yzw astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M3 8h18a1 1 0 1 0 0-2H3a1 1 0 0 0 0 2Zm18 8H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Zm0-5H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2Z"/></svg>  </button> </starlight-menu-button>    <div id="starlight__sidebar" class="sidebar-pane"> <div class="sidebar-content sl-flex"> <blog-theme> <span class="sidebar-sublist-wrapper"> <ul class="top-level"> <li> <a href="/docs/next/overview/" class="large flex items-center"> <span>概览</span>   </a> </li><li> <details open> <summary> <div class="group-label"> <span class="large">快速开始</span>  </div> <svg aria-hidden="true" class="caret astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg>  </summary> <span class="sidebar-sublist-wrapper"> <ul> <li> <a href="/docs/next/quickstart/quick-start/" class="flex items-center"> <span>Nacos</span>   </a> </li><li> <a href="/docs/next/quickstart/quick-start-docker/" class="flex items-center"> <span>Nacos Docker</span>   </a> </li><li> <a href="/docs/next/quickstart/quick-start-kubernetes/" class="flex items-center"> <span>Nacos Kubernetes</span>   </a> </li> </ul> </span>  </details> </li><li> <details open> <summary> <div class="group-label"> <span class="large">用户手册</span>  </div> <svg aria-hidden="true" class="caret astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg>  </summary> <span class="sidebar-sublist-wrapper"> <ul> <li> <a href="/docs/next/manual/user/overview/" class="flex items-center"> <span>概览</span>   </a> </li><li> <details open> <summary> <div class="group-label"> <span class="large">AI 管理中心</span>  </div> <svg aria-hidden="true" class="caret astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg>  </summary> <span class="sidebar-sublist-wrapper"> <ul> <li> <a href="/docs/next/manual/user/ai/ai-registry-overview/" class="flex items-center"> <span>AI 管理中心概述</span>   </a> </li><li> <a href="/docs/next/manual/user/ai/skill-registry/" class="flex items-center"> <span>Skill 管理</span>   </a> </li><li> <a href="/docs/next/manual/user/ai/agent-registry/" class="flex items-center"> <span>Agent 管理</span>   </a> </li><li> <a href="/docs/next/manual/user/ai/rad-discovery/" class="flex items-center"> <span>RAD 接入指南</span>   </a> </li><li> <a href="/docs/next/manual/user/ai/ard-discovery/" class="flex items-center"> <span>ARD 资源发现</span>   </a> </li><li> <a href="/docs/next/manual/user/ai/mcp-registry/" class="flex items-center"> <span>MCP 管理</span>   </a> </li><li> <a href="/docs/next/manual/user/ai/mcp-auto-register/" class="flex items-center"> <span>MCP Server 自动注册与发现手册</span>   </a> </li><li> <a href="/docs/next/manual/user/ai/api-to-mcp/" class="flex items-center"> <span>存量API转换MCP手册</span>   </a> </li><li> <a href="/docs/next/manual/user/ai/nacos-mcp-router/" class="flex items-center"> <span>Nacos MCP Router手册</span>   </a> </li><li> <a href="/docs/next/manual/user/ai/mcp-template/" class="flex items-center"> <span>MCP模版配置手册</span>   </a> </li><li> <a href="/docs/next/manual/user/ai/dify-nacos-mcp/" class="flex items-center"> <span>Dify 发现 Nacos MCP 服务</span>   </a> </li><li> <a href="/docs/next/manual/user/ai/prompt-registry/" class="flex items-center"> <span>Prompt 管理</span>   </a> </li><li> <a href="/docs/next/manual/user/ai/agentspec-registry/" class="flex items-center"> <span>AgentSpecs 管理</span>   </a> </li><li> <a href="/docs/next/manual/user/ai/ai-resource-lifecycle/" class="flex items-center"> <span>AI 资源生命周期</span>   </a> </li> </ul> </span>  </details> </li><li> <details> <summary> <div class="group-label"> <span class="large">配置中心</span>  </div> <svg aria-hidden="true" class="caret astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg>  </summary> <span class="sidebar-sublist-wrapper"> <ul> <li> <a href="/docs/next/manual/user/config/overview/" class="flex items-center"> <span>配置管理概览</span>   </a> </li><li> <a href="/docs/next/manual/user/config/publish-query-listen/" class="flex items-center"> <span>发布、查询与监听</span>   </a> </li><li> <a href="/docs/next/manual/user/config/gray-release/" class="flex items-center"> <span>配置灰度发布</span>   </a> </li><li> <a href="/docs/next/manual/user/config/ops-and-troubleshooting/" class="flex items-center"> <span>配置运维与排障</span>   </a> </li> </ul> </span>  </details> </li><li> <details> <summary> <div class="group-label"> <span class="large">注册中心</span>  </div> <svg aria-hidden="true" class="caret astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg>  </summary> <span class="sidebar-sublist-wrapper"> <ul> <li> <a href="/docs/next/manual/user/naming/overview/" class="flex items-center"> <span>服务发现概览</span>   </a> </li><li> <a href="/docs/next/manual/user/naming/instance-lifecycle/" class="flex items-center"> <span>实例生命周期</span>   </a> </li><li> <a href="/docs/next/manual/user/naming/health-and-metadata/" class="flex items-center"> <span>健康、权重与元数据</span>   </a> </li><li> <a href="/docs/next/manual/user/naming/subscription-and-ops/" class="flex items-center"> <span>订阅、推送与运维</span>   </a> </li> </ul> </span>  </details> </li><li> <details open> <summary> <div class="group-label"> <span class="large">SDK</span>  </div> <svg aria-hidden="true" class="caret astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg>  </summary> <span class="sidebar-sublist-wrapper"> <ul> <li> <a href="/docs/next/manual/user/overview/other-language/" class="flex items-center"> <span>SDK 概览</span>   </a> </li><li> <a href="/docs/next/manual/user/sdk/runtime-guide/" class="flex items-center"> <span>SDK 运行时</span>   </a> </li><li> <details> <summary> <div class="group-label"> <span class="large">JAVA SDK</span>  </div> <svg aria-hidden="true" class="caret astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg>  </summary> <span class="sidebar-sublist-wrapper"> <ul> <li> <a href="/docs/next/manual/user/java-sdk/usage/" class="flex items-center"> <span>Java SDK 使用手册</span>   </a> </li><li> <a href="/docs/next/manual/user/java-sdk/properties/" class="flex items-center"> <span>Java SDK 配置参数</span>   </a> </li><li> <a href="/docs/next/manual/user/java-sdk/failover/" class="flex items-center"> <span>Java SDK 容灾</span>   </a> </li><li> <a href="/docs/next/manual/user/java-sdk/metrics/" class="flex items-center"> <span>Java SDK 客户端指标</span>   </a> </li><li> <a href="/docs/next/manual/user/java-sdk/json-adapter/" class="flex items-center"> <span>JSON 适配与 Jackson 2/3 接入</span>   </a> </li> </ul> </span>  </details> </li><li> <details> <summary> <div class="group-label"> <span class="large">GO SDK</span>  </div> <svg aria-hidden="true" class="caret astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg>  </summary> <span class="sidebar-sublist-wrapper"> <ul> <li> <a href="/docs/next/manual/user/go-sdk/usage/" class="flex items-center"> <span>Go SDK 使用手册</span>   </a> </li> </ul> </span>  </details> </li><li> <details> <summary> <div class="group-label"> <span class="large">PYTHON SDK</span>  </div> <svg aria-hidden="true" class="caret astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg>  </summary> <span class="sidebar-sublist-wrapper"> <ul> <li> <a href="/docs/next/manual/user/python-sdk/usage/" class="flex items-center"> <span>Python SDK 使用手册</span>   </a> </li> </ul> </span>  </details> </li> </ul> </span>  </details> </li><li> <a href="/docs/next/manual/user/overview/api-overview/" class="flex items-center"> <span>OpenAPI 概览</span>   </a> </li><li> <a href="/docs/next/manual/user/open-api/" class="flex items-center"> <span>客户端API</span>   </a> </li><li> <a href="/docs/next/manual/user/auth/" class="flex items-center"> <span>访问凭据</span>   </a> </li><li> <a href="/docs/next/manual/user/parameters-check/" class="flex items-center"> <span>参数校验</span>   </a> </li><li> <a href="/docs/next/manual/user/addressing/" class="flex items-center"> <span>寻址说明</span>   </a> </li> </ul> </span>  </details> </li><li> <details open> <summary> <div class="group-label"> <span class="large">运维手册</span>  </div> <svg aria-hidden="true" class="caret astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg>  </summary> <span class="sidebar-sublist-wrapper"> <ul> <li> <details open> <summary> <div class="group-label"> <span class="large">部署手册</span>  </div> <svg aria-hidden="true" class="caret astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg>  </summary> <span class="sidebar-sublist-wrapper"> <ul> <li> <a href="/docs/next/manual/admin/deployment/deployment-overview/" class="flex items-center"> <span>部署手册概览</span>   </a> </li><li> <a href="/docs/next/manual/admin/deployment/deployment-standalone/" class="flex items-center"> <span>单机模式部署</span>   </a> </li><li> <a href="/docs/next/manual/admin/deployment/deployment-cluster/" class="flex items-center"> <span>集群模式部署</span>   </a> </li><li> <a href="/docs/next/manual/admin/deployment/deployment-independent/" class="flex items-center"> <span>控制台独立部署</span>   </a> </li><li> <a href="/docs/next/manual/admin/deployment/deployment-nacos-setup/" class="flex items-center"> <span>使用nacos-setup一键部署</span>   </a> </li><li> <a href="/docs/next/manual/admin/deployment/deployment-best-practices/" class="flex items-center"> <span>部署最佳实践</span>   </a> </li> </ul> </span>  </details> </li><li> <a href="/docs/next/manual/admin/system-configurations/" class="flex items-center"> <span>系统参数</span>   </a> </li><li> <a href="/docs/next/manual/admin/raft-log-storage/" aria-current="page" class="flex items-center"> <span>Raft 日志存储</span>   </a> </li><li> <a href="/docs/next/manual/admin/auth/" class="flex items-center"> <span>鉴权手册</span>   </a> </li><li> <a href="/docs/next/manual/admin/oidc-auth/" class="flex items-center"> <span>OIDC/OAuth2 认证</span>   </a> </li><li> <a href="/docs/next/manual/admin/upgrading/" class="flex items-center"> <span>升级手册</span>   </a> </li><li> <a href="/docs/next/manual/admin/compatibility-and-deprecation/" class="flex items-center"> <span>兼容与废弃</span>   </a> </li><li> <a href="/docs/next/manual/admin/monitor/" class="flex items-center"> <span>监控手册</span>   </a> </li><li> <a href="/docs/next/manual/admin/admin-api/" class="flex items-center"> <span>运维API</span>   </a> </li><li> <a href="/docs/next/manual/admin/maintainer-sdk/" class="flex items-center"> <span>运维SDK</span>   </a> </li><li> <a href="/docs/next/manual/admin/console/" class="flex items-center"> <span>控制台手册</span>   </a> </li><li> <a href="/docs/next/manual/admin/console-api/" class="flex items-center"> <span>控制台API</span>   </a> </li><li> <a href="/docs/next/manual/admin/nacos-cli/" class="flex items-center"> <span>Nacos CLI 使用指南</span>   </a> </li> </ul> </span>  </details> </li><li> <details open> <summary> <div class="group-label"> <span class="large">插件</span>  </div> <svg aria-hidden="true" class="caret astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg>  </summary> <span class="sidebar-sublist-wrapper"> <ul> <li> <a href="/docs/next/plugin/overview/" class="flex items-center"> <span>插件体系概览</span>   </a> </li><li> <a href="/docs/next/plugin/operations/" class="flex items-center"> <span>插件运维与配置</span>   </a> </li><li> <a href="/docs/next/plugin/development/" class="flex items-center"> <span>插件开发指南</span>   </a> </li><li> <a href="/docs/next/plugin/migration/" class="flex items-center"> <span>插件迁移指南</span>   </a> </li><li> <a href="/docs/next/plugin/auth-plugin/" class="flex items-center"> <span>鉴权插件</span>   </a> </li><li> <a href="/docs/next/plugin/visibility-plugin/" class="flex items-center"> <span>可见性插件</span>   </a> </li><li> <a href="/docs/next/plugin/datasource-plugin/" class="flex items-center"> <span>多数据源</span>   </a> </li><li> <a href="/docs/next/plugin/config-encryption-plugin/" class="flex items-center"> <span>配置加密</span>   </a> </li><li> <a href="/docs/next/plugin/config-change-plugin/" class="flex items-center"> <span>配置变更</span>   </a> </li><li> <a href="/docs/next/plugin/trace-plugin/" class="flex items-center"> <span>轨迹追踪</span>   </a> </li><li> <a href="/docs/next/plugin/custom-environment-plugin/" class="flex items-center"> <span>自定义环境变量</span>   </a> </li><li> <a href="/docs/next/plugin/control-plugin/" class="flex items-center"> <span>流量防护</span>   </a> </li><li> <a href="/docs/next/plugin/address-plugin/" class="flex items-center"> <span>集群寻址</span>   </a> </li><li> <a href="/docs/next/plugin/ai-pipeline-plugin/" class="flex items-center"> <span>AI 发布 Pipeline</span>   </a> </li><li> <a href="/docs/next/plugin/ai-resource-import-plugin/" class="flex items-center"> <span>AI 资源导入</span>   </a> </li><li> <a href="/docs/next/plugin/ai-storage-plugin/" class="flex items-center"> <span>AI 存储</span>   </a> </li><li> <a href="/docs/next/plugin/ai-vector-plugin/" class="flex items-center"> <span>AI 向量插件</span>   </a> </li> </ul> </span>  </details> </li><li> <details open> <summary> <div class="group-label"> <span class="large">测试手册</span>  </div> <svg aria-hidden="true" class="caret astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg>  </summary> <span class="sidebar-sublist-wrapper"> <ul> <li> <a href="/docs/next/manual/test/nacos-unit-test/" class="flex items-center"> <span>Nacos 单元测试</span>   </a> </li><li> <a href="/docs/next/manual/test/nacos-e2e/" class="flex items-center"> <span>Nacos E2E 测试</span>   </a> </li> </ul> </span>  </details> </li><li> <details open> <summary> <div class="group-label"> <span class="large">生态融合</span>  </div> <svg aria-hidden="true" class="caret astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg>  </summary> <span class="sidebar-sublist-wrapper"> <ul> <li> <a href="/docs/next/ecology/overview/" class="flex items-center"> <span>生态融合概览</span>   </a> </li><li> <a href="/docs/next/ecology/use-nacos-with-dubbo/" class="flex items-center"> <span>Dubbo 融合 Nacos 成为注册中心</span>   </a> </li><li> <a href="/docs/next/ecology/use-nacos-with-spring/" class="flex items-center"> <span>Nacos 融合 Spring，成为注册配置中心</span>   </a> </li><li> <a href="/docs/next/ecology/use-nacos-with-spring-boot3/" class="flex items-center"> <span>Nacos 融合 Spring Boot3，成为注册配置中心</span>   </a> </li><li> <a href="/docs/next/ecology/use-nacos-with-spring-cloud/" class="flex items-center"> <span>Nacos 融合 Spring Cloud，成为注册配置中心</span>   </a> </li><li> <a href="/docs/next/ecology/use-nacos-sync/" class="flex items-center"> <span>NacosSync 用户手册</span>   </a> </li><li> <a href="/docs/next/ecology/use-nacos-with-coredns/" class="flex items-center"> <span>Nacos 融合CoreDNS 下发DNS域名</span>   </a> </li><li> <a href="/docs/next/ecology/use-nacos-with-native-dns/" class="flex items-center"> <span>内置 DNS 服务发现</span>   </a> </li><li> <a href="/docs/next/ecology/use-nacos-mcp-router/" class="flex items-center"> <span>Nacos MCP Router 使用手册</span>   </a> </li><li> <a href="/docs/next/ecology/use-nacos-with-ard/" class="flex items-center"> <span>ARD 接入指南</span>   </a> </li><li> <a href="/docs/next/ecology/use-nacos-controller-to-sync-service/" class="flex items-center"> <span>使用Nacos Controller同步k8s服务到Nacos</span>   </a> </li><li> <a href="/docs/next/ecology/use-nacos-prometheus-sd/" class="flex items-center"> <span>使用 Nacos 提供 Prometheus 服务发现</span>   </a> </li><li> <a href="/docs/next/ecology/use-nacos-with-istio/" class="flex items-center"> <span>Nacos 融合Istio 下发xDS协议</span>   </a> </li><li> <a href="/docs/next/ecology/use-nacos-with-k8s-sync/" class="flex items-center"> <span>Nacos支持从K8S服务发现中同步服务元数据</span>   </a> </li> </ul> </span>  </details> </li><li> <details> <summary> <div class="group-label"> <span class="large">实验性功能</span>  </div> <svg aria-hidden="true" class="caret astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg>  </summary> <span class="sidebar-sublist-wrapper"> <ul> <li> <a href="/docs/next/experimental/overview/" class="flex items-center"> <span>实验性功能概览</span>   </a> </li><li> <a href="/docs/next/experimental/distributed-lock/" class="flex items-center"> <span>分布式锁</span>   </a> </li><li> <a href="/docs/next/experimental/ecosystem-integrations/" class="flex items-center"> <span>Kubernetes 生态实验能力</span>   </a> </li> </ul> </span>  </details> </li><li> <details open> <summary> <div class="group-label"> <span class="large">开源共建</span>  </div> <svg aria-hidden="true" class="caret astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg>  </summary> <span class="sidebar-sublist-wrapper"> <ul> <li> <a href="/docs/next/contribution/contributing/" class="flex items-center"> <span>如何贡献</span>   </a> </li><li> <a href="/docs/next/contribution/contributing-flow/" class="flex items-center"> <span>贡献流程</span>   </a> </li><li> <a href="/docs/next/contribution/pull-request/" class="flex items-center"> <span>提交需求模板</span>   </a> </li><li> <a href="/docs/next/contribution/how-to-reporting-bugs/" class="flex items-center"> <span>如何提交问题报告</span>   </a> </li><li> <a href="/docs/next/contribution/source-code-run-and-start/" class="flex items-center"> <span>Nacos3.0源码打包和启动</span>   </a> </li> </ul> </span>  </details> </li><li> <details open> <summary> <div class="group-label"> <span class="large">社区</span>  </div> <svg aria-hidden="true" class="caret astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg>  </summary> <span class="sidebar-sublist-wrapper"> <ul> <li> <a href="/docs/next/community/community/" class="flex items-center"> <span>社区</span>   </a> </li><li> <a href="/docs/next/community/nacos-dev/" class="flex items-center"> <span>开发者</span>   </a> </li> </ul> </span>  </details> </li><li> <details> <summary> <div class="group-label"> <span class="large">将归档</span>  </div> <svg aria-hidden="true" class="caret astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg>  </summary> <span class="sidebar-sublist-wrapper"> <ul> <li> <a href="/docs/next/what-is-nacos/" class="flex items-center"> <span>什么是 Nacos</span>   </a> </li><li> <details> <summary> <div class="group-label"> <span class="large">用户指南</span>  </div> <svg aria-hidden="true" class="caret astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg>  </summary> <span class="sidebar-sublist-wrapper"> <ul> <li> <a href="/docs/next/guide/user/sdk/" class="flex items-center"> <span>Java SDK</span>   </a> </li><li> <a href="/docs/next/guide/user/other-language/" class="flex items-center"> <span>其他语言的SDK</span>   </a> </li><li> <a href="/docs/next/guide/user/open-api/" class="flex items-center"> <span>Open API 指南</span>   </a> </li><li> <a href="/docs/next/guide/user/parameters-check/" class="flex items-center"> <span>参数校验</span>   </a> </li><li> <a href="/docs/next/guide/user/auth/" class="flex items-center"> <span>权限校验</span>   </a> </li><li> <a href="/docs/next/guide/user/faq/" class="flex items-center"> <span>FAQ</span>   </a> </li> </ul> </span>  </details> </li><li> <details> <summary> <div class="group-label"> <span class="large">运维指南</span>  </div> <svg aria-hidden="true" class="caret astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.25rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg>  </summary> <span class="sidebar-sublist-wrapper"> <ul> <li> <a href="/docs/next/guide/admin/deployment/" class="flex items-center"> <span>Nacos支持三种部署模式</span>   </a> </li><li> <a href="/docs/next/guide/admin/cluster-mode-quick-start/" class="flex items-center"> <span>集群部署说明</span>   </a> </li><li> <a href="/docs/next/guide/admin/system-configurations/" class="flex items-center"> <span>Nacos系统参数介绍</span>   </a> </li><li> <a href="/docs/next/guide/admin/management-api/" class="flex items-center"> <span>Management API</span>   </a> </li><li> <a href="/docs/next/guide/admin/console-guide/" class="flex items-center"> <span>控制台手册</span>   </a> </li><li> <a href="/docs/next/guide/admin/monitor-guide/" class="flex items-center"> <span>Nacos 监控手册</span>   </a> </li><li> <a href="/docs/next/guide/admin/nacos2-config-benchmark/" class="flex items-center"> <span>Nacos2.0服务配置性能测试报告</span>   </a> </li><li> <a href="/docs/next/guide/admin/nacos2-naming-benchmark/" class="flex items-center"> <span>Nacos2.0服务发现性能测试报告</span>   </a> </li><li> <a href="/docs/next/guide/admin/nginx-cluster-load-balance-guide/" class="flex items-center"> <span>Nacos 集群 Nginx 负载均衡指南</span>   </a> </li> </ul> </span>  </details> </li> </ul> </span>  </details> </li> </ul> </span>  </blog-theme>  </div> </div> </nav> <div class="main-frame">  <div class="lg:sl-flex two-column-content-wrapper"> <aside class="right-sidebar-container"> <div class="right-sidebar"> <div class="page-sidebar-wrapper"><div class="lg:sl-hidden"><mobile-starlight-toc data-min-h="2" data-max-h="3" class="astro-doynk5tl"><nav aria-labelledby="starlight__on-this-page--mobile" class="astro-doynk5tl"><details id="starlight__mobile-toc" class="astro-doynk5tl"><summary id="starlight__on-this-page--mobile" class="sl-flex astro-doynk5tl"><div class="toggle sl-flex astro-doynk5tl">本页<svg aria-hidden="true" class="caret astro-doynk5tl astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1rem;"><path d="m14.83 11.29-4.24-4.24a1 1 0 1 0-1.42 1.41L12.71 12l-3.54 3.54a1 1 0 0 0 0 1.41 1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l4.24-4.24a1.002 1.002 0 0 0 0-1.42Z"/></svg> </div><span class="display-current astro-doynk5tl"></span></summary><div class="dropdown astro-doynk5tl"><ul class="isMobile astro-g2bywc46" style="--depth: 0;"> <li class="astro-g2bywc46" style="--depth: 0;"> <a href="#_top" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">概述</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#1-配置后端" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">1. 配置后端</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#11-配置项" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">1.1. 配置项</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#12-使用文件日志后端" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">1.2. 使用文件日志后端</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#13-保留默认-rocksdb-后端" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">1.3. 保留默认 RocksDB 后端</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#14-参数组合与生效时机" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">1.4. 参数组合与生效时机</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#2-存储目录" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">2. 存储目录</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#21-目录布局与文件职责" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">2.1. 目录布局与文件职责</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#22-group-标识与存储身份" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">2.2. Group 标识与存储身份</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#23-文件编号与实现限制" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">2.3. 文件编号与实现限制</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#3-文件结构设计" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">3. 文件结构设计</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#31-segment分段日志文件" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">3.1. Segment：分段日志文件</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#32-manifest有效日志范围与发布状态" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">3.2. Manifest：有效日志范围与发布状态</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#33-index可重建的位置索引" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">3.3. Index：可重建的位置索引</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#4-持久化设计" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">4. 持久化设计</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#41-本地发布与一致性边界" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">4.1. 本地发布与一致性边界</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#42-批量追加与原子发布" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">4.2. 批量追加与原子发布</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#43-范围变更日志裁剪与快照" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">4.3. 范围变更、日志裁剪与快照</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#44-文件与目录的同步要求" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">4.4. 文件与目录的同步要求</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#45-并发控制与目录互斥" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">4.5. 并发控制与目录互斥</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#46-windows-的持久性边界" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">4.6. Windows 的持久性边界</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#5-异常恢复" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">5. 异常恢复</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#51-初始化与恢复顺序" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.1. 初始化与恢复顺序</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#52-manifest-缺失与临时文件残留" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.2. Manifest 缺失与临时文件残留</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#53-未引用-segment-的分类处理" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.3. 未引用 Segment 的分类处理</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#54-不同中断阶段的恢复依据" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.4. 不同中断阶段的恢复依据</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#55-运行时失败状态与后续操作" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.5. 运行时失败状态与后续操作</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#56-常见错误与排查方向" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.6. 常见错误与排查方向</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#57-必要写入失败后的恢复步骤" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">5.7. 必要写入失败后的恢复步骤</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#6-部署与运维排查" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">6. 部署与运维排查</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#61-准备部署环境与数据目录" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">6.1. 准备部署环境与数据目录</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#62-配置并启动-server" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">6.2. 配置并启动 Server</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#63-确认文件后端已经生效" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">6.3. 确认文件后端已经生效</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#64-按故障现象排查" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">6.4. 按故障现象排查</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#7-常见问题" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">7. 常见问题</span> </a> <ul class="isMobile astro-g2bywc46" style="--depth: 1;"> <li class="astro-g2bywc46" style="--depth: 1;"> <a href="#71-已有-rocksdb-节点能否改成-file-后重启" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">7.1. 已有 RocksDB 节点能否改成 file 后重启？</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#72-能否只为一个-raft-group-开启文件后端" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">7.2. 能否只为一个 Raft Group 开启文件后端？</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#73-为什么设置-sync_metatrue-之后仍然无法启动" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">7.3. 为什么设置 sync_meta=true 之后仍然无法启动？</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#74-lock-文件还在是否说明上次进程没有退出" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">7.4. LOCK 文件还在，是否说明上次进程没有退出？</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#75-看到-manifesttmp-是否说明恢复失败" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">7.5. 看到 manifest.tmp 是否说明恢复失败？</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#76-index-可以重建能否定期删除以节省空间" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">7.6. Index 可以重建，能否定期删除以节省空间？</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#77-使用文件后端后还需要快照吗" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">7.7. 使用文件后端后，还需要快照吗？</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#78-备份时需要保存哪些文件" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">7.8. 备份时需要保存哪些文件？</span> </a>  </li><li class="astro-g2bywc46" style="--depth: 1;"> <a href="#79-windows-的目录同步-warn-能否通过关闭-sync-消除" class="astro-g2bywc46" style="--depth: 1;"> <span class="astro-g2bywc46" style="--depth: 1;">7.9. Windows 的目录同步 WARN 能否通过关闭 sync 消除？</span> </a>  </li> </ul>  </li><li class="astro-g2bywc46" style="--depth: 0;"> <a href="#8-相关文档" class="astro-g2bywc46" style="--depth: 0;"> <span class="astro-g2bywc46" style="--depth: 0;">8. 相关文档</span> </a>  </li> </ul> </div></details></nav></mobile-starlight-toc></div><div class="right-sidebar-panel sl-hidden lg:sl-block"><div class="sl-container"><starlight-toc data-min-h="2" data-max-h="3"><nav aria-labelledby="starlight__on-this-page" class="starlight__on-this-page"><h2 id="starlight__on-this-page" class="heading">本页内容</h2><span class="table-of-contents-wrapper" style="--depth: 0;"> <ul style="--depth: 0;"> <li style="--depth: 0;"> <a href="#_top" class="py-1" style="--depth: 0;"> <span style="--depth: 0;">概述</span> </a>  </li><li style="--depth: 0;"> <a href="#1-配置后端" class="py-1" style="--depth: 0;"> <span style="--depth: 0;">1. 配置后端</span> </a> <span class="table-of-contents-wrapper" style="--depth: 1;"> <ul style="--depth: 1;"> <li style="--depth: 1;"> <a href="#11-配置项" class="py-1" style="--depth: 1;"> <span style="--depth: 1;">1.1. 配置项</span> </a>  </li><li style="--depth: 1;"> <a href="#12-使用文件日志后端" class="py-1" style="--depth: 1;"> <span style="--depth: 1;">1.2. 使用文件日志后端</span> </a>  </li><li style="--depth: 1;"> <a href="#13-保留默认-rocksdb-后端" class="py-1" style="--depth: 1;"> <span style="--depth: 1;">1.3. 保留默认 RocksDB 后端</span> </a>  </li><li style="--depth: 1;"> <a href="#14-参数组合与生效时机" class="py-1" style="--depth: 1;"> <span style="--depth: 1;">1.4. 参数组合与生效时机</span> </a>  </li> </ul> </span>  </li><li style="--depth: 0;"> <a href="#2-存储目录" class="py-1" style="--depth: 0;"> <span style="--depth: 0;">2. 存储目录</span> </a> <span class="table-of-contents-wrapper" style="--depth: 1;"> <ul style="--depth: 1;"> <li style="--depth: 1;"> <a href="#21-目录布局与文件职责" class="py-1" style="--depth: 1;"> <span style="--depth: 1;">2.1. 目录布局与文件职责</span> </a>  </li><li style="--depth: 1;"> <a href="#22-group-标识与存储身份" class="py-1" style="--depth: 1;"> <span style="--depth: 1;">2.2. Group 标识与存储身份</span> </a>  </li><li style="--depth: 1;"> <a href="#23-文件编号与实现限制" class="py-1" style="--depth: 1;"> <span style="--depth: 1;">2.3. 文件编号与实现限制</span> </a>  </li> </ul> </span>  </li><li style="--depth: 0;"> <a href="#3-文件结构设计" class="py-1" style="--depth: 0;"> <span style="--depth: 0;">3. 文件结构设计</span> </a> <span class="table-of-contents-wrapper" style="--depth: 1;"> <ul style="--depth: 1;"> <li style="--depth: 1;"> <a href="#31-segment分段日志文件" class="py-1" style="--depth: 1;"> <span style="--depth: 1;">3.1. Segment：分段日志文件</span> </a>  </li><li style="--depth: 1;"> <a href="#32-manifest有效日志范围与发布状态" class="py-1" style="--depth: 1;"> <span style="--depth: 1;">3.2. Manifest：有效日志范围与发布状态</span> </a>  </li><li style="--depth: 1;"> <a href="#33-index可重建的位置索引" class="py-1" style="--depth: 1;"> <span style="--depth: 1;">3.3. Index：可重建的位置索引</span> </a>  </li> </ul> </span>  </li><li style="--depth: 0;"> <a href="#4-持久化设计" class="py-1" style="--depth: 0;"> <span style="--depth: 0;">4. 持久化设计</span> </a> <span class="table-of-contents-wrapper" style="--depth: 1;"> <ul style="--depth: 1;"> <li style="--depth: 1;"> <a href="#41-本地发布与一致性边界" class="py-1" style="--depth: 1;"> <span style="--depth: 1;">4.1. 本地发布与一致性边界</span> </a>  </li><li style="--depth: 1;"> <a href="#42-批量追加与原子发布" class="py-1" style="--depth: 1;"> <span style="--depth: 1;">4.2. 批量追加与原子发布</span> </a>  </li><li style="--depth: 1;"> <a href="#43-范围变更日志裁剪与快照" class="py-1" style="--depth: 1;"> <span style="--depth: 1;">4.3. 范围变更、日志裁剪与快照</span> </a>  </li><li style="--depth: 1;"> <a href="#44-文件与目录的同步要求" class="py-1" style="--depth: 1;"> <span style="--depth: 1;">4.4. 文件与目录的同步要求</span> </a>  </li><li style="--depth: 1;"> <a href="#45-并发控制与目录互斥" class="py-1" style="--depth: 1;"> <span style="--depth: 1;">4.5. 并发控制与目录互斥</span> </a>  </li><li style="--depth: 1;"> <a href="#46-windows-的持久性边界" class="py-1" style="--depth: 1;"> <span style="--depth: 1;">4.6. Windows 的持久性边界</span> </a>  </li> </ul> </span>  </li><li style="--depth: 0;"> <a href="#5-异常恢复" class="py-1" style="--depth: 0;"> <span style="--depth: 0;">5. 异常恢复</span> </a> <span class="table-of-contents-wrapper" style="--depth: 1;"> <ul style="--depth: 1;"> <li style="--depth: 1;"> <a href="#51-初始化与恢复顺序" class="py-1" style="--depth: 1;"> <span style="--depth: 1;">5.1. 初始化与恢复顺序</span> </a>  </li><li style="--depth: 1;"> <a href="#52-manifest-缺失与临时文件残留" class="py-1" style="--depth: 1;"> <span style="--depth: 1;">5.2. Manifest 缺失与临时文件残留</span> </a>  </li><li style="--depth: 1;"> <a href="#53-未引用-segment-的分类处理" class="py-1" style="--depth: 1;"> <span style="--depth: 1;">5.3. 未引用 Segment 的分类处理</span> </a>  </li><li style="--depth: 1;"> <a href="#54-不同中断阶段的恢复依据" class="py-1" style="--depth: 1;"> <span style="--depth: 1;">5.4. 不同中断阶段的恢复依据</span> </a>  </li><li style="--depth: 1;"> <a href="#55-运行时失败状态与后续操作" class="py-1" style="--depth: 1;"> <span style="--depth: 1;">5.5. 运行时失败状态与后续操作</span> </a>  </li><li style="--depth: 1;"> <a href="#56-常见错误与排查方向" class="py-1" style="--depth: 1;"> <span style="--depth: 1;">5.6. 常见错误与排查方向</span> </a>  </li><li style="--depth: 1;"> <a href="#57-必要写入失败后的恢复步骤" class="py-1" style="--depth: 1;"> <span style="--depth: 1;">5.7. 必要写入失败后的恢复步骤</span> </a>  </li> </ul> </span>  </li><li style="--depth: 0;"> <a href="#6-部署与运维排查" class="py-1" style="--depth: 0;"> <span style="--depth: 0;">6. 部署与运维排查</span> </a> <span class="table-of-contents-wrapper" style="--depth: 1;"> <ul style="--depth: 1;"> <li style="--depth: 1;"> <a href="#61-准备部署环境与数据目录" class="py-1" style="--depth: 1;"> <span style="--depth: 1;">6.1. 准备部署环境与数据目录</span> </a>  </li><li style="--depth: 1;"> <a href="#62-配置并启动-server" class="py-1" style="--depth: 1;"> <span style="--depth: 1;">6.2. 配置并启动 Server</span> </a>  </li><li style="--depth: 1;"> <a href="#63-确认文件后端已经生效" class="py-1" style="--depth: 1;"> <span style="--depth: 1;">6.3. 确认文件后端已经生效</span> </a>  </li><li style="--depth: 1;"> <a href="#64-按故障现象排查" class="py-1" style="--depth: 1;"> <span style="--depth: 1;">6.4. 按故障现象排查</span> </a>  </li> </ul> </span>  </li><li style="--depth: 0;"> <a href="#7-常见问题" class="py-1" style="--depth: 0;"> <span style="--depth: 0;">7. 常见问题</span> </a> <span class="table-of-contents-wrapper" style="--depth: 1;"> <ul style="--depth: 1;"> <li style="--depth: 1;"> <a href="#71-已有-rocksdb-节点能否改成-file-后重启" class="py-1" style="--depth: 1;"> <span style="--depth: 1;">7.1. 已有 RocksDB 节点能否改成 file 后重启？</span> </a>  </li><li style="--depth: 1;"> <a href="#72-能否只为一个-raft-group-开启文件后端" class="py-1" style="--depth: 1;"> <span style="--depth: 1;">7.2. 能否只为一个 Raft Group 开启文件后端？</span> </a>  </li><li style="--depth: 1;"> <a href="#73-为什么设置-sync_metatrue-之后仍然无法启动" class="py-1" style="--depth: 1;"> <span style="--depth: 1;">7.3. 为什么设置 sync_meta=true 之后仍然无法启动？</span> </a>  </li><li style="--depth: 1;"> <a href="#74-lock-文件还在是否说明上次进程没有退出" class="py-1" style="--depth: 1;"> <span style="--depth: 1;">7.4. LOCK 文件还在，是否说明上次进程没有退出？</span> </a>  </li><li style="--depth: 1;"> <a href="#75-看到-manifesttmp-是否说明恢复失败" class="py-1" style="--depth: 1;"> <span style="--depth: 1;">7.5. 看到 manifest.tmp 是否说明恢复失败？</span> </a>  </li><li style="--depth: 1;"> <a href="#76-index-可以重建能否定期删除以节省空间" class="py-1" style="--depth: 1;"> <span style="--depth: 1;">7.6. Index 可以重建，能否定期删除以节省空间？</span> </a>  </li><li style="--depth: 1;"> <a href="#77-使用文件后端后还需要快照吗" class="py-1" style="--depth: 1;"> <span style="--depth: 1;">7.7. 使用文件后端后，还需要快照吗？</span> </a>  </li><li style="--depth: 1;"> <a href="#78-备份时需要保存哪些文件" class="py-1" style="--depth: 1;"> <span style="--depth: 1;">7.8. 备份时需要保存哪些文件？</span> </a>  </li><li style="--depth: 1;"> <a href="#79-windows-的目录同步-warn-能否通过关闭-sync-消除" class="py-1" style="--depth: 1;"> <span style="--depth: 1;">7.9. Windows 的目录同步 WARN 能否通过关闭 sync 消除？</span> </a>  </li> </ul> </span>  </li><li style="--depth: 0;"> <a href="#8-相关文档" class="py-1" style="--depth: 0;"> <span style="--depth: 0;">8. 相关文档</span> </a>  </li> </ul> </span> <!-- 文档右侧的贡献板块 --><h2 class="link-list-wrapper">贡献</h2> <ul> <li> <span class="header-link-wrapper"> <a class="header-link depth-2 undefined" href="/docs/latest/contribution/contributing/" target="_self">  <div class="flex items-center"> <svg aria-hidden="true" class="mr-1 astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M21.17 2.06A13.1 13.1 0 0 0 19 1.87a12.94 12.94 0 0 0-7 2.05 12.94 12.94 0 0 0-7-2 13.1 13.1 0 0 0-2.17.19 1 1 0 0 0-.83 1v12a1 1 0 0 0 1.17 1 10.9 10.9 0 0 1 8.25 1.91l.12.07h.11a.91.91 0 0 0 .7 0h.11l.12-.07A10.899 10.899 0 0 1 20.83 16 1 1 0 0 0 22 15V3a1 1 0 0 0-.83-.94ZM11 15.35a12.87 12.87 0 0 0-6-1.48H4v-10c.333-.02.667-.02 1 0a10.86 10.86 0 0 1 6 1.8v9.68Zm9-1.44h-1a12.87 12.87 0 0 0-6 1.48V5.67a10.86 10.86 0 0 1 6-1.8c.333-.02.667-.02 1 0v10.04Zm1.17 4.15a13.098 13.098 0 0 0-2.17-.19 12.94 12.94 0 0 0-7 2.05 12.94 12.94 0 0 0-7-2.05c-.727.003-1.453.066-2.17.19A1 1 0 0 0 2 19.21a1 1 0 0 0 1.17.79 10.9 10.9 0 0 1 8.25 1.91 1 1 0 0 0 1.16 0A10.9 10.9 0 0 1 20.83 20a1 1 0 0 0 1.17-.79 1 1 0 0 0-.83-1.15Z"/></svg>  贡献者指南 </div>  </a> </span> <span class="header-link-wrapper"> <a class="header-link depth-2 undefined" href="https://github.com/nacos-group/nacos-group.github.io/tree/develop-astro-nacos/src/content/docs/next/zh-cn/manual/admin/raft-log-storage.md" target="_blank">  <div class="flex items-center"> <svg aria-hidden="true" class="mr-1 astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M22 7.24a1 1 0 0 0-.29-.71l-4.24-4.24a1 1 0 0 0-1.1-.22 1 1 0 0 0-.32.22l-2.83 2.83L2.29 16.05a1 1 0 0 0-.29.71V21a1 1 0 0 0 1 1h4.24a1 1 0 0 0 .76-.29l10.87-10.93L21.71 8c.1-.1.17-.2.22-.33a1 1 0 0 0 0-.24v-.14l.07-.05ZM6.83 20H4v-2.83l9.93-9.93 2.83 2.83L6.83 20ZM18.17 8.66l-2.83-2.83 1.42-1.41 2.82 2.82-1.41 1.42Z"/></svg>  编辑本页内容 </div>  </a> </span> <span class="header-link-wrapper"> <a class="header-link depth-2 undefined" href="https://github.com/nacos-group/nacos-group.github.io/issues/new?title=关于文档【Raft 日志存储】的反馈&body=%0A%5B%E5%9C%A8%E6%AD%A4%E5%A4%84%E8%BE%93%E5%85%A5%E5%8F%8D%E9%A6%88%5D%0A%0A%0A---%0A%23%23%23%23%20%E6%96%87%E6%A1%A3%E8%AF%A6%E7%BB%86%E4%BF%A1%E6%81%AF%0A%0A%E2%9A%A0%20*%E8%AF%B7%E5%8B%BF%E7%BC%96%E8%BE%91%E6%AD%A4%E9%83%A8%E5%88%86%E3%80%82nacos.io%20%E2%9E%9F%20GitHub%20%E9%97%AE%E9%A2%98%E9%93%BE%E6%8E%A5%E5%BF%85%E9%A1%BB%E5%85%B7%E6%9C%89%E6%AD%A4%E9%83%A8%E5%88%86%E3%80%82*%0A%0A*%20Version%20%20ID%3A%202bac3769-2613-f739-4796-0737c7cd8919%0A*%20Content%3A%20%5BRaft%20%E6%97%A5%E5%BF%97%E5%AD%98%E5%82%A8%5D(https%3A%2F%2Fnacos-group.github.io%2Fdocs%2Fnext%2Fmanual%2Fadmin%2Fraft-log-storage%2F)%0A*%20Content%20Source%3A%20https%3A%2F%2Fgithub.com%2Fnacos-group%2Fnacos-group.github.io%2Ftree%2Fdevelop-astro-nacos%2Fsrc%2Fcontent%2Fdocs%2Fnext%2Fzh-cn%2Fmanual%2Fadmin%2Fraft-log-storage.md%0A*%20Service%3A%20**%E7%94%A8%E6%88%B7%E6%8C%87%E5%8D%97%2F%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97%2F%E8%BF%90%E7%BB%B4%E6%8C%87%E5%8D%97**%0A" target="_blank">  <div class="flex items-center"> <svg aria-hidden="true" class="mr-1 astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3Z"/></svg>  反馈本页问题 </div>  </a> </span>  </li> </ul> <!-- 文档右侧的社区链接板块 --><h2 class="link-list-wrapper">社区</h2> <ul> <li> <span class="header-link-wrapper"> <a class="header-link depth-undefined undefined" href="/blog" target="_self">  <div class="flex items-center"> <svg aria-hidden="true" class="mr-1 astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M9 10h1a1 1 0 1 0 0-2H9a1 1 0 0 0 0 2Zm0 2a1 1 0 0 0 0 2h6a1 1 0 0 0 0-2H9Zm11-3.06a1.3 1.3 0 0 0-.06-.27v-.09c-.05-.1-.11-.2-.19-.28l-6-6a1.07 1.07 0 0 0-.28-.19h-.09a.88.88 0 0 0-.33-.11H7a3 3 0 0 0-3 3v14a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V8.94Zm-6-3.53L16.59 8H15a1 1 0 0 1-1-1V5.41ZM18 19a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h5v3a3 3 0 0 0 3 3h3v9Zm-3-3H9a1 1 0 0 0 0 2h6a1 1 0 0 0 0-2Z"/></svg>  阅读我们的博客 </div>  </a> </span> <span class="header-link-wrapper"> <a class="header-link depth-undefined undefined" href="https://github.com/nacos-group/nacos-group.github.io/tree/develop-astro-nacos/src/content/docs" target="_blank">  <div class="flex items-center"> <svg aria-hidden="true" class="mr-1 astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1em;"><path d="M12 .3a12 12 0 0 0-3.8 23.38c.6.12.83-.26.83-.57L9 21.07c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.08-.74.09-.73.09-.73 1.2.09 1.83 1.24 1.83 1.24 1.08 1.83 2.81 1.3 3.5 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18a4.65 4.65 0 0 1 1.23 3.22c0 4.61-2.8 5.63-5.48 5.92.42.36.81 1.1.81 2.22l-.01 3.29c0 .31.2.69.82.57A12 12 0 0 0 12 .3Z"/></svg>  GitHub 上的 Nacos 文档 </div>  </a> </span>  </li> </ul> </nav></starlight-toc></div></div></div> </div> </aside> <div class="main-pane">  <main data-pagefind-body lang="zh-CN" dir="ltr" class="astro-bguv2lll">    <div class="content-panel content-panel-wrapper"> <div class="sl-container"> <h1 class="page-title-wrapper" id="_top"> Raft 日志存储 </h1>  </div> </div>  <div class="content-panel content-panel-wrapper"> <div class="sl-container"> <div class="sl-markdown-content"> <p>Nacos 的 Raft 协议支持 <code dir="auto">rocksdb</code> 和 <code dir="auto">file</code> 两种日志存储后端，默认使用 <code dir="auto">rocksdb</code>。<code dir="auto">file</code> 后端使用分段文件保存 Raft 日志，提供日志校验和重启恢复能力。</p>
+<p>后端选择只影响 Raft 日志。Raft 元数据、快照存储和日志条目编解码仍使用 JRaft 默认实现，Raft 多数派提交和状态机应用语义保持不变。该配置不替代配置中心使用的 Derby 或外置数据库。</p>
+<p>本文面向部署和维护 Nacos Server 的用户。配置与部署步骤适用于日常运维；文件格式和内部接口用于理解恢复行为及定位问题，不是新增的对外 API。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>组件</th><th>选择 <code dir="auto">file</code> 后的行为</th></tr></thead><tbody><tr><td>Raft 日志存储</td><td>使用 <code dir="auto">FileLogStorage</code>，通过 Segment、Manifest 和 Index 管理日志。</td></tr><tr><td>Raft 元数据存储</td><td>继续使用 JRaft 默认实现，保存任期、投票等元数据。</td></tr><tr><td>Raft 快照存储</td><td>继续使用 JRaft 默认实现，配合状态机快照和日志裁剪。</td></tr><tr><td>日志条目编解码</td><td>继续使用 JRaft 默认 codec，编码结果再封装成文件日志记录。</td></tr><tr><td>复制、选主和多数派提交</td><td>继续由 JRaft 协议处理。</td></tr><tr><td>配置中心数据库</td><td>保持原有 Derby 或外置数据库配置。</td></tr></tbody></table>
+<aside aria-label="注意" class="starlight-aside starlight-aside--note"><p class="starlight-aside__title" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="starlight-aside__icon"><path d="M12 11C11.7348 11 11.4804 11.1054 11.2929 11.2929C11.1054 11.4804 11 11.7348 11 12V16C11 16.2652 11.1054 16.5196 11.2929 16.7071C11.4804 16.8946 11.7348 17 12 17C12.2652 17 12.5196 16.8946 12.7071 16.7071C12.8946 16.5196 13 16.2652 13 16V12C13 11.7348 12.8946 11.4804 12.7071 11.2929C12.5196 11.1054 12.2652 11 12 11ZM12.38 7.08C12.1365 6.97998 11.8635 6.97998 11.62 7.08C11.4973 7.12759 11.3851 7.19896 11.29 7.29C11.2017 7.3872 11.1306 7.49882 11.08 7.62C11.024 7.73868 10.9966 7.86882 11 8C10.9992 8.13161 11.0245 8.26207 11.0742 8.38391C11.124 8.50574 11.1973 8.61656 11.29 8.71C11.3872 8.79833 11.4988 8.86936 11.62 8.92C11.7715 8.98224 11.936 9.00632 12.099 8.99011C12.2619 8.97391 12.4184 8.91792 12.5547 8.82707C12.691 8.73622 12.8029 8.61328 12.8805 8.46907C12.9582 8.32486 12.9992 8.16378 13 8C12.9963 7.73523 12.8927 7.48163 12.71 7.29C12.6149 7.19896 12.5028 7.12759 12.38 7.08ZM12 2C10.0222 2 8.08879 2.58649 6.4443 3.6853C4.79981 4.78412 3.51809 6.3459 2.76121 8.17317C2.00433 10.0004 1.8063 12.0111 2.19215 13.9509C2.578 15.8907 3.53041 17.6725 4.92894 19.0711C6.32746 20.4696 8.10929 21.422 10.0491 21.8079C11.9889 22.1937 13.9996 21.9957 15.8268 21.2388C17.6541 20.4819 19.2159 19.2002 20.3147 17.5557C21.4135 15.9112 22 13.9778 22 12C22 10.6868 21.7413 9.38642 21.2388 8.17317C20.7363 6.95991 19.9997 5.85752 19.0711 4.92893C18.1425 4.00035 17.0401 3.26375 15.8268 2.7612C14.6136 2.25866 13.3132 2 12 2ZM12 20C10.4178 20 8.87104 19.5308 7.55544 18.6518C6.23985 17.7727 5.21447 16.5233 4.60897 15.0615C4.00347 13.5997 3.84504 11.9911 4.15372 10.4393C4.4624 8.88743 5.22433 7.46197 6.34315 6.34315C7.46197 5.22433 8.88743 4.4624 10.4393 4.15372C11.9911 3.84504 13.5997 4.00346 15.0615 4.60896C16.5233 5.21447 17.7727 6.23984 18.6518 7.55544C19.5308 8.87103 20 10.4177 20 12C20 14.1217 19.1572 16.1566 17.6569 17.6569C16.1566 19.1571 14.1217 20 12 20Z"></path></svg>注意</p><section class="starlight-aside__content"><p>在运行环境允许的情况下，推荐使用默认的 RocksDB 后端，其稳定性和性能保障更成熟。file 模式主要作为目标架构或运行环境无法使用 RocksDB 时的降级备选方案。已有节点仍应遵守下文的数据迁移限制，不能通过直接修改配置切换后端。</p></section></aside>
+<h2 id="1-配置后端">1. 配置后端</h2>
+<h3 id="11-配置项">1.1. 配置项</h3>
+<p>在 Nacos Server 的 <code dir="auto">${nacos.home}/conf/application.properties</code> 中配置：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>参数名</th><th>说明</th><th>默认值</th></tr></thead><tbody><tr><td><code dir="auto">nacos.core.protocol.raft.data.log_storage_type</code></td><td>日志后端，取值为 <code dir="auto">rocksdb</code> 或 <code dir="auto">file</code>；去除首尾空白并忽略大小写。空串、纯空白或其他值会导致 Raft 初始化失败。</td><td><code dir="auto">rocksdb</code></td></tr><tr><td><code dir="auto">nacos.core.protocol.raft.data.sync</code></td><td>是否同步写入日志。使用 <code dir="auto">file</code> 时必须为 <code dir="auto">true</code>。</td><td><code dir="auto">true</code></td></tr><tr><td><code dir="auto">nacos.core.protocol.raft.data.sync_meta</code></td><td>传递给默认 Raft 元数据存储的同步选项。不能用它替代 <code dir="auto">file</code> 所要求的 <code dir="auto">sync=true</code>。</td><td><code dir="auto">false</code></td></tr></tbody></table>
+<p>配置名中的 <code dir="auto">data</code> 是 Raft 配置映射的一部分，不能省略。<code dir="auto">nacos.core.protocol.raft.log_storage_type</code> 不等同于本页介绍的参数。</p>
+<h3 id="12-使用文件日志后端">1.2. 使用文件日志后端</h3>
+<p>在全新部署的 Server 节点上配置：</p>
+<div class="expressive-code"><link rel="stylesheet" href="/_astro/ec.n9pre.css"><script type="module" src="/_astro/ec.sgewm.js"></script><figure class="frame not-content"><figcaption class="header"></figcaption><pre tabindex="0"><code><div class="ec-line"><span style="--0:#F97583">nacos.core.protocol.raft.data.log_storage_type</span><span style="--0:#E1E4E8">=file</span></div><div class="ec-line"><span style="--0:#F97583">nacos.core.protocol.raft.data.sync</span><span style="--0:#E1E4E8">=true</span></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="nacos.core.protocol.raft.data.log_storage_type=filenacos.core.protocol.raft.data.sync=true"><div></div></button></div></figure></div>
+<p><code dir="auto">sync</code> 默认已经是 <code dir="auto">true</code>，示例中显式写出该配置，便于部署时检查。不要为了降低写入延迟而将文件后端的 <code dir="auto">sync</code> 改为 <code dir="auto">false</code>。</p>
+<h3 id="13-保留默认-rocksdb-后端">1.3. 保留默认 RocksDB 后端</h3>
+<p>无需增加配置，也可以显式设置：</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre tabindex="0"><code><div class="ec-line"><span style="--0:#F97583">nacos.core.protocol.raft.data.log_storage_type</span><span style="--0:#E1E4E8">=rocksdb</span></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="nacos.core.protocol.raft.data.log_storage_type=rocksdb"><div></div></button></div></figure></div>
+<h3 id="14-参数组合与生效时机">1.4. 参数组合与生效时机</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>后端配置</th><th><code dir="auto">sync</code></th><th>结果</th></tr></thead><tbody><tr><td>未配置</td><td>未配置</td><td>使用 <code dir="auto">rocksdb</code>，同步写入默认开启。</td></tr><tr><td><code dir="auto">rocksdb</code></td><td><code dir="auto">true</code></td><td>使用默认 RocksDB 后端并同步写入。</td></tr><tr><td><code dir="auto">file</code></td><td>未配置或 <code dir="auto">true</code></td><td>使用文件后端，按同步写入方式初始化。</td></tr><tr><td><code dir="auto">file</code></td><td><code dir="auto">false</code></td><td>初始化失败，报错 <code dir="auto">File Raft log storage requires sync=true</code>。</td></tr><tr><td>空串、纯空白或不支持的名称</td><td>任意</td><td>初始化失败，抛出 <code dir="auto">IllegalArgumentException</code>。</td></tr></tbody></table>
+<p>后端值会先去除首尾空白，再忽略大小写匹配，因此 <code dir="auto">FILE</code> 与 <code dir="auto">file</code> 等效；规范配置建议使用小写。未配置参数与显式配置空值的含义不同。</p>
+<p>后端在 Raft 初始化时、Raft 运行时启动前选择，选定的工厂会应用于当前节点创建的每个 Raft Group，包括后续创建的 Group。不支持按 Group 单独选择，也不支持运行中热切换。修改配置文件不会使已经打开的日志存储自动更换实现。</p>
+<p><code dir="auto">sync_meta</code> 是传递给默认元数据存储的选项。即使将它设置为 <code dir="auto">true</code>，也不能使 <code dir="auto">file</code> 与 <code dir="auto">sync=false</code> 的组合合法。元数据和快照的最终同步语义仍由 JRaft 默认实现处理。</p>
+<aside aria-label="已有节点不能通过修改配置迁移后端" class="starlight-aside starlight-aside--caution"><p class="starlight-aside__title" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="starlight-aside__icon"><path d="M12 16C11.8022 16 11.6089 16.0587 11.4444 16.1686C11.28 16.2784 11.1518 16.4346 11.0761 16.6173C11.0004 16.8001 10.9806 17.0011 11.0192 17.1951C11.0578 17.3891 11.153 17.5673 11.2929 17.7071C11.4327 17.847 11.6109 17.9422 11.8049 17.9808C11.9989 18.0194 12.2 17.9996 12.3827 17.9239C12.5654 17.8482 12.7216 17.72 12.8315 17.5556C12.9413 17.3911 13 17.1978 13 17C13 16.7348 12.8946 16.4805 12.7071 16.2929C12.5196 16.1054 12.2652 16 12 16ZM22.67 17.47L14.62 3.47003C14.3598 3.00354 13.9798 2.61498 13.5192 2.3445C13.0586 2.07401 12.5341 1.9314 12 1.9314C11.4659 1.9314 10.9414 2.07401 10.4808 2.3445C10.0202 2.61498 9.64019 3.00354 9.38 3.47003L1.38 17.47C1.11079 17.924 0.966141 18.441 0.960643 18.9688C0.955144 19.4966 1.089 20.0166 1.34868 20.4761C1.60837 20.9356 1.9847 21.3185 2.43968 21.5861C2.89466 21.8536 3.41218 21.9964 3.94 22H20.06C20.5921 22.0053 21.1159 21.8689 21.5779 21.6049C22.0399 21.341 22.4234 20.9589 22.689 20.4978C22.9546 20.0368 23.0928 19.5134 23.0895 18.9814C23.0862 18.4493 22.9414 17.9277 22.67 17.47ZM20.94 19.47C20.8523 19.626 20.7245 19.7556 20.5697 19.8453C20.4149 19.935 20.2389 19.9815 20.06 19.98H3.94C3.76111 19.9815 3.5851 19.935 3.43032 19.8453C3.27553 19.7556 3.14765 19.626 3.06 19.47C2.97223 19.318 2.92602 19.1456 2.92602 18.97C2.92602 18.7945 2.97223 18.622 3.06 18.47L11.06 4.47003C11.1439 4.30623 11.2714 4.16876 11.4284 4.07277C11.5855 3.97678 11.766 3.92599 11.95 3.92599C12.134 3.92599 12.3145 3.97678 12.4716 4.07277C12.6286 4.16876 12.7561 4.30623 12.84 4.47003L20.89 18.47C20.9892 18.6199 21.0462 18.7937 21.055 18.9732C21.0638 19.1527 21.0241 19.3312 20.94 19.49V19.47ZM12 8.00003C11.7348 8.00003 11.4804 8.10538 11.2929 8.29292C11.1054 8.48046 11 8.73481 11 9.00003V13C11 13.2652 11.1054 13.5196 11.2929 13.7071C11.4804 13.8947 11.7348 14 12 14C12.2652 14 12.5196 13.8947 12.7071 13.7071C12.8946 13.5196 13 13.2652 13 13V9.00003C13 8.73481 12.8946 8.48046 12.7071 8.29292C12.5196 8.10538 12.2652 8.00003 12 8.00003Z"></path></svg>已有节点不能通过修改配置迁移后端</p><section class="starlight-aside__content"><p>后端选择不会转换已有日志、元数据或快照。文件后端使用独立的 <code dir="auto">file-log</code> 子目录，这种目录隔离不提供数据迁移能力。不要在已有节点上直接修改后端后重启，也不要把切回 <code dir="auto">rocksdb</code> 当作数据回滚方式。升级已有集群时，保留原后端；在全新部署中启用 <code dir="auto">file</code> 前，先验证文件系统能力和恢复行为。</p></section></aside>
+<h2 id="2-存储目录">2. 存储目录</h2>
+<h3 id="21-目录布局与文件职责">2.1. 目录布局与文件职责</h3>
+<p>每个 Raft Group 使用独立目录。文件日志存储布局如下：</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre tabindex="0"><code><div class="ec-line"><span style="--0:#e1e4e8">${nacos.home}/data/protocol/raft/&#x3C;group>/</span></div><div class="ec-line"><span style="--0:#e1e4e8">├── log/</span></div><div class="ec-line"><span style="--0:#e1e4e8">│   └── file-log/</span></div><div class="ec-line"><span style="--0:#e1e4e8">│       ├── LOCK</span></div><div class="ec-line"><span style="--0:#e1e4e8">│       ├── manifest</span></div><div class="ec-line"><span style="--0:#e1e4e8">│       ├── manifest.tmp</span></div><div class="ec-line"><span style="--0:#e1e4e8">│       ├── segments/</span></div><div class="ec-line"><span style="--0:#e1e4e8">│       │   └── 00000000000000000001.seg</span></div><div class="ec-line"><span style="--0:#e1e4e8">│       └── index/</span></div><div class="ec-line"><span style="--0:#e1e4e8">│           └── 00000000000000000001.idx</span></div><div class="ec-line"><span style="--0:#e1e4e8">├── meta-data/</span></div><div class="ec-line"><span style="--0:#e1e4e8">└── snapshot/</span></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="${nacos.home}/data/protocol/raft/<group>/├── log/│   └── file-log/│       ├── LOCK│       ├── manifest│       ├── manifest.tmp│       ├── segments/│       │   └── 00000000000000000001.seg│       └── index/│           └── 00000000000000000001.idx├── meta-data/└── snapshot/"><div></div></button></div></figure></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>文件或目录</th><th>用途</th></tr></thead><tbody><tr><td><code dir="auto">LOCK</code></td><td>获取目录排他锁，防止多个存储实例同时打开同一目录。锁文件存在不代表锁仍被持有。</td></tr><tr><td><code dir="auto">manifest</code></td><td>保存存储身份、Group 标识和本地有效日志范围；恢复时据此校验日志。该范围不等同于 Raft 多数派已提交范围。</td></tr><tr><td><code dir="auto">manifest.tmp</code></td><td>发布新 Manifest 时使用的临时文件，通过原子替换更新 <code dir="auto">manifest</code>。</td></tr><tr><td><code dir="auto">segments/</code></td><td>保存带校验信息的分段日志文件。</td></tr><tr><td><code dir="auto">index/</code></td><td>保存日志位置索引，初始化时扫描已发布日志重建。</td></tr><tr><td><code dir="auto">meta-data/</code>、<code dir="auto">snapshot/</code></td><td>由 JRaft 默认实现管理的元数据和快照目录。</td></tr></tbody></table>
+<p>备份时应先停止对应节点，再备份完整的 <code dir="auto">data</code> 目录及配置，保持日志、元数据和快照一致。不要在运行中单独复制、替换或删除 Manifest、Segment 或索引文件，也不要混用不同 Group 或不同存储实例的文件。</p>
+<h3 id="22-group-标识与存储身份">2.2. Group 标识与存储身份</h3>
+<p>文件存储同时检查业务 Group 标识和本地存储身份：</p>
+<ul>
+<li><code dir="auto">groupId</code>：来自 JRaft 初始化上下文，必须与 Manifest 中保存的 Group 标识一致。</li>
+<li><code dir="auto">storeId</code>：首次创建 Manifest 时生成的 UUID，后续 Segment Header 必须使用同一身份。</li>
+<li><code dir="auto">segmentId</code>：Segment 的编号，Header 中的编号必须与 Manifest 描述或对应文件名匹配。</li>
+</ul>
+<p><code dir="auto">storeId</code> 随文件持久化。复制整套存储文件会保留原身份，不会因为换了路径就自动生成新的身份。不要通过修改 Manifest 中的标识让一组文件冒充另一个 Group 或存储实例。</p>
+<h3 id="23-文件编号与实现限制">2.3. 文件编号与实现限制</h3>
+<p>Segment 和 Index 文件名使用补零到 20 位的 ASCII 十进制编号，后缀分别为 <code dir="auto">.seg</code> 和 <code dir="auto">.idx</code>。编号用于区分文件，不应直接解释为文件中第一条日志的 index。</p>
+<p>初始化会在清理文件之前，结合 Manifest 与目录中的规范 Segment 文件名计算后续编号。被保留的未知归属 Segment 也参与计算，避免重用其编号；编号溢出会导致初始化失败。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>项目</th><th>当前实现限制</th><th>说明</th></tr></thead><tbody><tr><td>文件格式版本</td><td><code dir="auto">1</code></td><td>Segment、日志记录和 Manifest 均包含格式版本。</td></tr><tr><td>单个 Segment</td><td>128 MiB</td><td>包含 40 字节 Header 和后续日志记录；容量不足时滚动创建新段。</td></tr><tr><td>单条文件日志记录</td><td>64 MiB</td><td>包含 16 字节 Header、JRaft 编码后的 payload 和 8 字节校验值。</td></tr><tr><td>单个 Manifest</td><td>16 MiB</td><td>包含 Group 标识和全部有效 Segment 描述符。</td></tr><tr><td>Group 标识</td><td>UTF-8 编码后最多 1024 字节</td><td>必须非空白，并能正确编码。</td></tr><tr><td>单条 Index 记录</td><td>12 字节</td><td>8 字节记录 offset 和 4 字节记录总长度。</td></tr></tbody></table>
+<p>上述值是当前文件后端的实现边界，没有在本次变更中增加对应的用户调节参数。64 MiB 是封装后的单条日志记录上限，不能当作配置内容或 HTTP 请求允许达到该大小的承诺；请求和业务数据仍受各自限制。</p>
+<h2 id="3-文件结构设计">3. 文件结构设计</h2>
+<p>文件后端由 Segment、Manifest 和 Index 三部分配合工作：Segment 保存日志记录，Manifest 定义当前有效的日志范围，Index 将日志 index 映射到 Segment 中的记录位置。理解这三者的关系，有助于区分已写入文件的数据、已发布的本地日志和可重建的辅助数据。</p>
+<p>文件格式版本为 <code dir="auto">1</code>，多字节数值使用大端序。以下偏移和长度均以字节为单位，区间采用左闭右开表示法。</p>
+<h3 id="31-segment分段日志文件">3.1. Segment：分段日志文件</h3>
+<p>Segment 是日志记录的实际载体，存放在 <code dir="auto">segments/</code> 目录中。每个文件由固定长度 Header 和连续追加的日志记录组成；单条记录完整地保存在一个 Segment 中，不跨文件拆分。</p>
+<h4 id="311-文件组织与滚动">3.1.1. 文件组织与滚动</h4>
+<p>单个 Segment 上限为 128 MiB，其中前 40 字节为 Header。追加时使用当前活动段；剩余容量不足以容纳下一条完整记录时，确保旧段已同步后关闭，再创建新段继续写入。一次批量追加可以跨越多个 Segment。</p>
+<p>Segment 文件编号独立于日志 index。每个段实际保留哪些日志、从哪个字节开始读取、读取到哪里结束，都由 Manifest 的描述符决定。因此，文件中可能仍有已裁剪的前缀或尚未发布的尾部，不能仅根据文件名和物理长度确定有效日志范围。</p>
+<h4 id="312-segment-header">3.1.2. Segment Header</h4>
+<p>每个 Segment 以 40 字节 Header 开始，其后为日志记录：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>偏移</th><th>长度</th><th>内容</th></tr></thead><tbody><tr><td>0</td><td>4</td><td>magic：<code dir="auto">0x4e4c5331</code>（<code dir="auto">NLS1</code>）。</td></tr><tr><td>4</td><td>2</td><td>格式版本。</td></tr><tr><td>6</td><td>2</td><td>Header 长度，固定为 40。</td></tr><tr><td>8</td><td>16</td><td>UUID <code dir="auto">storeId</code>，高 64 位在前、低 64 位在后。</td></tr><tr><td>24</td><td>8</td><td><code dir="auto">segmentId</code>，必须大于 0。</td></tr><tr><td>32</td><td>8</td><td>CRC64，覆盖 <code dir="auto">[0, 32)</code>。</td></tr></tbody></table>
+<h4 id="313-日志记录与校验">3.1.3. 日志记录与校验</h4>
+<p>设 JRaft codec 编码后的 payload 长度为 <code dir="auto">L</code>，总记录长度为 <code dir="auto">24 + L</code>：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>偏移</th><th>长度</th><th>内容</th></tr></thead><tbody><tr><td>0</td><td>4</td><td>magic：<code dir="auto">0x4e4c5231</code>（<code dir="auto">NLR1</code>）。</td></tr><tr><td>4</td><td>2</td><td>格式版本。</td></tr><tr><td>6</td><td>2</td><td>Header 长度，固定为 16。</td></tr><tr><td>8</td><td>4</td><td>payload 长度 <code dir="auto">L</code>。</td></tr><tr><td>12</td><td>4</td><td>CRC32，覆盖 <code dir="auto">[0, 12)</code>。</td></tr><tr><td>16</td><td><code dir="auto">L</code></td><td>JRaft 日志条目 payload。</td></tr><tr><td><code dir="auto">16 + L</code></td><td>8</td><td>payload 的 CRC64。</td></tr></tbody></table>
+<p>恢复扫描允许在 Manifest 已发布范围内有界预读原始字节。在依据记录头长度分配专用缓冲区，以及分配 payload 缓冲区或解码 payload 前，必须完成 Header、长度和记录边界校验。解码后的日志 index 必须大于 0、term 非负、条目类型有效；配置条目还会校验成员信息。恢复扫描要求记录 index 与预期位置连续一致。</p>
+<p>CRC32 使用 <code dir="auto">java.util.zip.CRC32</code>，CRC64 使用 JRaft 的 <code dir="auto">CrcUtil.crc64()</code>。Header 校验用于验证长度等信息，payload 校验用于检测记录内容损坏，Segment Header 中的身份校验则用于发现文件混用。</p>
+<p>校验和用于发现损坏，不会自动修复记录。已发布范围内的记录校验失败时，恢复不能跳过该记录继续推进日志 index。</p>
+<h3 id="32-manifest有效日志范围与发布状态">3.2. Manifest：有效日志范围与发布状态</h3>
+<p>Manifest 是当前本地日志范围的描述文件。它保存存储身份、Group 标识、全局首尾 index 和有序 Segment 描述符；日志恢复和读取均以这些范围信息为依据。</p>
+<p>Manifest 中的“已发布”表示文件后端已经完成相应的本地范围更新。Raft 多数派提交、状态机应用和快照进度仍由上层协议管理，不能把 Manifest 的末尾 index 直接当作业务已经提交或应用的位置。</p>
+<h4 id="321-segment-描述符">3.2.1. Segment 描述符</h4>
+<p>每个 Segment 描述符由以下五个 8 字节整数构成：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>字段</th><th>含义</th></tr></thead><tbody><tr><td><code dir="auto">segmentId</code></td><td>对应 Segment 文件的编号。</td></tr><tr><td><code dir="auto">firstIndex</code></td><td>该段当前保留的第一条日志 index。</td></tr><tr><td><code dir="auto">lastIndex</code></td><td>该段当前保留的最后一条日志 index。</td></tr><tr><td><code dir="auto">firstRecordOffset</code></td><td>第一条保留记录在 Segment 中的字节偏移。</td></tr><tr><td><code dir="auto">publishedEndOffset</code></td><td>已发布记录结束位置的下一字节偏移。</td></tr></tbody></table>
+<p>该段的有效字节范围为 <code dir="auto">[firstRecordOffset, publishedEndOffset)</code>。描述符编号必须严格递增，日志范围必须连续，全局首尾 index 必须与描述符一致。前缀裁剪后，第一条有效记录可以位于 Segment Header 之后的更远位置；文件开头仍有旧记录不代表它们仍可读取。</p>
+<p>空日志范围表示为 <code dir="auto">[firstLogIndex, firstLogIndex - 1]</code>，此时没有 Segment 描述符。重置日志范围时会保留下次追加的起点，而不需要创建占位日志。</p>
+<h4 id="322-manifest-文件格式">3.2.2. Manifest 文件格式</h4>
+<p>Manifest 包含 52 字节固定 Header、UTF-8 Group 标识、有序 Segment 描述符和末尾 CRC64。设 Group 标识编码长度为 <code dir="auto">G</code>、Segment 数量为 <code dir="auto">N</code>，文件总长度为 <code dir="auto">60 + G + 40N</code>。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>偏移</th><th>长度</th><th>内容</th></tr></thead><tbody><tr><td>0</td><td>4</td><td>magic：<code dir="auto">0x4e4c4d31</code>（<code dir="auto">NLM1</code>）。</td></tr><tr><td>4</td><td>2</td><td>格式版本。</td></tr><tr><td>6</td><td>2</td><td>Header 长度，固定为 52。</td></tr><tr><td>8</td><td>4</td><td>文件总长度。</td></tr><tr><td>12</td><td>16</td><td>UUID <code dir="auto">storeId</code>，高 64 位在前、低 64 位在后。</td></tr><tr><td>28</td><td>8</td><td><code dir="auto">firstLogIndex</code>。</td></tr><tr><td>36</td><td>8</td><td><code dir="auto">lastLogIndex</code>。</td></tr><tr><td>44</td><td>4</td><td>Group 标识的 UTF-8 字节数 <code dir="auto">G</code>。</td></tr><tr><td>48</td><td>4</td><td>Segment 描述符数量 <code dir="auto">N</code>。</td></tr><tr><td>52</td><td><code dir="auto">G</code></td><td>UTF-8 Group 标识。</td></tr><tr><td><code dir="auto">52 + G</code></td><td><code dir="auto">40N</code></td><td>有序 Segment 描述符。</td></tr><tr><td><code dir="auto">52 + G + 40N</code></td><td>8</td><td>此前全部字节的 CRC64。</td></tr></tbody></table>
+<p>读取 Manifest 时会检查文件长度、格式版本、Header、校验和、Group 编码及日志范围。Group 标识必须非空白且 UTF-8 编码长度不超过 1024 字节；不支持的版本、非法编码、大小不符或范围不连续均不能作为有效 Manifest 使用。</p>
+<h4 id="323-正式文件与临时文件">3.2.3. 正式文件与临时文件</h4>
+<p><code dir="auto">manifest</code> 保存当前发布状态，<code dir="auto">manifest.tmp</code> 用于准备下一次更新。发布时先写入并刷盘临时文件，再通过同目录原子替换更新正式文件，具体顺序见第 4 节。</p>
+<p>临时文件可能因异常退出而留下。它的存在本身不能证明上一次操作已经成功，也不能替代正式 Manifest 作为恢复依据。恢复时由存储实现验证正式文件及其引用的数据，再决定后续清理。</p>
+<h3 id="33-index可重建的位置索引">3.3. Index：可重建的位置索引</h3>
+<p>Index 存放在 <code dir="auto">index/</code> 目录中，与对应 Segment 使用相同编号。它将日志 index 映射为记录的物理位置，避免每次读取都从 Segment 开头顺序扫描。</p>
+<h4 id="331-索引布局与槽位计算">3.3.1. 索引布局与槽位计算</h4>
+<p>Index 没有文件头，每条索引记录占 12 字节：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>记录内偏移</th><th>长度</th><th>内容</th></tr></thead><tbody><tr><td>0</td><td>8</td><td>日志记录在 Segment 中的字节 offset。</td></tr><tr><td>8</td><td>4</td><td>日志记录总长度，包括 Header、payload 和校验值。</td></tr></tbody></table>
+<p>以该段第一条保留日志为 <code dir="auto">baseIndex</code>，目标日志的索引槽位偏移为 <code dir="auto">(logIndex - baseIndex) × 12</code>。例如，<code dir="auto">baseIndex=100</code> 时，日志 <code dir="auto">index=102</code> 的索引记录位于 <code dir="auto">.idx</code> 文件的第 24 字节处；该索引记录中保存的 offset 才是日志在 <code dir="auto">.seg</code> 文件中的位置。</p>
+<p>索引文件长度必须与该段保留的条目数量一致。计算槽位、记录结束位置和后续 index 时会进行溢出检查，避免损坏的数值越过文件边界。</p>
+<h4 id="332-日志读取流程">3.3.2. 日志读取流程</h4>
+<p>读取一条日志时，存储依次执行：</p>
+<ol>
+<li>根据 Manifest 的全局范围检查目标 index；范围外不会继续查找记录。</li>
+<li>在有序 Segment 描述符中定位包含目标 index 的段，确定该段的保留范围。</li>
+<li>读取 Index 槽位，检查记录长度及其字节范围是否处于 Manifest 发布范围内。</li>
+<li>从 Segment 读取记录，校验 Header、payload 校验和及编码，并确认解码后的 index 与请求 index 一致。</li>
+</ol>
+<p>因此，仅修改 Index 不能扩大有效日志范围；Index 中的 offset 和长度也不能绕过 Segment 记录本身的校验。</p>
+<h4 id="333-索引重建与维护">3.3.3. 索引重建与维护</h4>
+<p>Index 是由 Segment 派生的数据。初始化时会扫描所有已发布 Segment，按照经过校验的保留记录重建索引；前缀裁剪等操作也会根据新的边界调整或重建索引。</p>
+<p>追加过程中会同步更新 Index，但本地发布顺序不依赖 Index 刷盘。持久化与恢复所需的日志内容及有效范围由 Segment 和 Manifest 共同确定。</p>
+<p>可以重建不等于可以在运行中定期删除 Index 节省空间。运行中的存储仍然持有活动索引资源，文件回收由实现管理；手工删除、拼接或替换文件可能破坏资源与磁盘状态的一致性。</p>
+<h2 id="4-持久化设计">4. 持久化设计</h2>
+<p>文件后端通过“先写入并刷盘日志，再发布 Manifest 范围”的顺序组织持久化。追加、裁剪和重置都围绕这一发布边界执行，失败后的处理则根据操作是否已经进入实际文件变更阶段区分。</p>
+<h3 id="41-本地发布与一致性边界">4.1. 本地发布与一致性边界</h3>
+<p>持久化过程需要区分三个层次：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>层次</th><th>含义</th></tr></thead><tbody><tr><td>Segment 中已有记录</td><td>记录字节已经写入文件，可能仍位于尚未发布的尾部。</td></tr><tr><td>Manifest 已发布范围</td><td>文件后端已经更新本地有效范围，恢复会验证该范围引用的记录。</td></tr><tr><td>Raft 多数派提交与状态机应用</td><td>由 JRaft 的复制、提交和应用流程决定业务可见结果。</td></tr></tbody></table>
+<p>Manifest 不以文件中最大的 index 或 Segment 的物理长度推导有效范围，而是显式保存保留范围和字节边界。这样，恢复能够识别未完成的追加，也能够在范围更新后继续完成尚未结束的裁剪与回收。</p>
+<p>日志 index、Segment 编号和文件偏移均进行边界与溢出检查。校验失败时不应通过扩大 Manifest 范围或调整 Index 来绕过限制。</p>
+<h3 id="42-批量追加与原子发布">4.2. 批量追加与原子发布</h3>
+<p>文件后端先校验整批日志，再写入文件。校验包括：日志 index 必须从当前末尾的下一个位置连续递增，每条记录能放入空 Segment，计划中的 Manifest 满足格式和大小限制。</p>
+<p>批次校验通过后，按以下顺序执行：</p>
+<ol>
+<li>将日志记录追加到活动 Segment，同时写入 Index。</li>
+<li>Segment 容量不足时，确保旧段已同步后关闭，并滚动创建新段；批次写入结束后刷盘最后一个 Segment。</li>
+<li>新 Manifest 引用了新增 Segment 时，同步 <code dir="auto">segments</code> 目录。</li>
+<li>写入 <code dir="auto">manifest.tmp</code>，并对临时文件执行 <code dir="auto">force(true)</code>。</li>
+<li>使用同目录的原子移动替换 <code dir="auto">manifest</code>。</li>
+<li>同步 <code dir="auto">file-log</code> 目录，更新内存中的 Manifest，完成本地范围发布。</li>
+</ol>
+<p>滚动时，如果旧段已同步且没有新变更，会跳过重复刷盘。</p>
+<p>目录同步遵循第 4.4 节及第 4.6 节的平台规则。Index 是派生数据，发布顺序不依赖其刷盘；恢复时通过扫描已发布 Segment 重建。</p>
+<p>日志记录出现在 Segment 文件中，并不意味着它已经被 Manifest 发布；Manifest 发布完成，也不等于日志已经由 Raft 多数派提交或应用到状态机。业务操作是否成功，应依据上层协议和业务接口的结果判断。</p>
+<h3 id="43-范围变更日志裁剪与快照">4.3. 范围变更、日志裁剪与快照</h3>
+<p>快照和复制冲突处理可能触发前缀裁剪、后缀裁剪或日志范围重置。以下是 JRaft 内部存储接口的语义，不需要用户通过 HTTP 或 SDK 主动调用：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>内部操作</th><th>保留范围与行为</th></tr></thead><tbody><tr><td><code dir="auto">truncatePrefix(firstIndexKept)</code></td><td>保留目标 index 及之后的日志；目标超过原末尾时，发布从目标开始的空范围。</td></tr><tr><td><code dir="auto">truncateSuffix(lastIndexKept)</code></td><td>保留目标 index 及之前的日志；目标低于原首 index 时，发布以原首 index 开始的空范围。</td></tr><tr><td><code dir="auto">reset(nextLogIndex)</code></td><td>发布 <code dir="auto">[nextLogIndex, nextLogIndex - 1]</code> 的空范围，后续从目标位置继续追加，不创建占位日志。</td></tr></tbody></table>
+<p>这些操作先发布新的 Manifest 范围，再处理边界段、索引和失效文件。被移除的日志及配置条目不能继续读取。快照中的 index、term 和成员信息仍通过 JRaft 的快照及 LogManager 路径承接。</p>
+<p>不能通过手工删除旧 <code dir="auto">.seg</code> 文件代替日志裁剪。磁盘上暂时仍有失效文件，也不表示它们仍属于有效日志范围，应以 Manifest 和恢复校验结果为准。</p>
+<p>裁剪边界位于已保留范围内时，会先读取并校验边界记录，再发布新 Manifest。发布后才调整边界段与索引、重开活动资源并回收失效文件；重启恢复也遵循已经验证的发布范围。</p>
+<p>文件后端保留 JRaft 的快照存储与快照处理路径。周期性快照仍用于状态恢复和日志裁剪，不能用更换日志后端或手工删除 Segment 来代替快照。</p>
+<h3 id="44-文件与目录的同步要求">4.4. 文件与目录的同步要求</h3>
+<p>文件后端要求数据路径所在文件系统支持：</p>
+<ul>
+<li>排他文件锁，同一目录只能由一个存储实例打开。</li>
+<li>普通文件同步刷盘，日志与临时 Manifest 使用 <code dir="auto">force(true)</code>。</li>
+<li>同目录内的 Manifest 原子替换。</li>
+<li>非 Windows 平台上的目录同步刷盘。初始化还会同步解析后的真实 <code dir="auto">file-log</code> 目录的祖先目录，需要目标运行环境支持这些操作。</li>
+</ul>
+<p>配置的日志入口及其祖先目录允许使用目录软链接，初始化时会解析真实路径。本次打开使用解析后的固定路径；内部受管的 <code dir="auto">file-log</code>、<code dir="auto">segments</code>、<code dir="auto">index</code> 目录以及 Manifest、Segment、Index 等受管文件不能用软链接替代。必要的锁、刷盘或原子替换操作失败，会导致初始化或写入失败。</p>
+<p>目录同步针对解析后的真实路径，按照 <code dir="auto">segments</code>、<code dir="auto">index</code>、<code dir="auto">file-log</code> 及 <code dir="auto">file-log</code> 的全部祖先目录的顺序执行，即使这些目录已经存在也会调用同步入口。非 Windows 平台会实际打开目录并执行 <code dir="auto">force(true)</code>；因此，仅确认数据目录可以创建文件并不足以证明环境满足要求。</p>
+<h3 id="45-并发控制与目录互斥">4.5. 并发控制与目录互斥</h3>
+<p>同一存储实例使用读写锁协调访问。日志读取在读锁内完成定位、校验和解码；追加、裁剪、重置和关闭在写锁内执行，避免读者观察到一条只更新了部分内容的记录。</p>
+<p>不同存储实例之间通过 <code dir="auto">LOCK</code> 文件上的 <code dir="auto">FileChannel.tryLock()</code> 获取目录排他锁，防止同时打开同一目录。操作系统管理的是文件通道上的锁状态，锁文件是否存在与锁是否仍被持有需要分别判断。</p>
+<p>正常关闭会关闭活动 Segment 和 Index、释放目录锁并清空运行状态。必要写入失败后即使活动写入资源已关闭，目录锁也会继续保留到存储关闭；不能通过删除 <code dir="auto">LOCK</code> 文件启动另一个进程绕过互斥。</p>
+<h3 id="46-windows-的持久性边界">4.6. Windows 的持久性边界</h3>
+<aside aria-label="Windows 持久性限制" class="starlight-aside starlight-aside--caution"><p class="starlight-aside__title" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" class="starlight-aside__icon"><path d="M12 16C11.8022 16 11.6089 16.0587 11.4444 16.1686C11.28 16.2784 11.1518 16.4346 11.0761 16.6173C11.0004 16.8001 10.9806 17.0011 11.0192 17.1951C11.0578 17.3891 11.153 17.5673 11.2929 17.7071C11.4327 17.847 11.6109 17.9422 11.8049 17.9808C11.9989 18.0194 12.2 17.9996 12.3827 17.9239C12.5654 17.8482 12.7216 17.72 12.8315 17.5556C12.9413 17.3911 13 17.1978 13 17C13 16.7348 12.8946 16.4805 12.7071 16.2929C12.5196 16.1054 12.2652 16 12 16ZM22.67 17.47L14.62 3.47003C14.3598 3.00354 13.9798 2.61498 13.5192 2.3445C13.0586 2.07401 12.5341 1.9314 12 1.9314C11.4659 1.9314 10.9414 2.07401 10.4808 2.3445C10.0202 2.61498 9.64019 3.00354 9.38 3.47003L1.38 17.47C1.11079 17.924 0.966141 18.441 0.960643 18.9688C0.955144 19.4966 1.089 20.0166 1.34868 20.4761C1.60837 20.9356 1.9847 21.3185 2.43968 21.5861C2.89466 21.8536 3.41218 21.9964 3.94 22H20.06C20.5921 22.0053 21.1159 21.8689 21.5779 21.6049C22.0399 21.341 22.4234 20.9589 22.689 20.4978C22.9546 20.0368 23.0928 19.5134 23.0895 18.9814C23.0862 18.4493 22.9414 17.9277 22.67 17.47ZM20.94 19.47C20.8523 19.626 20.7245 19.7556 20.5697 19.8453C20.4149 19.935 20.2389 19.9815 20.06 19.98H3.94C3.76111 19.9815 3.5851 19.935 3.43032 19.8453C3.27553 19.7556 3.14765 19.626 3.06 19.47C2.97223 19.318 2.92602 19.1456 2.92602 18.97C2.92602 18.7945 2.97223 18.622 3.06 18.47L11.06 4.47003C11.1439 4.30623 11.2714 4.16876 11.4284 4.07277C11.5855 3.97678 11.766 3.92599 11.95 3.92599C12.134 3.92599 12.3145 3.97678 12.4716 4.07277C12.6286 4.16876 12.7561 4.30623 12.84 4.47003L20.89 18.47C20.9892 18.6199 21.0462 18.7937 21.055 18.9732C21.0638 19.1527 21.0241 19.3312 20.94 19.49V19.47ZM12 8.00003C11.7348 8.00003 11.4804 8.10538 11.2929 8.29292C11.1054 8.48046 11 8.73481 11 9.00003V13C11 13.2652 11.1054 13.5196 11.2929 13.7071C11.4804 13.8947 11.7348 14 12 14C12.2652 14 12.5196 13.8947 12.7071 13.7071C12.8946 13.5196 13 13.2652 13 13V9.00003C13 8.73481 12.8946 8.48046 12.7071 8.29292C12.5196 8.10538 12.2652 8.00003 12 8.00003Z"></path></svg>Windows 持久性限制</p><section class="starlight-aside__content"><p>Windows 会在校验目录后自动跳过目录同步，没有额外的配置开关；普通文件刷盘、排他锁和 Manifest 原子替换仍然必需。每次实际初始化成功时会记录一条包含存储路径的 WARN，说明跳过目录同步的影响。</p><p>Windows 下不能保证依赖目录同步屏障的断电恢复：已确认的本地日志范围可能丢失，Manifest 与截断或回收结果不一致时可能恢复失败。进程强杀后的恢复验证不能证明操作系统崩溃或断电后的安全性。</p></section></aside>
+<p>Windows 的 WARN 在每次实际初始化成功时输出；已经持锁时的幂等初始化和普通追加不会反复输出。跳过目录同步不意味着可以关闭 <code dir="auto">sync</code>，也不意味着文件刷盘或原子替换失败会被忽略。</p>
+<h2 id="5-异常恢复">5. 异常恢复</h2>
+<p>异常恢复以原目录中的正式 Manifest 和日志文件为依据，先验证发布范围及数据身份，再处理未发布尾部和可回收文件。已经发布的数据缺失或损坏时，存储会拒绝初始化，避免把不完整的日志当作有效状态继续使用。</p>
+<h3 id="51-初始化与恢复顺序">5.1. 初始化与恢复顺序</h3>
+<p>节点重新打开原目录时，会获取排他锁，校验 Manifest、存储身份、日志校验和及连续范围，并重建索引。通过恢复校验后，才会截断未发布的尾部并清理可回收文件。已发布日志缺失、损坏、范围不连续或身份不匹配时，初始化失败，不会跳过这些日志继续运行。</p>
+<p>具体过程如下：</p>
+<ol>
+<li>校验同步写入选项、Group 标识、配置管理器和日志 codec。</li>
+<li>解析或创建配置的日志入口，派生、创建并校验真实根目录，获取 <code dir="auto">LOCK</code> 排他锁，创建和同步所需子目录及真实祖先目录。</li>
+<li>读取并验证 Manifest；首次初始化时，在确认目录满足空存储要求后创建 Manifest。</li>
+<li>在清理前计算 Segment 编号高水位，确保后续分配不重用已识别的编号。</li>
+<li>扫描 Manifest 发布范围内的所有记录，校验 Header、校验和、身份及 index 连续性，重建 Index，并收集 Raft 配置条目。</li>
+<li>检查未被 Manifest 引用的 Segment，区分可回收文件、需要保留的文件和必须报错的文件。</li>
+<li>同步已验证 Manifest 所在目录，建立恢复屏障；Windows 按平台规则仅校验目录并跳过同步。</li>
+<li>截断已发布 Segment 的未发布尾部并刷盘，回收失效 Segment、无用 Index 和临时 Manifest。</li>
+<li>重开活动资源，将配置条目恢复到 JRaft 配置管理器，确认资源完整后完成初始化。</li>
+</ol>
+<p>在恢复屏障之前，已有 Manifest 和 Segment 保持原状；派生 Index 可以重建。这里的“恢复屏障”指后续清理前对已验证 Manifest 目录项执行的同步步骤，不能据此扩大 Windows 的断电持久性保证。</p>
+<h3 id="52-manifest-缺失与临时文件残留">5.2. Manifest 缺失与临时文件残留</h3>
+<p>没有 Manifest 时，仅允许存在空的 <code dir="auto">segments</code>、<code dir="auto">index</code> 子目录、普通 <code dir="auto">LOCK</code> 文件和普通临时 Manifest。满足条件后会创建空存储；如果日志或索引目录已有内容，或者根目录出现其他不允许的文件，初始化失败。</p>
+<p>这项检查用于避免把缺少 Manifest 的历史目录误认为全新目录。不要通过清空目录、新建空 Manifest 或把 <code dir="auto">manifest.tmp</code> 手工改名来绕过检查。应先保留现场，再确认目录来源及完整备份。</p>
+<p>当正式 Manifest 存在且通过验证时，残留的临时文件由恢复流程在适当阶段清理；不能根据 <code dir="auto">manifest.tmp</code> 的时间戳或文件大小推断发布已经完成，也不应手工将其提升为正式文件。</p>
+<h3 id="53-未引用-segment-的分类处理">5.3. 未引用 Segment 的分类处理</h3>
+<p>下表适用于 <code dir="auto">segments</code> 中具有规范文件名、但未被 Manifest 引用的文件：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>检查结果</th><th>恢复行为</th></tr></thead><tbody><tr><td>Header 有效，<code dir="auto">storeId</code> 属于当前存储，编号与文件名匹配</td><td>在恢复屏障之后可以回收。</td></tr><tr><td>普通文件 Header 不完整，或 magic、Header 长度、Header 校验损坏</td><td>原地保留并记录包含路径的 WARN，继续校验已发布日志。</td></tr><tr><td>Header 属于其他 <code dir="auto">storeId</code>、编号与文件名不符、版本不支持或身份非法</td><td>初始化失败。</td></tr><tr><td>非普通文件、符号链接或实际 I/O 错误</td><td>初始化失败。</td></tr></tbody></table>
+<p>无法确认归属的文件不会被重放，其规范文件名仍参与后续编号计算。保留 WARN 不表示对应内容已经进入有效日志范围，也不表示可以忽略其他恢复错误。</p>
+<h3 id="54-不同中断阶段的恢复依据">5.4. 不同中断阶段的恢复依据</h3>
+<p>进程可能在一次操作的不同阶段退出。下表说明恢复的判断依据；其中涉及目录同步的步骤仍受第 4.6 节的 Windows 限制约束。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>中断阶段</th><th>重启后的处理依据</th></tr></thead><tbody><tr><td>日志已写入，但新 Manifest 尚未替换正式文件</td><td>以已验证的正式 Manifest 为准；发布范围外的尾部或未引用文件按恢复规则处理。</td></tr><tr><td>临时 Manifest 已写入或刷盘，但尚未原子替换</td><td>不因临时文件存在就认定新范围已发布，仍校验正式 Manifest。</td></tr><tr><td>Manifest 已原子替换，但目录同步或后续资源操作失败</td><td>磁盘可能已经存在新 Manifest；恢复以实际读取并验证后的状态为准，不能根据失败响应手工回退文件。</td></tr><tr><td>新范围已发布，但边界截断或失效文件回收尚未完成</td><td>先验证新范围、执行恢复屏障，再处理未发布尾部和可回收文件。</td></tr><tr><td>已发布范围内的文件缺失、记录损坏或身份不匹配</td><td>初始化失败，不会跳过损坏记录或自动混用其他存储文件。</td></tr></tbody></table>
+<p>进程退出测试只覆盖进程故障，不能直接证明操作系统崩溃或断电时目录项和数据都已持久化。恢复演练需要区分这些故障模型。</p>
+<h3 id="55-运行时失败状态与后续操作">5.5. 运行时失败状态与后续操作</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>失败类型</th><th>存储行为</th><th>运维含义</th></tr></thead><tbody><tr><td>参数、编码或批次规划校验失败</td><td>在写入本批文件前拒绝操作，存储仍可继续使用。</td><td>检查调用内容或大小边界，不应直接认定磁盘故障。</td></tr><tr><td>实际变更中的必要 I/O 或资源重开失败</td><td>关闭活动 Segment 和 Index，禁止后续追加、裁剪和重置。</td><td>需要处理底层故障，再关闭并重新打开存储。</td></tr><tr><td>读取 I/O 或解码失败</td><td>记录包含目录、index 和异常的 ERROR，读取返回失败结果。</td><td>检查数据完整性和异常链，不要把读取失败当作正常缺失。</td></tr><tr><td>失效文件删除或回收后的目录同步失败</td><td>记录 WARN，已发布范围保持有效。</td><td>关注磁盘空间和持续回收失败，避免失效文件长期积累。</td></tr></tbody></table>
+<p>实际日志变更中发生必要 I/O 或资源重开失败后，目录锁仍保留到关闭。处理底层故障后，应先停止节点以释放资源，再使用原后端和原目录重启，触发恢复校验。持锁期间重复调用初始化只检查当前状态，不会重新执行恢复流程。</p>
+<p>写入返回失败时，磁盘上可能已经存在新的 Manifest，重启后以磁盘校验结果为准；不要根据一次失败响应手工回退文件。失效文件回收失败会记录 WARN，不改变已发布日志范围。</p>
+<h3 id="56-常见错误与排查方向">5.6. 常见错误与排查方向</h3>
+<p>排查时先查看 <code dir="auto">${nacos.home}/logs/protocol-raft.log</code> 中的路径和异常信息。后端取值和同步选项校验失败时，还应检查服务端启动日志。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>错误或日志消息</th><th>含义与处理</th></tr></thead><tbody><tr><td><code dir="auto">Invalid nacos.core.protocol.raft.data.log_storage_type</code></td><td>后端值非法，检查是否为 <code dir="auto">rocksdb</code> 或 <code dir="auto">file</code>。</td></tr><tr><td><code dir="auto">File Raft log storage requires sync=true</code></td><td>文件后端关闭了同步写入，修正配置后重启。</td></tr><tr><td><code dir="auto">File log directory is already in use</code></td><td>无法取得目录排他锁，检查是否有其他进程或实例使用同一数据目录。删除 <code dir="auto">LOCK</code> 文件不能替代释放锁。</td></tr><tr><td><code dir="auto">Manifest is missing with existing data</code></td><td>Manifest 缺失，但日志或索引目录非空。保留现场并检查完整备份，不要通过新建空 Manifest 绕过校验。</td></tr><tr><td><code dir="auto">Unexpected content without a manifest</code></td><td>缺少 Manifest 的根目录存在不允许的内容，检查是否指定了错误路径或混入其他文件。</td></tr><tr><td><code dir="auto">Manifest group does not match JRaft group</code> / <code dir="auto">Segment identity does not match manifest</code></td><td>Group 或存储身份不一致，检查是否混用了数据文件。</td></tr><tr><td><code dir="auto">Foreign segment in file log directory</code></td><td>未引用 Segment 的有效 Header 属于其他存储，不能自动回收，需检查目录来源。</td></tr><tr><td><code dir="auto">Segment id does not match its file name</code></td><td>Segment Header 的编号与文件名不符，检查是否手工改名或混入了文件。</td></tr><tr><td><code dir="auto">Published record is incomplete</code> / <code dir="auto">Non-contiguous log index</code></td><td>已发布范围内存在不完整记录或 index 不连续，保留现场并检查数据完整性。</td></tr><tr><td><code dir="auto">File log record header checksum mismatch</code> / <code dir="auto">File log record payload checksum mismatch</code></td><td>记录 Header 或 payload 校验失败，不能通过跳过该记录恢复。</td></tr><tr><td><code dir="auto">Segment ID exhausted</code> / <code dir="auto">File ID overflow</code></td><td>Segment 编号无法继续分配，或规范文件名中的编号超出 long 范围。</td></tr><tr><td><code dir="auto">Preserving unpublished segment with unknown ownership</code></td><td>保留了无法确认归属的未发布 Segment；该文件不会被重放，已发布日志仍需通过校验。</td></tr><tr><td><code dir="auto">Failed to initialize file log storage</code></td><td>查看后续异常，检查文件系统能力、权限、磁盘空间和数据完整性。</td></tr></tbody></table>
+<p>对于底层文件系统异常，还应查看异常链中的具体操作和路径，例如锁获取、目录打开、文件刷盘、原子移动或截断失败。不要仅根据最外层的初始化失败消息判断数据一定已经损坏。</p>
+<h3 id="57-必要写入失败后的恢复步骤">5.7. 必要写入失败后的恢复步骤</h3>
+<ol>
+<li>保存故障时间、节点和 Group 信息，收集完整异常链及相关路径。</li>
+<li>按集群流程停止故障节点，保留原目录，不要先清空文件或切换后端。</li>
+<li>检查磁盘空间、权限、挂载状态及所需文件系统能力，处理已经定位的底层问题。</li>
+<li>使用原版本对应的后端配置和原目录启动，让存储执行完整恢复校验。</li>
+<li>恢复成功后验证业务读写、集群追平和后续写入；若仍出现已发布数据缺失、损坏或身份不匹配，应保留现场并结合完整备份、集群状态制定恢复方案。</li>
+</ol>
+<p>数据校验失败没有通用的“删除某个文件即可修复”步骤。不要编辑校验值、手工拼接不同副本的文件，或把内部 <code dir="auto">reset</code> 接口当作修复已损坏日志的运维命令。</p>
+<p>遇到目录占用时，还应先确认原进程已经退出并释放文件通道，再使用原后端和原目录重启。不要把删除锁文件、切换日志后端或重复调用初始化当作释放资源与执行恢复的替代方式。</p>
+<h2 id="6-部署与运维排查">6. 部署与运维排查</h2>
+<p>本节以发行包部署为例，说明如何启用文件后端、确认配置生效，以及遇到启动或运行故障时从哪里开始排查。以下 shell 命令在 Linux 环境的 <code dir="auto">${nacos.home}</code> 目录执行；容器部署应在实际运行 Nacos Server 的容器内检查对应配置、挂载路径和日志。</p>
+<h3 id="61-准备部署环境与数据目录">6.1. 准备部署环境与数据目录</h3>
+<p>使用包含文件日志后端实现的 Nacos 版本，先按<a href="../deployment/deployment-standalone/" referrerpolicy="unsafe-url">单机部署</a>或<a href="../deployment/deployment-cluster/" referrerpolicy="unsafe-url">集群部署</a>完成数据库、节点列表和鉴权配置。文件日志参数只决定 Raft 的日志实现，不替代这些部署配置。</p>
+<p>启用前确认以下事项：</p>
+<ol>
+<li>这是全新部署，或者节点原本就使用 <code dir="auto">file</code> 后端；已有 RocksDB 节点不要通过修改配置原地切换。</li>
+<li>每个 Server 节点使用独立的数据目录，不与其他进程共用同一套 Group 文件。</li>
+<li>Nacos 运行用户对数据路径具有创建、读取、写入、截断、重命名和删除文件所需的权限。</li>
+<li>实际数据路径支持第 4.4 节要求的文件锁、文件刷盘和原子替换；非 Windows 平台还需要目录及祖先目录同步。</li>
+</ol>
+<p>使用容器或挂载卷时，配置文件需要挂载到 Server 实际读取的位置，数据卷需要保留原节点的数据路径。应在相同运行用户和挂载方式下检查这些条件，不能只根据宿主机上的权限判断。</p>
+<h3 id="62-配置并启动-server">6.2. 配置并启动 Server</h3>
+<p>在每个 Server 节点的 <code dir="auto">conf/application.properties</code> 中加入：</p>
+<div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre tabindex="0"><code><div class="ec-line"><span style="--0:#F97583">nacos.core.protocol.raft.data.log_storage_type</span><span style="--0:#E1E4E8">=file</span></div><div class="ec-line"><span style="--0:#F97583">nacos.core.protocol.raft.data.sync</span><span style="--0:#E1E4E8">=true</span></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="nacos.core.protocol.raft.data.log_storage_type=filenacos.core.protocol.raft.data.sync=true"><div></div></button></div></figure></div>
+<p>集群模式需要先按部署手册配置各节点的 <code dir="auto">conf/cluster.conf</code>，然后在每个节点启动：</p>
+<div class="expressive-code"><figure class="frame is-terminal not-content"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre tabindex="0"><code><div class="ec-line"><span style="--0:#B392F0">bash</span><span style="--0:#E1E4E8"> </span><span style="--0:#9ECBFF">bin/startup.sh</span><span style="--0:#E1E4E8"> </span><span style="--0:#79B8FF">-m</span><span style="--0:#E1E4E8"> </span><span style="--0:#9ECBFF">cluster</span></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="bash bin/startup.sh -m cluster"><div></div></button></div></figure></div>
+<p>开发或测试环境使用单机模式时，启动命令为：</p>
+<div class="expressive-code"><figure class="frame is-terminal not-content"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre tabindex="0"><code><div class="ec-line"><span style="--0:#B392F0">bash</span><span style="--0:#E1E4E8"> </span><span style="--0:#9ECBFF">bin/startup.sh</span><span style="--0:#E1E4E8"> </span><span style="--0:#79B8FF">-m</span><span style="--0:#E1E4E8"> </span><span style="--0:#9ECBFF">standalone</span></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="bash bin/startup.sh -m standalone"><div></div></button></div></figure></div>
+<p>如果采用控制台独立部署，可在 Server 启动命令中增加 <code dir="auto">-d server</code>，具体步骤见<a href="../deployment/deployment-independent/" referrerpolicy="unsafe-url">控制台独立部署</a>。文件后端参数应配置在 Server 一侧，修改独立 Console 的配置不会替换 Server 的日志存储。</p>
+<p>后端选择在 Raft 初始化时生效。配置修改后，仅保存文件不会改变已经打开的存储实例；已使用文件后端的节点需要按既有运维流程重启，才能重新读取启动配置。</p>
+<h3 id="63-确认文件后端已经生效">6.3. 确认文件后端已经生效</h3>
+<p>启动后按以下顺序检查：</p>
+<ol>
+<li>查看启动脚本输出的日志路径。发行包脚本默认将启动输出写入 <code dir="auto">logs/startup.log</code>；检查是否存在配置校验或组件启动异常。</li>
+<li>查看 <code dir="auto">logs/protocol-raft.log</code>，确认对应 Group 没有文件存储初始化失败、目录占用或数据校验错误。</li>
+<li>对已经创建的 Raft Group，检查其 <code dir="auto">log/file-log/manifest</code> 是否存在。将下面路径中的 <code dir="auto">&#x3C;group></code> 替换为实际 Group 名称。</li>
+</ol>
+<div class="expressive-code"><figure class="frame is-terminal not-content"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre tabindex="0"><code><div class="ec-line"><span style="--0:#B392F0">tail</span><span style="--0:#E1E4E8"> </span><span style="--0:#79B8FF">-n</span><span style="--0:#E1E4E8"> </span><span style="--0:#79B8FF">100</span><span style="--0:#E1E4E8"> </span><span style="--0:#9ECBFF">logs/startup.log</span></div><div class="ec-line"><span style="--0:#B392F0">tail</span><span style="--0:#E1E4E8"> </span><span style="--0:#79B8FF">-n</span><span style="--0:#E1E4E8"> </span><span style="--0:#79B8FF">100</span><span style="--0:#E1E4E8"> </span><span style="--0:#9ECBFF">logs/protocol-raft.log</span></div><div class="ec-line"><span style="--0:#B392F0">ls</span><span style="--0:#E1E4E8"> </span><span style="--0:#79B8FF">-la</span><span style="--0:#E1E4E8"> </span><span style="--0:#9ECBFF">"data/protocol/raft/&#x3C;group>/log/file-log/"</span></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="tail -n 100 logs/startup.logtail -n 100 logs/protocol-raft.logls -la &#x22;data/protocol/raft/<group>/log/file-log/&#x22;"><div></div></button></div></figure></div>
+<p>Group 尚未追加日志时，<code dir="auto">segments/</code> 可以为空。配置文件中存在 <code dir="auto">file</code>、目录已经创建或进程仍在运行，都不足以单独说明业务写入已经成功。</p>
+<p>通过实际经过 Raft 的持久化操作写入并读取数据，例如通过管理接口注册并查询持久实例，相关说明见<a href="../../user/naming/instance-lifecycle/" referrerpolicy="unsafe-url">实例生命周期</a>。再检查对应 Group 是否产生 <code dir="auto">.seg</code> 和 <code dir="auto">.idx</code> 文件；仅注册临时实例不能验证这条日志路径。</p>
+<p>检查服务就绪状态的方法见<a href="../monitor/" referrerpolicy="unsafe-url">监控手册</a>。如果节点尚未创建对应 Group，应先确认相关业务组件是否已经启用或初始化，不要手工创建日志文件来补齐目录。</p>
+<h3 id="64-按故障现象排查">6.4. 按故障现象排查</h3>
+<p>先记录故障节点、发生时间、受影响的 Group 和完整异常链，再按下表检查。具体错误消息及含义见第 5.6 节。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>故障现象</th><th>先检查什么</th><th>后续处理</th></tr></thead><tbody><tr><td>启动时提示后端配置非法，或要求同步写入</td><td>确认 Server 实际读取的配置中使用完整参数名，后端为 <code dir="auto">file</code>，且 <code dir="auto">sync</code> 没有被其他配置来源覆盖为 <code dir="auto">false</code>。</td><td>修正配置后重启；<code dir="auto">sync_meta=true</code> 不能替代 <code dir="auto">sync=true</code>。</td></tr><tr><td>提示目录已经被占用</td><td>检查是否存在另一个 Nacos 进程，或多个容器、节点挂载了同一数据目录。</td><td>停止占用同目录的实例并确认资源释放，不要删除 <code dir="auto">LOCK</code> 绕过文件锁。</td></tr><tr><td>初始化、刷盘、原子移动或截断失败</td><td>根据异常中的实际路径，检查运行用户权限、磁盘空间、挂载状态及文件系统是否支持相应操作。</td><td>处理底层问题后，使用原后端和原目录重启；检查恢复结果。</td></tr><tr><td>Manifest 缺失、记录校验失败或存储身份不匹配</td><td>检查是否误删文件、只恢复了部分备份、混用了其他 Group 的文件，或启动时指向了错误目录。</td><td>保留原目录与日志，按第 5.7 节处理；不要新建 Manifest、修改校验值或拼接其他副本的文件。</td></tr><tr><td>写入失败后，后续写入也持续失败</td><td>检查首次失败的异常，而不只查看最后一次请求；必要 I/O 失败会关闭活动写入资源。</td><td>处理底层故障后停止并重新启动节点，触发完整恢复；仅重试业务请求不会重新打开存储。</td></tr><tr><td>日志持续出现失效文件回收 WARN，磁盘空间不断减少</td><td>检查异常中的文件路径、删除权限和磁盘状态，区分回收失败与已发布数据损坏。</td><td>修复回收失败的原因，由存储管理文件；不要按文件名自行删除 Segment。</td></tr><tr><td>只出现 Windows 目录同步 WARN</td><td>确认消息说明的是平台跳过目录同步，而不是文件刷盘或初始化失败。</td><td>按第 4.6 节理解断电持久性边界；继续确认节点和业务状态。</td></tr></tbody></table>
+<p>Linux 下排查磁盘空间和目录权限时，可以在故障节点执行以下只读命令：</p>
+<div class="expressive-code"><figure class="frame is-terminal not-content"><figcaption class="header"><span class="title"></span><span class="sr-only">Terminal window</span></figcaption><pre tabindex="0"><code><div class="ec-line"><span style="--0:#B392F0">df</span><span style="--0:#E1E4E8"> </span><span style="--0:#79B8FF">-h</span><span style="--0:#E1E4E8"> </span><span style="--0:#9ECBFF">data</span></div><div class="ec-line"><span style="--0:#B392F0">df</span><span style="--0:#E1E4E8"> </span><span style="--0:#79B8FF">-i</span><span style="--0:#E1E4E8"> </span><span style="--0:#9ECBFF">data</span></div><div class="ec-line"><span style="--0:#B392F0">ls</span><span style="--0:#E1E4E8"> </span><span style="--0:#79B8FF">-ld</span><span style="--0:#E1E4E8"> </span><span style="--0:#9ECBFF">data</span><span style="--0:#E1E4E8"> </span><span style="--0:#9ECBFF">data/protocol</span><span style="--0:#E1E4E8"> </span><span style="--0:#9ECBFF">data/protocol/raft</span></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="df -h datadf -i datals -ld data data/protocol data/protocol/raft"><div></div></button></div></figure></div>
+<p>容器中应检查实际挂载的数据卷；若故障路径尚未创建，则检查它最近的已存在父目录。目录权限输出只能帮助定位问题，不能证明锁、刷盘或原子替换一定可用，仍需结合具体异常判断。</p>
+<p>问题处理后，使用原后端和原数据目录启动节点，确认恢复不再报错、业务读写恢复，并检查该节点是否正常参与集群。恢复仍然失败时保留现场，结合完整备份与其他节点状态制定处理方案。需要执行快照或主动转移 Leader 时，使用现有<a href="../admin-api/" referrerpolicy="unsafe-url">运维 API</a>。</p>
+<h2 id="7-常见问题">7. 常见问题</h2>
+<h3 id="71-已有-rocksdb-节点能否改成-file-后重启">7.1. 已有 RocksDB 节点能否改成 <code dir="auto">file</code> 后重启？</h3>
+<p>不能把修改配置后重启当作迁移方法。后端选择不会转换日志、元数据或快照，本次能力没有提供 RocksDB 与文件后端之间的数据转换工具或在线迁移流程。</p>
+<p>已有节点改用 <code dir="auto">file</code> 会使用另一套日志文件，再切回 <code dir="auto">rocksdb</code> 也不会把期间的数据合并回原日志。升级已有集群时应保留原后端；已经使用 <code dir="auto">file</code> 的部署还需确认目标版本支持该实现及文件格式。其他版本升级限制见<a href="../upgrading/" referrerpolicy="unsafe-url">升级手册</a>。</p>
+<h3 id="72-能否只为一个-raft-group-开启文件后端">7.2. 能否只为一个 Raft Group 开启文件后端？</h3>
+<p>不能。当前后端工厂由 Server 初始化时统一选择，再应用到该节点创建的每个 Group，没有按 Group 指定后端的配置。</p>
+<h3 id="73-为什么设置-sync_metatrue-之后仍然无法启动">7.3. 为什么设置 <code dir="auto">sync_meta=true</code> 之后仍然无法启动？</h3>
+<p>文件后端单独要求日志 <code dir="auto">sync=true</code>。<code dir="auto">sync_meta</code> 是传递给默认元数据存储的选项，不能替代日志同步条件。检查完整的 <code dir="auto">nacos.core.protocol.raft.data.sync</code> 配置及其实际生效值。</p>
+<h3 id="74-lock-文件还在是否说明上次进程没有退出">7.4. <code dir="auto">LOCK</code> 文件还在，是否说明上次进程没有退出？</h3>
+<p>不能只根据文件是否存在判断。锁状态由文件通道及操作系统管理，正常关闭释放的是锁，不要求删除锁文件。应检查是否仍有进程使用目录，不要通过删除 <code dir="auto">LOCK</code> 启动第二个存储实例。</p>
+<h3 id="75-看到-manifesttmp-是否说明恢复失败">7.5. 看到 <code dir="auto">manifest.tmp</code> 是否说明恢复失败？</h3>
+<p>不一定。它是发布 Manifest 时使用的临时文件，异常退出可能留下该文件。是否能够恢复，应以正式 Manifest、Segment 和恢复校验结果为准；不要手工把临时文件改名为正式 Manifest。</p>
+<h3 id="76-index-可以重建能否定期删除以节省空间">7.6. Index 可以重建，能否定期删除以节省空间？</h3>
+<p>不应这样维护。恢复会重建索引，但运行中的存储仍然使用活动 Index。手工删除、替换或拼接索引文件可能破坏资源与磁盘状态的一致性，文件回收应由存储实现管理。</p>
+<h3 id="77-使用文件后端后还需要快照吗">7.7. 使用文件后端后，还需要快照吗？</h3>
+<p>需要。文件后端只替换日志存储，快照仍用于状态恢复和日志裁剪，JRaft 的快照处理路径保持不变。不能通过手工删除 Segment 代替快照或日志裁剪。</p>
+<h3 id="78-备份时需要保存哪些文件">7.8. 备份时需要保存哪些文件？</h3>
+<p>先按集群运维流程停止待备份节点，确认进程退出并释放资源，再保存该节点完整的 <code dir="auto">data</code>、<code dir="auto">conf</code>、成员配置和版本信息，使日志、元数据、快照和部署配置来自一致的停机状态。维护集群时应保留所需的多数派可用性。</p>
+<p>仅备份 <code dir="auto">segments</code>、仅保留最新 Segment，或者只复制 Manifest 都不足以构成完整节点备份。配置中心使用外置数据库时，还需按数据库自身流程备份，Raft 文件备份不能替代数据库备份。备份恢复应在隔离环境中确认 Group 身份和业务数据符合预期。</p>
+<h3 id="79-windows-的目录同步-warn-能否通过关闭-sync-消除">7.9. Windows 的目录同步 WARN 能否通过关闭 <code dir="auto">sync</code> 消除？</h3>
+<p>不能。Windows 会按平台策略跳过目录同步，没有额外的开关；普通文件刷盘、文件锁和原子替换仍然必需。关闭 <code dir="auto">sync</code> 会使文件后端初始化失败，也无法弥补跳过目录同步带来的断电持久性限制。</p>
+<h2 id="8-相关文档">8. 相关文档</h2>
+<ul>
+<li><a href="../system-configurations/" referrerpolicy="unsafe-url">系统参数</a></li>
+<li><a href="../deployment/deployment-standalone/" referrerpolicy="unsafe-url">单机部署</a></li>
+<li><a href="../deployment/deployment-cluster/" referrerpolicy="unsafe-url">集群部署</a></li>
+<li><a href="../deployment/deployment-best-practices/" referrerpolicy="unsafe-url">部署最佳实践</a></li>
+<li><a href="../monitor/" referrerpolicy="unsafe-url">监控手册</a></li>
+<li><a href="../admin-api/" referrerpolicy="unsafe-url">运维 API</a></li>
+<li><a href="../upgrading/" referrerpolicy="unsafe-url">升级手册</a></li>
+</ul> </div> <footer class="astro-3yyafb3n"> <div class="meta sl-flex astro-3yyafb3n"> <a href="https://github.com/nacos-group/nacos-group.github.io/tree/develop-astro-nacos/src/content/docs/next/zh-cn/manual/admin/raft-log-storage.md" class="sl-flex astro-eez2twj6"><svg aria-hidden="true" class="astro-eez2twj6 astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.2em;"><path d="M22 7.24a1 1 0 0 0-.29-.71l-4.24-4.24a1 1 0 0 0-1.1-.22 1 1 0 0 0-.32.22l-2.83 2.83L2.29 16.05a1 1 0 0 0-.29.71V21a1 1 0 0 0 1 1h4.24a1 1 0 0 0 .76-.29l10.87-10.93L21.71 8c.1-.1.17-.2.22-.33a1 1 0 0 0 0-.24v-.14l.07-.05ZM6.83 20H4v-2.83l9.93-9.93 2.83 2.83L6.83 20ZM18.17 8.66l-2.83-2.83 1.42-1.41 2.82 2.82-1.41 1.42Z"/></svg> 编辑此页</a>  </div> <div class="pagination-links-wrapper" dir="ltr"> <a href="/docs/next/manual/admin/system-configurations/" rel="prev"> <svg aria-hidden="true" class=" astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17 11H9.41l3.3-3.29a1.004 1.004 0 1 0-1.42-1.42l-5 5a1 1 0 0 0-.21.33 1 1 0 0 0 0 .76 1 1 0 0 0 .21.33l5 5a1.002 1.002 0 0 0 1.639-.325 1 1 0 0 0-.219-1.095L9.41 13H17a1 1 0 0 0 0-2Z"/></svg>  <span> 上一页 <br> <span class="link-title">系统参数</span> </span> </a> <a href="/docs/next/manual/admin/auth/" rel="next"> <svg aria-hidden="true" class=" astro-c6vsoqas" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="--sl-icon-size: 1.5rem;"><path d="M17.92 11.62a1.001 1.001 0 0 0-.21-.33l-5-5a1.003 1.003 0 1 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1.002 1.002 0 0 0 .325 1.639 1 1 0 0 0 1.095-.219l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z"/></svg>  <span> 下一页 <br> <span class="link-title">鉴权手册</span> </span> </a> </div>  </footer>  </div> </div>   </main> </div> </div>  </div> </div>  </body></html>
