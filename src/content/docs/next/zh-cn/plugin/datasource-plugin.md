@@ -73,6 +73,10 @@ nacos.plugin.datasource-dialect.type=h2
 
 从 Derby 切换到 H2 不会迁移数据，H2 数据库从空库开始。Derby 专用的运维接口（如 Derby ops 查询和导入）对 `h2` 返回受控错误。
 
+备份 H2 数据库时，先停止服务端，再把 `data/h2-data` 目录整体复制走。
+
+服务端停止时，H2 在自己的关闭钩子里关闭数据库，所以此刻正在处理的请求或后台任务可能以 `Database is already closed` 失败，服务端会记录该语句。服务端在停机前已确认的写入会保留，客户端可以重新发送失败的请求。
+
 ## 外置数据库配置
 
 以 PostgreSQL 为例：

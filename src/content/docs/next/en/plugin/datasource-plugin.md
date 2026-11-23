@@ -73,6 +73,10 @@ The database is stored under `${nacos.home}/data/h2-data`. H2 is available in st
 
 Switching from Derby to H2 does not migrate data, so the H2 database starts empty. The Derby-only operations, such as the Derby ops query and import APIs, reject `h2` with a controlled error.
 
+To back up the H2 database, stop the server and copy the `data/h2-data` directory as a whole.
+
+H2 closes the database in its own shutdown hook while the server stops, so a request or a background task that is being processed at that moment can fail with `Database is already closed`, and the server logs the statement. Writes that the server acknowledged before the stop are kept, and the client can send a failed request again.
+
 ## External Database Configuration
 
 PostgreSQL example:
