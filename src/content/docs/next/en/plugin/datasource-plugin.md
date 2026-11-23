@@ -71,7 +71,7 @@ nacos.plugin.datasource-dialect.type=h2
 
 The database is stored under `${nacos.home}/data/h2-data`. H2 is available in standalone mode only. In cluster mode, startup fails with `h2`, so use MySQL, PostgreSQL, or Oracle for clusters. If the H2 driver is missing, startup fails and the message names the jars to add. A Console that runs as a separate process (`nacos.deployment.type=console`) reads configuration through a remote server, so it needs no H2 driver and can share the configuration file of a server that selects `h2`.
 
-Switching from Derby to H2 does not migrate data, so the H2 database starts empty. The Derby-only operations, such as the Derby ops query and import APIs, reject `h2` with a controlled error. For Native Image, see [Native Quick Start](../quickstart/quick-start-native.mdx).
+Switching from Derby to H2 does not migrate data, so the H2 database starts empty. The Derby-only operations, such as the Derby ops query and import APIs, reject `h2` with a controlled error.
 
 ## External Database Configuration
 

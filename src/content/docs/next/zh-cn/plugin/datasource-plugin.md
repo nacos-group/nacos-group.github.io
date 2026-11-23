@@ -71,7 +71,7 @@ nacos.plugin.datasource-dialect.type=h2
 
 数据库文件位于 `${nacos.home}/data/h2-data`。H2 只支持单机模式。集群模式下使用 `h2` 会导致启动失败，集群请使用 MySQL、PostgreSQL 或 Oracle。缺少 H2 驱动时启动失败，报错信息会列出需要添加的 jar。单独部署的控制台进程（`nacos.deployment.type=console`）通过远程服务端读取配置，不需要 H2 驱动，可以与选择了 `h2` 的服务端共用同一份配置文件。
 
-从 Derby 切换到 H2 不会迁移数据，H2 数据库从空库开始。Derby 专用的运维接口（如 Derby ops 查询和导入）对 `h2` 返回受控错误。Native Image 的构建方式见 [Native 快速开始](../quickstart/quick-start-native.mdx)。
+从 Derby 切换到 H2 不会迁移数据，H2 数据库从空库开始。Derby 专用的运维接口（如 Derby ops 查询和导入）对 `h2` 返回受控错误。
 
 ## 外置数据库配置
 

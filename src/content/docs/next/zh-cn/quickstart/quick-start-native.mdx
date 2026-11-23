@@ -181,16 +181,6 @@ bash bin/shutdown.sh
 
 已在 **macOS ARM64、GraalVM CE `25.4.4.1.1`、单机合并部署**的环境中验证可用。
 
-### 使用嵌入式 H2
-
-H2 不需要实验性构建参数，因为 `nacos.native.derby.experimental` 只对 Derby 生效。它是可选项：默认插件包不包含它，因此需要在构建时启用，并在运行时选择：
-
-1. 在 `$NACOS_NATIVE_WORK/build.properties` 中设置 `nacos.plugin.datasource-dialect.type=h2`，构建会从该文件选择 H2 引擎。
-2. 在第 2.2 节的构建命令中把 `native-h2` 加入 profile 列表，即 `-Pnative,release-native,native-h2,!dev`。
-3. 在解压后的服务端 `conf/application.properties`（即 `$NACOS_NATIVE_WORK/run/nacos/conf/application.properties`）中设置同样的 `nacos.plugin.datasource-dialect.type=h2`。
-
-H2 只支持单机模式。数据目录为 `${nacos.home}/data/h2-data`。从 Derby 切换到 H2 不会迁移数据，H2 数据库从空库开始。
-
 ## 7. 自行构建 Docker 镜像
 
 Nacos 暂不提供官方 Native Docker 镜像。Native 的插件组合在构建时确定，新增或升级插件需要重新构建 Native 程序和镜像。
