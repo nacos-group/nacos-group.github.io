@@ -55,7 +55,7 @@ Nacos 通过数据源方言插件支持 Derby、MySQL、PostgreSQL、Oracle 和�
 
 | 参数名 | 说明 | 默认值 |
 | --- | --- | --- |
-| `nacos.plugin.datasource-dialect.type` | 启动时选择 `derby`、`h2`、`mysql`、`postgresql`、`oracle` 或自定义方言。`h2` 是可选的单机嵌入式引擎，需要在 `plugins/` 中放入 H2 驱动和 `nacos-datasource-plugin-h2` jar。 | 单机/embedded 为 `derby`，普通集群为 `mysql` |
+| `nacos.plugin.datasource-dialect.type` | 启动时选择 `derby`、`h2`、`mysql`、`postgresql`、`oracle` 或自定义方言。`h2` 是可选的单机嵌入式引擎，不属于 Nacos 3.3.0 及更早版本，需要在 `plugins/` 中放入 H2 驱动和 `nacos-datasource-plugin-h2` jar。 | 单机/embedded 为 `derby`，普通集群为 `mysql` |
 | `nacos.plugin.datasource.db.num` | 外置数据库连接地址数量。 | `0` |
 | `nacos.plugin.datasource.db.url.{index}` | 逐下标 JDBC URL。 | 空 |
 | `nacos.plugin.datasource.db.user[.{index}]` | 公共或逐连接用户名。 | 空 |

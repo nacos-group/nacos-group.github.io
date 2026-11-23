@@ -56,6 +56,10 @@ The selected dialect is the active critical provider. If it is missing or disabl
 
 H2 2.2.224 is an embedded engine written in pure Java. It is an opt-in alternative to embedded Derby for standalone servers. The default plugin bundle does not include it, and Derby remains the default embedded engine.
 
+:::note
+H2 is not part of Nacos 3.3.0 or earlier releases. It is available in builds of the `develop` branch and in the first release after 3.3.0.
+:::
+
 To use H2 on a standalone server:
 
 1. Copy the H2 driver (`com.h2database:h2`, version 2.2.224) and the `nacos-datasource-plugin-h2` jar into the server's `plugins/` directory. The jar is built from the `nacos-datasource-plugin-h2` module in the Nacos source tree, at `plugin-default-impl/nacos-default-datasource-plugin/nacos-datasource-plugin-h2`.
@@ -65,7 +69,7 @@ To use H2 on a standalone server:
 nacos.plugin.datasource-dialect.type=h2
 ```
 
-The database is stored under `${nacos.home}/data/h2-data`. H2 is available in standalone mode only. In cluster mode, startup fails with `h2`, so use MySQL, PostgreSQL, or Oracle for clusters. If the H2 driver is missing, startup fails and the message names the jars to add.
+The database is stored under `${nacos.home}/data/h2-data`. H2 is available in standalone mode only. In cluster mode, startup fails with `h2`, so use MySQL, PostgreSQL, or Oracle for clusters. If the H2 driver is missing, startup fails and the message names the jars to add. A Console that runs as a separate process (`nacos.deployment.type=console`) reads configuration through a remote server, so it needs no H2 driver and can share the configuration file of a server that selects `h2`.
 
 Switching from Derby to H2 does not migrate data, so the H2 database starts empty. The Derby-only operations, such as the Derby ops query and import APIs, reject `h2` with a controlled error. For Native Image, see [Native Quick Start](../quickstart/quick-start-native.mdx).
 
