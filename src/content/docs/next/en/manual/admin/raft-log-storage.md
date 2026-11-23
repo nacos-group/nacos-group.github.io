@@ -23,7 +23,9 @@ This guide is for users deploying and maintaining Nacos Server. Configuration an
 | Replication, elections, and majority commit | Continue to be handled by the JRaft protocol. |
 | Config Center database | Keeps the existing Derby or external database configuration. |
 
-The default RocksDB backend selection and existing data layout remain unchanged. Evaluate the file backend against the target filesystem, synchronous write costs, and recovery drills. The backend name alone does not establish performance or resource usage.
+:::note
+When the runtime environment supports it, use the default RocksDB backend for its more mature reliability and performance characteristics. The file backend is intended primarily as a fallback when RocksDB is unavailable on the target architecture or in the runtime environment. Existing nodes must still follow the migration restrictions below; changing the configuration alone does not migrate their data.
+:::
 
 ## 1. Configure the Backend
 
@@ -149,7 +151,7 @@ Segments hold the actual log records in the `segments/` directory. Each file con
 
 #### 3.1.1. File Organization and Rotation
 
-One Segment has a maximum size of 128 MiB, including a 40-byte header. Appends use the current active Segment. If its remaining capacity cannot hold the next complete record, storage flushes and closes the old Segment and creates a new one. A batch append can span multiple Segments.
+One Segment has a maximum size of 128 MiB, including a 40-byte header. Appends use the current active Segment. If its remaining capacity cannot hold the next complete record, storage ensures the old Segment is synchronized before closing it and creating a new one. A batch append can span multiple Segments.
 
 Segment file numbers are independent of log indexes. Manifest descriptors determine which logs a Segment retains, where reading starts, and where it ends. A file may therefore contain a truncated prefix or an unpublished tail; filenames and physical lengths alone do not establish the valid log range.
 
@@ -180,9 +182,9 @@ For a payload of length `L` after JRaft codec encoding, total record length is `
 | 16 | `L` | JRaft log entry payload. |
 | `16 + L` | 8 | Payload CRC64. |
 
-Reads validate the header, length, and record bounds before allocating a payload buffer. Decoded log indexes must be positive, terms non-negative, and entry types valid. Configuration entries also have membership validation. Recovery scanning requires entry indexes to match the expected contiguous positions.
+Recovery scanning may prefetch raw bytes within the Manifest's published range using a bounded buffer. The header, length, and record bounds must be validated before allocating a dedicated buffer based on the record header's length, allocating a payload buffer, or decoding the payload. Decoded log indexes must be positive, terms non-negative, and entry types valid. Configuration entries also have membership validation. Recovery scanning requires entry indexes to match the expected contiguous positions.
 
-CRC32 uses `java.util.zip.CRC32`, and CRC64 uses JRaft's `CrcUtil.crc64()`. Header checksums validate information such as length before payload reads, payload checksums detect corrupt record contents, and Segment header identity checks detect mixed files.
+CRC32 uses `java.util.zip.CRC32`, and CRC64 uses JRaft's `CrcUtil.crc64()`. Header checksums validate information such as length, payload checksums detect corrupt record contents, and Segment header identity checks detect mixed files.
 
 Checksums detect corruption but do not repair records. If a record in the published range fails validation, recovery cannot skip it and advance the log index.
 
@@ -296,11 +298,13 @@ The file backend validates the entire batch before writing files. Log indexes mu
 After validation, the batch follows this sequence:
 
 1. Append log records to the active Segment and write the Index alongside them.
-2. Flush the old Segment and create a new one when capacity is insufficient. Flush the final Segment after the batch is written.
+2. When capacity is insufficient, ensure the old Segment is synchronized before closing it and creating a new one. Flush the final Segment after the batch is written.
 3. Synchronize the `segments` directory if the new Manifest references newly created Segments.
 4. Write `manifest.tmp` and execute `force(true)` on the temporary file.
 5. Replace `manifest` using an atomic move within the same directory.
 6. Synchronize the `file-log` directory, update the in-memory Manifest, and complete local range publication.
+
+During rotation, redundant flushing is skipped if the old Segment is already synchronized and has no new changes.
 
 Directory synchronization follows the platform rules in Sections 4.4 and 4.6. Indexes are derived data; publication does not depend on flushing them. Recovery rebuilds them by scanning published Segments.
 
@@ -331,11 +335,11 @@ The filesystem containing the data path must support:
 - Exclusive file locking, so only one storage instance can open a directory.
 - Synchronous flushing of regular files. Logs and the temporary Manifest use `force(true)`.
 - Atomic Manifest replacement within the same directory.
-- Directory synchronization on platforms other than Windows. Initialization also synchronizes the ancestors of `file-log`; the runtime environment must support these operations.
+- Directory synchronization on platforms other than Windows. Initialization also synchronizes the ancestors of the resolved real `file-log` directory; the runtime environment must support these operations.
 
-File type checks apply to Segments, the Manifest, and related directories. Paths that require regular files or real directories cannot be replaced with symbolic links. Failures in required locking, flushing, or atomic replacement operations fail initialization or writes.
+The configured log directory and its ancestors may contain directory symbolic links. Initialization resolves them to a real path that remains fixed while the store is open. Managed directories (`file-log`, `segments`, and `index`) and managed files such as the Manifest, Segments, and Indexes must not be replaced with symbolic links. Failures in required locking, flushing, or atomic replacement operations fail initialization or writes.
 
-Directory synchronization runs for `segments`, `index`, `file-log`, and all its ancestors in that order, even if those directories already exist. On platforms other than Windows, the implementation opens directories and executes `force(true)`. The ability to create a file in the data directory alone therefore does not establish compatibility.
+Directory synchronization uses the resolved real paths and runs for `segments`, `index`, `file-log`, and all ancestors of `file-log` in that order, even if those directories already exist. On platforms other than Windows, the implementation opens directories and executes `force(true)`. The ability to create a file in the data directory alone therefore does not establish compatibility.
 
 ### 4.5. Concurrency Control and Directory Exclusion
 
@@ -366,7 +370,7 @@ When a node reopens its original directory, it acquires the exclusive lock, vali
 The detailed sequence is:
 
 1. Validate synchronous write options, the group ID, configuration manager, and log codec.
-2. Create and validate the root directory, acquire the `LOCK` exclusive lock, and create and synchronize required subdirectories and ancestors.
+2. Resolve or create the configured log directory, derive, create, and validate the real root directory, acquire the `LOCK` exclusive lock, and create and synchronize required subdirectories and real ancestors.
 3. Read and validate the Manifest. On first initialization, create a Manifest after confirming that the directory meets the empty-store requirements.
 4. Calculate the Segment number high-water mark before cleanup, so subsequent allocations do not reuse recognized numbers.
 5. Scan every record in the Manifest's published range, validate headers, checksums, identities, and contiguous indexes, rebuild Indexes, and collect Raft configuration entries.
