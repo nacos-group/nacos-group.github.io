@@ -257,7 +257,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST \
   --data-urlencode 'targetName=weather-imported' --data-urlencode 'targetVersion=0.0.1'
 ```
 
-MCP STDIO 不创建 Naming 服务；普通 REF 保留源引用；源自有 Direct 从唯一、合法的持久固定地址创建目标自有服务。目标服务已存在时冲突，失败回滚的目标是清理本次导入创建的资源。导入失败后，应检查目标草稿及依赖资源的状态，确认清理结果后再重试。删除目标不删除源或 REF 服务；源撤销不删除已导入目标。Agent 导入不复制动态运行时注册。
+MCP STDIO 不创建 Naming 服务；普通 REF 保留源引用；源自有 Direct 从唯一、合法的持久固定地址创建目标自有服务。目标服务已存在时冲突，失败回滚的目标是清理本次导入创建的资源。清理失败时，参见[重试说明](#51-导入或克隆失败后重试)。删除目标不删除源或 REF 服务；源撤销不删除已导入目标。Agent 导入不复制动态运行时注册。
 
 ## 3. 响应模型
 
@@ -351,6 +351,10 @@ Client Agent 保持 `AgentDiscoveryResult`，AgentSpec 保持 `AgentSpec`，不�
 `nacos.ai.hub.enabled=false` 时，在完成身份和参数检查后，共享目录返回空页，Hub 内容和七类管理操作返回 HTTP `501` / `API_FUNCTION_DISABLED`（`40001`）。Skill 直接克隆不受此开关影响。
 
 参数非法通常为 HTTP `400` / `PARAMETER_VALIDATE_ERROR`（`20002`）；权限拒绝为 `403`，CAS、同名或服务依赖冲突为 `409`。不存在或失效资源按照各资源接口的既有错误模型返回，不能假定所有类型的业务错误码相同。来源存储系统故障应返回脱敏 5xx，不能伪装为空目录。错误结果与成功结果应分开处理。
+
+### 5.1. 导入或克隆失败后重试
+
+Hub 导入或 Skill 跨命名空间克隆失败后，如果清理也未完成，服务端会保留目标名称的占位记录和恢复信息。此时编辑或删除目标资源，或在同一命名空间使用相同目标名称重试，都可能返回 HTTP `409`。请等管理员检查目标草稿及相关依赖资源、确认清理完成后再重试。
 
 ## 6. SDK 与进一步阅读
 

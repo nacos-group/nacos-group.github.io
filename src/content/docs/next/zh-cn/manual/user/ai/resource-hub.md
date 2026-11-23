@@ -66,6 +66,8 @@ nacos.ai.hub.enabled=true
 - 已撤销或失效的共享无法导入。
 - 导入后按 [AI 资源生命周期](./ai-resource-lifecycle.md) 审核和发布。
 
+Hub 导入或 Skill 跨命名空间克隆失败后，如果清理也未完成，服务端会保留目标名称的占位记录和恢复信息。此时编辑或删除目标资源，或在同一命名空间使用相同目标名称重试，都可能返回 HTTP `409`。请等管理员检查目标草稿及相关依赖资源、确认清理完成后再重试。
+
 API 和 SDK 调用方式见[运维 API](../../admin/admin-api.md#12-agentic-resource-hub) 和 [Maintainer SDK](../../admin/maintainer-sdk.md#13-agentic-resource-hub)。
 
 ## 5. 同集群跨 Namespace 克隆（仅 Skill）
@@ -73,6 +75,8 @@ API 和 SDK 调用方式见[运维 API](../../admin/admin-api.md#12-agentic-reso
 通过 API 或 Maintainer SDK 指定源 Namespace、Skill 名称和已上线版本，以及目标 Namespace、名称和版本。源 Skill 必须已启用，调用方需具备源 READ 和目标 WRITE 权限，并通过源资源可见性检查。
 
 使用 `POST /v3/admin/ai/hub/skills/clone` 或对应 Console 路由；Maintainer SDK 使用 `cloneHubSkill`。较早版本的 Skill 复制接口使用 `/copy` 和 `copyHubSkill`，请按部署版本选择对应接口。目标为独立草稿，按普通生命周期审核和发布。兼容来源标记仍为 `DIRECT_COPY`。其余四类资源仅支持从 Hub 导入，没有直接克隆入口。
+
+如果失败后的清理未完成，再次使用该目标名称前请参见[重试说明](../../admin/resource-hub-api.md#51-导入或克隆失败后重试)。
 
 ## 6. 关闭 Hub
 
@@ -154,10 +158,12 @@ Profile 的 `source` 支持 `namespace`、`hub` 和 `all`。未设置时，CLI �
 
 ```shell
 nacos-cli skill-list --hub --name demo --output json
-nacos-cli skill-get demo --hub-entry-id 101
+nacos-cli skill-get demo --hub-entry-id 101 -o ./hub-downloads/skill-101
 nacos-cli agentspec-list --hub --name demo --output json
-nacos-cli agentspec-get demo --hub-entry-id 205 --version 2.0.0
+nacos-cli agentspec-get demo --hub-entry-id 205 --version 2.0.0 -o ./hub-downloads/agentspec-205-v2
 ```
+
+每次下载请选择一个新的输出目录。如果目录中已有同名 Skill，CLI 会提示覆盖并继续写入同名文件；如果该 Skill 目录是同步链接，写入会作用于链接指向的文件。
 
 Profile 显式设置 `source=all` 且命令未指定来源选项时，`--page` 和 `--size` 分别对两个来源生效。JSON 的 `namespace` 和 `hub` 各有自己的总数、页码和条目。完整 JSON 示例见 [CLI 手册](../../admin/nacos-cli.md)。
 

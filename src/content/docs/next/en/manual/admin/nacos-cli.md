@@ -307,10 +307,12 @@ To download a specific Hub entry, pass its display name and `--hub-entry-id <id>
 
 ```shell
 nacos-cli skill-list --hub --name demo --output json
-nacos-cli skill-get demo --hub-entry-id 101
+nacos-cli skill-get demo --hub-entry-id 101 -o ./hub-downloads/skill-101
 nacos-cli agentspec-list --hub --name demo --output json
-nacos-cli agentspec-get demo --hub-entry-id 205 --version 2.0.0
+nacos-cli agentspec-get demo --hub-entry-id 205 --version 2.0.0 -o ./hub-downloads/agentspec-205-v2
 ```
+
+Choose a fresh output directory for each download. If a same-name Skill directory already exists, the CLI warns and then overwrites matching files. If the directory is a sync link, the write affects the linked files.
 
 Single-source JSON has a top-level `pageItems` array. To list both sources, set `source=all` in the current Profile (`nacos-cli profile set source=all`) and run the list command without a source flag. `--page` and `--size` apply independently to each source. For example, `skill-list --output json` returns the following when neither source has a match.
 
@@ -538,7 +540,7 @@ nacos-cli agentspec-get <agentspec-name> --version v1
 nacos-cli agentspec-get <agentspec-name> --no-hub --label latest
 
 # Download the shared version of a Hub entry
-nacos-cli agentspec-get demo --hub-entry-id 205
+nacos-cli agentspec-get demo --hub-entry-id 205 -o ./hub-downloads/agentspec-205
 
 # Download multiple AgentSpecs
 nacos-cli agentspec-get spec1 spec2 spec3

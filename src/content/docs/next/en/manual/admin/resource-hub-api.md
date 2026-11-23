@@ -257,7 +257,7 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST \
   --data-urlencode 'targetName=weather-imported' --data-urlencode 'targetVersion=0.0.1'
 ```
 
-MCP STDIO creates no Naming service; ordinary REF retains its original reference; source-owned Direct creates a target-owned service from one valid, unambiguous persistent fixed address. Existing target services conflict. Rollback is intended to remove resources created by the failed import. After a failed import, check the target draft and dependent resources and confirm the cleanup result before retrying. Target deletion preserves source/REF services; source revocation preserves imported targets. Agent import does not copy dynamic runtime registrations.
+MCP STDIO creates no Naming service; ordinary REF retains its original reference; source-owned Direct creates a target-owned service from one valid, unambiguous persistent fixed address. Existing target services conflict. Rollback is intended to remove resources created by the failed import. If cleanup fails, follow the [retry instructions](#51-retrying-a-failed-import-or-clone). Target deletion preserves source/REF services; source revocation preserves imported targets. Agent import does not copy dynamic runtime registrations.
 
 ## 3. Response Models
 
@@ -351,6 +351,10 @@ Client Agent retains `AgentDiscoveryResult`; AgentSpec retains `AgentSpec`. Neit
 With `nacos.ai.hub.enabled=false`, shared directories return empty pages after identity and parameter checks. Hub content and all seven management operations return HTTP `501` / `API_FUNCTION_DISABLED` (`40001`). Skill direct cloning remains available.
 
 Invalid parameters normally return HTTP `400` / `PARAMETER_VALIDATE_ERROR` (`20002`); permission rejection is `403`; CAS, name or service-dependency conflicts are `409`. Missing/invalid resources retain each resource API's error model; do not assume one business error code across every type. Source-storage system faults must return sanitized 5xx rather than an empty directory. Handle unsuccessful results separately.
+
+### 5.1. Retrying a failed import or clone
+
+If cleanup fails after a Hub import or a cross-Namespace Skill clone, the server retains the target name reservation and its recovery information. While the name is reserved, editing or deleting the target, or retrying with the same name in the same Namespace, may return HTTP `409`. Retry only after an administrator has checked the target draft and any dependent resources and confirmed that cleanup is complete.
 
 ## 6. SDK and Further Reading
 

@@ -8477,6 +8477,8 @@ A `NacosException` is thrown when the request fails or the server returns a non-
 
 Use the `skill()`, `mcp()`, `agent()`, `prompt()` and `agentSpec()` facades. The existing Skill reference is followed by all seven management methods for each additional type. Models are in `com.alibaba.nacos.api.ai.model.hub`; SDK ID/CAS fields are `Long`, while HTTP JSON serializes them as strings. See the [Hub extension API reference](./resource-hub-api.md) for field constraints and response models. All new methods may throw `NacosException` for invalid parameters, permissions, CAS/name conflicts, invalid shares or disabled Hub. Example IDs/revisions are placeholders; fetch current state in real use. The four additional types have no direct clone methods.
 
+If an import or a Skill clone fails and cleanup is incomplete, follow the [retry instructions](./resource-hub-api.md#51-retrying-a-failed-import-or-clone).
+
 Obtain `SkillMaintainerService` from `aiMaintainerService.skill()`. Special management request/response types are in `com.alibaba.nacos.api.ai.model.hub`; ordinary shared-read models are in `com.alibaba.nacos.api.ai.model.skills`. Reads reuse the namespace-aware Skill SDK methods with `__nacos_ai_hub__`. The special management methods and general ZIP download method are available from `3.3.0`.
 
 ### 13.1. Share a Skill

@@ -307,10 +307,12 @@ nacos> skill-list --output json
 
 ```shell
 nacos-cli skill-list --hub --name demo --output json
-nacos-cli skill-get demo --hub-entry-id 101
+nacos-cli skill-get demo --hub-entry-id 101 -o ./hub-downloads/skill-101
 nacos-cli agentspec-list --hub --name demo --output json
-nacos-cli agentspec-get demo --hub-entry-id 205 --version 2.0.0
+nacos-cli agentspec-get demo --hub-entry-id 205 --version 2.0.0 -o ./hub-downloads/agentspec-205-v2
 ```
+
+每次下载请选择一个新的输出目录。如果目录中已有同名 Skill，CLI 会提示覆盖并继续写入同名文件；如果该 Skill 目录是同步链接，写入会作用于链接指向的文件。
 
 查询单一来源时，JSON 的 `pageItems` 位于顶层。要同时查询两个来源，可执行 `nacos-cli profile set source=all` 设置当前 Profile，再运行不带来源选项的列表命令。`--page` 和 `--size` 分别对两个来源生效。例如，两个来源都没有匹配项时，`skill-list --output json` 返回如下结果。
 
@@ -538,7 +540,7 @@ nacos-cli agentspec-get <agentspec-name> --version v1
 nacos-cli agentspec-get <agentspec-name> --no-hub --label latest
 
 # 下载指定 Hub 条目的共享版本
-nacos-cli agentspec-get demo --hub-entry-id 205
+nacos-cli agentspec-get demo --hub-entry-id 205 -o ./hub-downloads/agentspec-205
 
 # 批量下载多个 AgentSpec
 nacos-cli agentspec-get spec1 spec2 spec3

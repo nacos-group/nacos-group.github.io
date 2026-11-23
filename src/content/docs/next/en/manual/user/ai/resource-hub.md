@@ -66,6 +66,8 @@ Select import on the Hub detail page and enter a writable target Namespace, targ
 - Revoked or invalid shares cannot be imported.
 - Review and publish the draft through the [AI Resource Lifecycle](./ai-resource-lifecycle.md).
 
+If cleanup fails after a Hub import or a cross-Namespace Skill clone, the server retains the target name reservation and its recovery information. While the name is reserved, editing or deleting the target, or retrying with the same name in the same Namespace, may return HTTP `409`. Retry only after an administrator has checked the target draft and any dependent resources and confirmed that cleanup is complete.
+
 For API and SDK usage, see [Admin API](../../admin/admin-api.md#12-agentic-resource-hub) and [Maintainer SDK](../../admin/maintainer-sdk.md#13-agentic-resource-hub).
 
 ## 5. Direct Clone within a Cluster: Skill Only
@@ -73,6 +75,8 @@ For API and SDK usage, see [Admin API](../../admin/admin-api.md#12-agentic-resou
 Use the API or Maintainer SDK to specify the source Namespace, Skill name and online version, together with the target Namespace, name and version. The source Skill must be enabled. The caller needs source READ and target WRITE permissions and must pass source visibility checks.
 
 Use `POST /v3/admin/ai/hub/skills/clone` or the corresponding Console route; the Maintainer SDK method is `cloneHubSkill`. Earlier versions use `/copy` and `copyHubSkill` for Skill copies. Choose the interface supported by your deployed version. The target is an independent draft reviewed and published through the ordinary lifecycle. The compatible provenance marker remains `DIRECT_COPY`. The other four types support Hub import only, without direct clone entry points.
+
+If cleanup is incomplete, follow the [retry instructions](../../admin/resource-hub-api.md#51-retrying-a-failed-import-or-clone) before reusing the target name.
 
 ## 6. Disable Hub
 
@@ -154,10 +158,12 @@ To download a specific share, pass its display name and the `hubEntryId` from th
 
 ```shell
 nacos-cli skill-list --hub --name demo --output json
-nacos-cli skill-get demo --hub-entry-id 101
+nacos-cli skill-get demo --hub-entry-id 101 -o ./hub-downloads/skill-101
 nacos-cli agentspec-list --hub --name demo --output json
-nacos-cli agentspec-get demo --hub-entry-id 205 --version 2.0.0
+nacos-cli agentspec-get demo --hub-entry-id 205 --version 2.0.0 -o ./hub-downloads/agentspec-205-v2
 ```
+
+Choose a fresh output directory for each download. If a same-name Skill directory already exists, the CLI warns and then overwrites matching files. If the directory is a sync link, the write affects the linked files.
 
 With `source=all` in the Profile and no source flag, the CLI applies the same `--page` and `--size` to each source. The `namespace` and `hub` objects in JSON each carry their own total, page number and items. See the [CLI manual](../../admin/nacos-cli.md) for a JSON example.
 

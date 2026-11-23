@@ -8477,6 +8477,8 @@ try {
 
 五类分别使用 `skill()`、`mcp()`、`agent()`、`prompt()`、`agentSpec()` facade。下文先保留 Skill，再逐项列出四类扩展的七个管理方法。模型均来自 `com.alibaba.nacos.api.ai.model.hub`；SDK 的 ID/CAS 字段为 `Long`，HTTP JSON 才按字符串序列化。字段约束与响应展开见 [Hub 扩展接口参考](./resource-hub-api.md)。所有新方法均可能抛出 `NacosException`，包括参数、权限、CAS/名称冲突、共享失效或关闭；示例 ID 和修订仅为占位，实际应读取最新状态。四类扩展没有直接克隆方法。
 
+导入或 Skill 克隆失败且清理未完成时，参见[重试说明](./resource-hub-api.md#51-导入或克隆失败后重试)。
+
 通过 `aiMaintainerService.skill()` 获取 `SkillMaintainerService`。特殊管理请求和响应模型位于 `com.alibaba.nacos.api.ai.model.hub`，普通共享读取模型位于 `com.alibaba.nacos.api.ai.model.skills`。读取传入 `__nacos_ai_hub__` 复用按命名空间查询的 Skill SDK 方法；特殊管理方法和通用 ZIP 下载方法从 `3.3.0` 开始提供。
 
 ### 13.1. 共享 Skill

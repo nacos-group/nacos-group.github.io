@@ -10847,6 +10847,8 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" --get 'http://127.0.0.1:8080/v3/con
 
 Import an effective Hub version into the target Namespace as an independent Skill draft with provenance. Source Namespace, name and version parameters must be omitted.
 
+If cleanup is incomplete, follow the [retry instructions](./resource-hub-api.md#51-retrying-a-failed-import-or-clone) before reusing the target name.
+
 #### Since
 
 `3.3.0`
@@ -10922,6 +10924,8 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X POST 'http://127.0.0.1:8080/v3/c
 #### Description
 
 Copy a specified source version into the target Namespace as an independent Skill draft with provenance. The source Skill must be enabled and the version online. This operation remains available when Hub is disabled. `hubEntryId` must be omitted.
+
+If cleanup is incomplete, follow the [retry instructions](./resource-hub-api.md#51-retrying-a-failed-import-or-clone) before reusing the target name.
 
 #### Since
 
