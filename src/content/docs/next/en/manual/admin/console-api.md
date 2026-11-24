@@ -9008,7 +9008,9 @@ Copilot-related APIs provide configuration retrieval and saving, Prompt debuggin
 
 #### Description
 
-Get the current Copilot configuration. The response contains the stored editable fields, the sanitized model connection list, and the connection currently routed for Copilot. The stored api key is always masked, and no connection entry contains a credential.
+Get the current Copilot configuration. The response contains the stored editable fields, the sanitized model connection list, and the connection currently routed for Copilot. The stored api key is always masked, and no connection entry contains a credential. Legacy credentials use deployment > stored > `COPILOT_API_KEY`; a clear at the highest declaring source blocks lower sources, and a stored clear cannot erase a deployment key. Without real legacy declarations, no synthetic `LEGACY` connection is returned.
+
+Runtime status and refresh are per node: saving through one console does not implicitly refresh another. Nodes need matching provider dependencies and configuration, plus aligned storage server, namespace, and permissions. Deleting a deployment setting requires restart before a stored value can take effect; see [Copilot configuration and refresh](../copilot/#4-configuration-precedence-and-refresh).
 
 #### Since
 
@@ -9095,13 +9097,17 @@ curl -H "accessToken: ${NACOS_ACCESS_TOKEN}" -X GET 'http://127.0.0.1:8080/v3/co
 }
 ```
 
+An unreadable or invalid stored JSON object returns HTTP 503 / `SERVER_ERROR`, without credential details or fabricated defaults. JSON followed by trailing content is also invalid; saving rejects it before writing.
+
 ### 11.2. Save Copilot Configuration
 
 #### Description
 
-Create or update the Copilot configuration. Only `apiKey`, `model`, `studioUrl`, `studioProject`, and `selectedConnection` are processed; other fields, including `enabled` and `defaultNamespace`, are ignored. A field absent from the request keeps its stored value, and only the submitted fields are patched into the stored document; absent fields are not backfilled from deployment values or defaults. The save persists the document with an MD5 compare-and-set guard before activating the new snapshot, so a failed persist leaves the in-memory configuration unchanged. The stored `apiKey` and `model` belong to the deprecated legacy connection; prefer the model connections configured under `nacos.copilot.connections.*`.
+Create or update the Copilot configuration. Only `apiKey`, `model`, `studioUrl`, `studioProject`, and `selectedConnection` are processed; other fields, including `enabled` and `defaultNamespace`, are ignored. Only submitted fields are patched; omitted fields and stored JSON `null` clear declarations are preserved, without backfilling deployment values or defaults. The deprecated `apiKey` and `model` remain editable even without a runtime `LEGACY` connection; prefer `nacos.copilot.connections.*` for new deployments.
 
-`selectedConnection` is validated against the connection table from the most recent configuration refresh, so the check itself does not contact the provider. After a successful save the configuration is re-bound synchronously before the response, and connection validation during that refresh can resolve an explicit `baseUrl`, so the save request as a whole is not free of availability-check I/O. Adding a stored key for the legacy connection and selecting that connection therefore takes two requests: save the key first, then the selection once the refreshed table reports the connection as available. Clearing a stored key while keeping the same selection is accepted, and a successful save does not leave the connection in a pending state; it is simply re-evaluated by the refresh that follows.
+The save validates, reads the stored document, persists with an MD5 conditional-update guard or a guarded first create, then resolves and atomically activates the new snapshot. Local and remote conflicts re-read and re-apply the patch. A read failure before persistence rejects the save without writing; a failed persist leaves runtime state unchanged. A runtime activation exception returns HTTP 500 / `SERVER_ERROR` with "stored but not activated" and a sanitized reason: the document is stored, but this node keeps its previous snapshot until another refresh. A rare local read failure after persistence remains a deferred gap, logged without compensation or a new state protocol.
+
+`selectedConnection` is validated against the connection table from the most recent configuration refresh, so the check itself does not contact the provider. The save waits for synchronous refresh, including model validation, DNS lookup for an explicit `baseUrl`, and Studio initialization when configured. Step5 asynchronous save/validation and a `configValid` migration remain pending; the current API retains `available` and `unavailableReason`. Adding a stored key for the legacy connection and selecting that connection therefore takes two requests: save the key first, then the selection once the refreshed table reports the connection as available. Clearing a stored key while keeping the same selection is accepted, and a successful save does not leave the connection in a pending state; it is simply re-evaluated by the refresh that follows.
 
 #### Since
 
@@ -9127,9 +9133,9 @@ A user identity with the corresponding `namespace write` permission is required.
 |--------|------|------|----------|
 | `apiKey` | `string` | No | Three-state stored key: omit it or send the masked value to keep the stored key, send a new value to replace it, or send an empty string to clear a stored key and stop the legacy connection from falling back to `COPILOT_API_KEY`. An empty value without a stored key is a no-op. |
 | `model` | `string` | No | Model identifier used by the deprecated legacy connection. If omitted, the existing value is retained. |
-| `studioUrl` | `string` | No | Associated AgentScope Studio service URL. If omitted, the existing value or default configuration is retained. |
-| `studioProject` | `string` | No | Associated AgentScope Studio project identifier. If omitted, the existing value or default configuration is retained. |
-| `selectedConnection` | `string` | No | Connection name used by routing. Leading and trailing whitespace is trimmed; an empty string clears the stored selection so the default selection order applies. A non-empty value must name an existing, enabled, and available connection; the declared connection name is stored, and an unknown, disabled, or unavailable connection is rejected with HTTP 400. If omitted, the stored selection is retained. |
+| `studioUrl` | `string` | No | Associated AgentScope Studio service URL. Omission preserves the stored declaration (or absence), without backfilling defaults. |
+| `studioProject` | `string` | No | Associated AgentScope Studio project identifier. Omission preserves the stored declaration (or absence), without backfilling defaults. |
+| `selectedConnection` | `string` | No | Connection name used by routing. Leading and trailing whitespace is trimmed; an empty or whitespace-only string persists a JSON `null` clear declaration for Automatic, preserved by unrelated saves. Deployment selection still takes precedence. A non-empty value must name an existing, enabled, and available connection; the declared connection name is stored, and an unknown, disabled, or unavailable connection is rejected with HTTP 400. If omitted, the stored selection is retained. |
 
 #### Response Data
 
