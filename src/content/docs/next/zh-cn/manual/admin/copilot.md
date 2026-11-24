@@ -66,7 +66,7 @@ Copilot 按以下顺序路由请求：
 
 ## 4. 配置优先级与刷新
 
-生效配置按字段合并：`nacos.copilot.*` 中显式设置的值覆盖 `copilot-config.json`，后者覆盖内置默认值。`nacos.copilot.selectedConnection` 为空白时视为未声明，既不清理也不覆盖已存选择；凭据字段只在被显式清空时才按清除处理。连接字段只从部署配置读取；通过通用配置接口把同名字段写入 `copilot-config.json` 不会覆盖部署侧连接。
+生效的 Copilot 配置按字段从三路输入解析：`nacos.copilot.*`、`copilot-config.json` 与内置默认值。部署配置声明的字段覆盖已存值，已存值覆盖默认值。字符串字段声明为 null、空串或纯空白表示清除，并阻断更低来源；`false` 与 `0` 是实值。连接字段只从部署配置读取；通过通用配置接口把同名字段写入 `copilot-config.json` 不会覆盖部署侧连接。`nacos.copilot.selectedConnection` 为空白时清除当前生效选择，路由使用默认顺序；控制台已存值不受影响，移除该部署项后会重新生效。
 
 merged 部署在配置文件变化时会重新绑定 `nacos.copilot.*`，连接表、`selectedConnection` 和 `enabled` 无需重启即可生效。纯控制台部署不监听配置文件，必须重启。运行中修改环境变量不会被感知，同样需要重启。
 
