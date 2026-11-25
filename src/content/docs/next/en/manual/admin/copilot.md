@@ -45,9 +45,9 @@ nacos.copilot.selectedConnection=prod-qwen
 
 ### 2.1 Connection names
 
-- Names are case-insensitive: they are trimmed and lower-cased with `Locale.ROOT` before merging, lookup, and selection, so `Prod-Qwen` and `prod-qwen` identify the same connection. `nacos.copilot.selectedConnection` follows the same rule.
-- A name is a single configuration-key element, so it may contain only ASCII letters, digits, and `-`. Dots and surrounding whitespace are not valid in a key. A declaration that violates this grammar is skipped with a warning instead of being loaded.
-- When one connection is declared under several spellings, the lower-case spelling wins if it is present; otherwise the first spelling in lexicographic order wins. The other spellings are reported and ignored, including their fields.
+- Names follow Spring's configuration-key rules: `Prod-Qwen`, `PROD-QWEN`, and `prod-qwen` identify the same connection, and `nacos.copilot.selectedConnection` is trimmed and lower-cased before merging, lookup, and selection. A name is one configuration-key element; declarations containing dots or non-ASCII characters cannot be resolved by Spring and are ignored. An underscore is not a name separator: `prod_qwen` resolves to a separate connection named `prodqwen`.
+- When one connection is declared under several spellings, the spellings belong to the same configuration block and their fields merge into one connection; no spelling is selected over another and no spelling's fields are dropped.
+- Connection fields follow Spring's precedence: JVM system properties over environment variables, and environment variables over property files. The environment-variable spelling replaces dots and hyphens with underscores, for example `NACOS_COPILOT_CONNECTIONS_PROD_QWEN_MODEL` and `NACOS_COPILOT_CONNECTIONS_PROD_QWEN_API_KEY`; an explicit empty value at higher precedence blocks lower values. This applies to keys only; model, credential, and selection values are used verbatim.
 - A deployment connection replaces the entire lower-source connection with the same normalized name; it does not inherit its fields.
 
 ### 2.2 Validation

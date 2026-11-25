@@ -45,9 +45,9 @@ nacos.copilot.selectedConnection=prod-qwen
 
 ### 2.1 连接名
 
-- 连接名大小写不敏感：合并、查找和选择前会去除首尾空白并用 `Locale.ROOT` 转小写，因此 `Prod-Qwen` 与 `prod-qwen` 是同一个连接。`nacos.copilot.selectedConnection` 遵循同一规则。
-- 连接名是单个配置键元素，只能包含 ASCII 字母、数字和 `-`。配置键中不允许点和首尾空白；不符合该语法的声明会被跳过并输出告警。
-- 同一连接以多种拼写声明时，存在小写拼写则小写胜出，否则按字典序取第一个拼写；其他拼写（包括其字段）会被忽略并上报。
+- 连接名按 Spring 的配置键规则解析：`Prod-Qwen`、`PROD-QWEN` 与 `prod-qwen` 是同一个连接，`nacos.copilot.selectedConnection` 在合并、查找和选择前会去除首尾空白并转小写。连接名是单个配置键元素；含点号或非 ASCII 字符的声明 Spring 无法解析，会被忽略。下划线不是连接名分隔符：`prod_qwen` 会被解析为另一个连接 `prodqwen`。
+- 同一连接以多种拼写声明时，各拼写属于同一块配置，字段合并到同一个连接，不会按拼写择一，也不会丢弃其他拼写的字段。
+- 连接字段按 Spring 的优先级解析：JVM 系统属性高于环境变量，环境变量高于配置文件。环境变量把点号和连字符换成下划线，例如 `NACOS_COPILOT_CONNECTIONS_PROD_QWEN_MODEL`、`NACOS_COPILOT_CONNECTIONS_PROD_QWEN_API_KEY`；高优先级的显式空值会阻止更低优先级取值。该规则只作用于配置键，模型、凭据等取值按原样使用。
 - 部署侧连接按归一化名称整体替换同名的低优先级连接，不继承其字段。
 
 ### 2.2 校验
