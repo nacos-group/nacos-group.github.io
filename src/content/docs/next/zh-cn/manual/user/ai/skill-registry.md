@@ -12,6 +12,8 @@ Skill 管理（Skill Registry）是 Nacos 提供的私有 Skill 仓库能力。�
 
 Nacos 从 `3.2.0` 版本开始，提供了 Skill 管理能力，支持 Skill 的创建、版本管理、安全审核、发布和分发。
 
+包含 Hub 实现的开发构建支持通过 [Agentic Resource Hub](./resource-hub.md) 跨 Namespace 共享、导入和克隆 Skill；请确认部署构建包含此能力。Hub 同时支持 MCP、Agent、Prompt、AgentSpec 共享与导入，直接克隆仅限 Skill。
+
 ## 1. Nacos 中的 Skill
 
 ### 1.1. Skill 的定义与结构
