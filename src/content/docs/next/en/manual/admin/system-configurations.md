@@ -55,7 +55,7 @@ Nacos supports Derby, MySQL, PostgreSQL, Oracle, and custom database types throu
 
 | Property | Description | Default |
 | --- | --- | --- |
-| `nacos.plugin.datasource-dialect.type` | Select `derby`, `mysql`, `postgresql`, `oracle`, or a custom dialect at startup. | `derby` for standalone/embedded; `mysql` for ordinary cluster |
+| `nacos.plugin.datasource-dialect.type` | Select `derby`, `h2`, `mysql`, `postgresql`, `oracle`, or a custom dialect at startup. `h2` is an opt-in standalone embedded engine that is not part of Nacos 3.3.0 or earlier; it needs the H2 driver and the `nacos-datasource-plugin-h2` jar in `plugins/`. | `derby` for standalone/embedded; `mysql` for ordinary cluster |
 | `nacos.plugin.datasource.db.num` | Number of external database URLs. | `0` |
 | `nacos.plugin.datasource.db.url.{index}` | JDBC URL for each index. | empty |
 | `nacos.plugin.datasource.db.user[.{index}]` | Shared or per-connection username. | empty |
