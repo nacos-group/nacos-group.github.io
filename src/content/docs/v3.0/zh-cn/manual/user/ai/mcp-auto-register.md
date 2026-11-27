@@ -199,7 +199,7 @@ or
 ```
 或者使用 提供的ToolCallbackProvider
 ```java
-@Qualifier("loadbalancedSyncMcpToolCallbacks") ToolCallbackProvider tools
+@Qualifier("loadbalancedMcpSyncToolCallbacks") ToolCallbackProvider tools
 ```
 or
 ```java
