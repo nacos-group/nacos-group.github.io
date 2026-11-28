@@ -13,7 +13,7 @@ Nacos 从 2.1.0 开始支持通过 [SPI](https://docs.oracle.com/javase/tutorial
 鉴权插件回答的问题是：**当前请求是谁发起的，它是否可以对目标资源执行这个操作**。
 
 ```text
-IdentityContext + Resource + Action -> 允许或拒绝
+IdentityContext + Permission(resource, action, requestTarget) -> 允许或拒绝
 ```
 
 如果你只是想开启 Nacos 自带的鉴权能力，请先阅读[运维手册 - 权限校验](../manual/admin/auth.mdx)。如果你要接入企业身份系统，请阅读 [OIDC/OAuth2 认证](../manual/admin/oidc-auth.md)。本文更关注插件模型、内置插件边界和扩展开发。
@@ -76,6 +76,20 @@ Nacos 当前主要使用两类操作：
 | --- | --- |
 | `r` | 读、查询、列表、订阅等读操作。 |
 | `w` | 创建、更新、删除、发布等写操作。 |
+
+### 权限 Permission
+
+`Permission` 是传给 `validateAuthority` 的对象，包含资源、操作和一个可选的请求目标。
+
+| 字段 | 说明 |
+| --- | --- |
+| `resource` | 请求解析出的 Nacos `Resource`。 |
+| `action` | 请求的操作，通常为 `r` 或 `w`。 |
+| `requestTarget` | 触发本次校验的端点。HTTP 为 `${method} ${uri}`；gRPC 为请求类的简单类名。 |
+
+`requestTarget` 用于区分共享同一资源和操作的不同端点。例如 `GET /v3/console/cs/config/list` 和 `GET /v3/console/cs/config/export2` 都是对同一命名空间资源的 `r` 操作，插件可以根据请求目标放行列表、拒绝导出。
+
+协议鉴权过滤器之外创建的权限校验，该字段为 `null`。它只是补充上下文：资源和操作仍是授权输入，插件不得从请求目标推导受保护的资源。
 
 ## 内置鉴权实现
 
@@ -287,7 +301,7 @@ nacos.plugin.auth.oidc.scope=openid profile email
 | `identityNames()` | 声明插件需要从请求中提取的身份字段。 |
 | `enableAuth(action, type)` | 判断指定操作和资源类型是否需要鉴权。 |
 | `validateIdentity(identityContext, resource)` | 校验身份，并把已认证用户等信息写入 `IdentityContext`。 |
-| `validateAuthority(identityContext, permission)` | 校验身份是否拥有目标资源的目标操作权限。 |
+| `validateAuthority(identityContext, permission)` | 校验身份是否拥有目标资源的目标操作权限。权限对象还可能携带触发本次校验的请求目标。 |
 | `isLoginEnabled()` | 判断控制台是否展示插件提供的登录能力。 |
 | `isAdminRequest()` | 判断当前请求是否属于管理员初始化流程。 |
 

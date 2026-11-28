@@ -182,6 +182,16 @@ nacos.plugin.auth.oidc.username-claim=preferred_username
 如果生产环境需要按命名空间、配置、服务或 AI 资源做权限隔离，请配置 `nacos.plugin.auth.oidc.authorization-endpoint`，或提供更严格的授权实现。当前实现中该配置为空时，非管理员授权判断会默认放行。
 :::
 
+发送到 `authorization-endpoint` 的请求体包含：
+
+| 字段 | 含义 |
+|------|------|
+| `token` | 用户 access token。 |
+| `resource` | 从 `Resource` 推导出的 Nacos resource URI。 |
+| `action` | Nacos action，例如 `read` 或 `write`。 |
+| `resourceType`、`namespace`、`group`、`resourceName` | 结构化的 Nacos 资源身份。 |
+| `requestTarget` | 触发本次校验的端点，例如 `GET /v3/console/cs/config/list`。可以用它放行同一资源上的列表 API、拒绝导出 API。未知时省略。 |
+
 ### 3.5 Java SDK OAuth2 Client Credentials 配置
 
 Java SDK 的 OIDC/OAuth2 客户端鉴权使用 OAuth2 Client Credentials flow，适合服务到服务访问。

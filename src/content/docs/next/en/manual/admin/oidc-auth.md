@@ -182,6 +182,16 @@ nacos.plugin.auth.oidc.username-claim=preferred_username
 If production needs permission isolation by namespace, config, service, or AI resource, configure `nacos.plugin.auth.oidc.authorization-endpoint`, or provide a stricter authorization implementation. In the current implementation, an empty endpoint allows non-admin authorization decisions by default.
 :::
 
+The request body sent to `authorization-endpoint` contains:
+
+| Field | Meaning |
+|-------|---------|
+| `token` | User access token. |
+| `resource` | Nacos resource URI derived from `Resource`. |
+| `action` | Nacos action, such as `read` or `write`. |
+| `resourceType`, `namespace`, `group`, `resourceName` | Structured Nacos resource identity. |
+| `requestTarget` | Endpoint that triggered the check, such as `GET /v3/console/cs/config/list`. Use it to allow a list API and deny an export API on the same resource. Omitted when unknown. |
+
 ### 3.5 Java SDK OAuth2 Client Credentials
 
 The Java SDK OIDC/OAuth2 client auth uses the OAuth2 Client Credentials flow. It is intended for service-to-service access.
