@@ -13,7 +13,7 @@ Since 2.1.0, Nacos can load auth implementations through [SPI](https://docs.orac
 An auth plugin answers one question: **who is calling, and can that caller perform this action on this resource**.
 
 ```text
-IdentityContext + Resource + Action -> allow or reject
+IdentityContext + Permission(resource, action, requestTarget) -> allow or reject
 ```
 
 If you only need to enable the built-in auth capability, start with [Admin Manual - Authorization](../manual/admin/auth.mdx). If you need enterprise SSO or an external identity provider, see [OIDC/OAuth2 Authentication](../manual/admin/oidc-auth.md). This page focuses on the plugin model, built-in implementation boundaries, and custom extension.
@@ -72,6 +72,20 @@ Nacos mainly uses two actions:
 | --- | --- |
 | `r` | Read, query, list, subscribe, or similar read operations. |
 | `w` | Create, update, delete, publish, or similar write operations. |
+
+### Permission
+
+`Permission` is the object passed to `validateAuthority`. It combines the resource, the action, and an optional request target.
+
+| Field | Description |
+| --- | --- |
+| `resource` | Parsed Nacos `Resource` for the request. |
+| `action` | Requested action, usually `r` or `w`. |
+| `requestTarget` | Endpoint that triggered the check. HTTP uses `${method} ${uri}`; gRPC uses the request class simple name. |
+
+`requestTarget` distinguishes endpoints that share the same resource and action. For example, `GET /v3/console/cs/config/list` and `GET /v3/console/cs/config/export2` both authorize as `r` on the same namespace resource, but a plugin can allow list and deny export by checking the target.
+
+The field is `null` for permission checks created outside the protocol auth filters. It is supplementary context: resource and action remain the authorization inputs, and a plugin must not derive the protected resource from the target.
 
 ## Built-In Auth Implementations
 
@@ -283,7 +297,7 @@ Then implement `com.alibaba.nacos.plugin.auth.spi.server.AuthPluginService` and 
 | `identityNames()` | Declare identity fields that should be extracted from requests. |
 | `enableAuth(action, type)` | Decide whether the action and resource type require auth. |
 | `validateIdentity(identityContext, resource)` | Authenticate the caller and enrich `IdentityContext`. |
-| `validateAuthority(identityContext, permission)` | Authorize the caller for the target resource and action. |
+| `validateAuthority(identityContext, permission)` | Authorize the caller for the target resource and action. The permission may also carry the request target that triggered the check. |
 | `isLoginEnabled()` | Declare whether the console should expose plugin-provided login. |
 | `isAdminRequest()` | Declare whether the request is an administrator bootstrap flow. |
 
