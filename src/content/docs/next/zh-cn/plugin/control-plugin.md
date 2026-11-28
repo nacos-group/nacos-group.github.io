@@ -8,7 +8,7 @@ sidebar:
 
 # 流量防护插件
 
-流量防护插件用于在高压或异常访问场景下保护 Nacos 服务端。它可以限制连接数量，也可以限制核心接口的 TPS，帮助服务端快速拒绝过量请求，避免局部流量问题扩大成集群不可用。
+流量防护插件用于在高压或异常访问场景下保护 Nacos 服务端。它可以限制连接数量、核心接口的 TPS，以及 naming 推送任务的准入，帮助服务端快速拒绝或延迟过量请求，避免局部流量问题扩大成集群不可用。
 
 Nacos 2.3.0 起支持通过 SPI 注入流量防护插件。统一插件类型为 `control`，执行模式为 `EXCLUSIVE`，加载阶段为 `STANDARD`，类型非 critical。当前内置插件身份是 `control:nacos`，不声明配置 definitions，因此 `configurable=false`。如果没有选择实现，Nacos 使用轻量 no-limit facade，不加载规则、指标或限流后台资源。
 
@@ -118,8 +118,23 @@ EOF
 | `NamingServiceQuery` | 服务查询 | HTTP |
 | `NamingServiceListQuery` | 服务列表查询 | HTTP |
 | `NamingServiceUpdate` | 服务元数据更新 | HTTP |
+| `NAMING_PUSH_TASK` | naming 推送任务分发 | naming 推送引擎 |
 
-ControlPoint 名称来自代码中的 `@TpsControl` 注解。不同 Nacos 版本可能会新增 ControlPoint，升级后建议重新核对目标版本代码和默认文档。
+大多数 ControlPoint 名称来自代码中的 `@TpsControl` 注解。naming 运行时 point（`NAMING_RPC_PUSH`、`NAMING_RPC_PUSH_SUCCESS`、`NAMING_RPC_PUSH_FAIL`、`NAMING_PUSH_TASK` 以及 `NAMING_DISTRO_*`）由 `NamingTpsMonitor` 注册。不同 Nacos 版本可能会新增 ControlPoint，升级后建议重新核对目标版本代码和默认文档。
+
+## 推送准入
+
+naming 推送有一个准入点 `NAMING_PUSH_TASK`。推送引擎分发任务前会检查该点。被拒绝的任务不会被丢弃：它会按 `nacos.naming.push.pushTaskRetryDelay` 回到推送 delay 队列，并与同一服务的新变更合并。
+
+例如把节点限制为每秒 100 个推送任务：
+
+```bash
+cat > ${nacos.home}/data/tps/NAMING_PUSH_TASK <<'EOF'
+{"pointName":"NAMING_PUSH_TASK","pointRule":{"maxCount":100,"monitorType":"intercept"}}
+EOF
+```
+
+内置 barrier 是速率型的。如果需要基于队列深度的绝对水位，需要实现自定义 `TpsControlManager`，从检查上下文读取 `push.pending.tasks`。上下文还提供目标订阅者数量和服务属性，插件可以按服务做决策。
 
 ## 外部规则存储
 
@@ -171,6 +186,24 @@ META-INF/services/com.alibaba.nacos.plugin.control.spi.ExternalRuleStorageBuilde
 ```
 
 新 `ControlManagerBuilder` 可以通过 `PluginConfigDefinitionSpec` 声明私有配置，标准键为 `nacos.plugin.control.{pluginName}.{itemKey}`。在 control 定义安全的 manager 替换/关闭生命周期前，这些 definitions 必须使用 `RESTART`；旧 builder 的无参数构建方法仍保持二进制兼容。
+
+## 检查上下文
+
+`ConnectionCheckRequest` 和 `TpsCheckRequest` 携带不可变的 `ControlContext` 快照。服务端在检查前填充以下 key：
+
+| Key | 类型 | 含义 |
+| --- | --- | --- |
+| `connection.current.total` | metric | 本次连接准入前，节点上的活跃连接数。 |
+| `connection.current.ip` | metric | 本次连接准入前，请求来源 IP 的活跃连接数。 |
+| `push.pending.tasks` | metric | 推送任务被检查时，naming delay engine 中等待的推送任务数。 |
+| `push.target.subscribers` | metric | 被检查的推送任务的目标订阅者数。 |
+| `push.service.namespace` | attribute | 被检查推送任务所属服务的命名空间。 |
+| `push.service.group` | attribute | 被检查推送任务所属服务的分组。 |
+| `push.service.name` | attribute | 被检查推送任务所属服务的名称。 |
+
+插件通过 `request.getControlContext().getMetric(...)` 读取 metric，通过 `getAttribute(...)` 读取属性。缺失的 metric 返回 `0`，可用 `hasMetric` 区分“缺失”和“真实为 0”。Key 集合是增量契约，插件必须忽略不认识的 key，并且不得在 `check` 中阻塞。
+
+拒绝只是延迟，不是丢弃。被延迟的推送任务仍留在 `push.pending.tasks` 中，所以如果插件在 backlog 超过水位时拒绝所有任务，推送会永久停止。用 backlog 做水位的插件必须在水位之上保留正准入速率，例如降低 token bucket 速率，让 backlog 能够被消费。
 
 ## 运维建议
 

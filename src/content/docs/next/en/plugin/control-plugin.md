@@ -8,7 +8,7 @@ sidebar:
 
 # Traffic Control Plugin
 
-The traffic control plugin protects Nacos Server under high load or abnormal access patterns. It can limit connection count and TPS for core APIs, so the server can reject excessive requests early instead of letting a local traffic problem grow into a cluster-wide outage.
+The traffic control plugin protects Nacos Server under high load or abnormal access patterns. It can limit connection count, TPS for core APIs, and naming push task dispatch, so the server can reject or delay excessive work early instead of letting a local traffic problem grow into a cluster-wide outage.
 
 Since Nacos 2.3.0, traffic control can be extended through SPI. Its unified type is `control`, execution mode is `EXCLUSIVE`, load phase is `STANDARD`, and the type is non-critical. The built-in identity is `control:nacos`; it declares no configuration definitions and is reported as `configurable=false`. If no implementation is selected, Nacos uses lightweight no-limit facades without starting rule, metric, or limiter resources.
 
@@ -118,8 +118,23 @@ For production, run new rules in `monitor` mode first, then switch to `intercept
 | `NamingServiceQuery` | Service query | HTTP |
 | `NamingServiceListQuery` | Service list query | HTTP |
 | `NamingServiceUpdate` | Service metadata update | HTTP |
+| `NAMING_PUSH_TASK` | Naming push task dispatch | naming push engine |
 
-ControlPoint names come from `@TpsControl` annotations in the code. New Nacos versions may add more ControlPoints, so check the target version when upgrading.
+Most ControlPoint names come from `@TpsControl` annotations in the code. The naming runtime points (`NAMING_RPC_PUSH`, `NAMING_RPC_PUSH_SUCCESS`, `NAMING_RPC_PUSH_FAIL`, `NAMING_PUSH_TASK`, and the `NAMING_DISTRO_*` points) are registered by `NamingTpsMonitor`. New Nacos versions may add more ControlPoints, so check the target version when upgrading.
+
+## Push Admission
+
+Naming push has an admission point named `NAMING_PUSH_TASK`. Before the push engine dispatches a task, it checks this point. A denied task is not dropped: it returns to the push delay queue with `nacos.naming.push.pushTaskRetryDelay` and merges with newer changes of the same service.
+
+For example, to cap a node at 100 push tasks per second:
+
+```bash
+cat > ${nacos.home}/data/tps/NAMING_PUSH_TASK <<'EOF'
+{"pointName":"NAMING_PUSH_TASK","pointRule":{"maxCount":100,"monitorType":"intercept"}}
+EOF
+```
+
+The built-in barrier is rate-based. If you need an absolute queue-depth watermark, implement a custom `TpsControlManager` and read `push.pending.tasks` from the check context. The context also exposes the target subscriber count and the service attributes, so the plugin can make a per-service decision.
 
 ## External Rule Storage
 
@@ -171,6 +186,24 @@ META-INF/services/com.alibaba.nacos.plugin.control.spi.ExternalRuleStorageBuilde
 ```
 
 A new `ControlManagerBuilder` can declare private settings through `PluginConfigDefinitionSpec`, using canonical keys under `nacos.plugin.control.{pluginName}.{itemKey}`. Until Control defines a safe manager replacement and close lifecycle, every definition must use `RESTART`. The older no-argument builder methods remain binary compatible.
+
+## Check Context
+
+`ConnectionCheckRequest` and `TpsCheckRequest` carry an immutable `ControlContext` snapshot. The server fills these keys before the check:
+
+| Key | Kind | Meaning |
+| --- | --- | --- |
+| `connection.current.total` | metric | Active connections on the node before the requested connection is admitted. |
+| `connection.current.ip` | metric | Active connections from the requesting client IP before admission. |
+| `push.pending.tasks` | metric | Push tasks waiting in the naming delay engine when a push task is checked. |
+| `push.target.subscribers` | metric | Subscribers targeted by the checked push task. |
+| `push.service.namespace` | attribute | Namespace of the checked push task. |
+| `push.service.group` | attribute | Group of the checked push task. |
+| `push.service.name` | attribute | Service name of the checked push task. |
+
+A custom manager reads a metric with `request.getControlContext().getMetric(ControlContext.PUSH_PENDING_TASKS)` and an attribute with `getAttribute(...)`. Missing metrics return `0`; use `hasMetric` to distinguish an absent metric from a real zero. The key set is additive, so plugins must ignore unknown keys and must not block inside `check`.
+
+Denial only delays work. A delayed push task stays in `push.pending.tasks`, so a plugin that denies every task while the backlog is above a watermark would stop pushes forever. Keep a positive admission rate above the watermark, for example by lowering a token-bucket rate, so the backlog can drain.
 
 ## Operations Advice
 
